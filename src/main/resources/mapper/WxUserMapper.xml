@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.xiaobaiqiuzhi.admin.dao.WxUserMapper">
-  <resultMap id="BaseResultMap" type="cn.xiaobaiqiuzhi.admin.entity.WxUser">
+<mapper namespace="com.cainiaoshixi.dao.WxUserMapper">
+  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.WxUser">
     <id column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
@@ -24,7 +24,7 @@
     delete from wx_user
     where user_id = #{userId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.xiaobaiqiuzhi.admin.entity.WxUser">
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.WxUser">
     insert into wx_user (user_id, name, sex, 
       identity, birth, region, 
       email, phone)
@@ -32,7 +32,7 @@
       #{identity,jdbcType=INTEGER}, #{birth,jdbcType=DATE}, #{region,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.xiaobaiqiuzhi.admin.entity.WxUser">
+  <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.WxUser">
     insert into wx_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.xiaobaiqiuzhi.admin.entity.WxUser">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.WxUser">
     update wx_user
     <set>
       <if test="name != null">
@@ -114,7 +114,7 @@
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.xiaobaiqiuzhi.admin.entity.WxUser">
+  <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.WxUser">
     update wx_user
     set name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
