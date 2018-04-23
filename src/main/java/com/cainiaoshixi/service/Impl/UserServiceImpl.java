@@ -23,16 +23,25 @@ public class UserServiceImpl implements IUserService{
      * @Description: 创建一个新用户
      * @Date: 20:25 2018/4/9
      */
-    public void createUser(String openId) {
-        //若用户不存在，则新建用户并保存
-        if (cnUserMapper.getUserByOpenId(openId) > 0){
-            return;
+    public int createUser(String openId) {
+        //若用户不存在，则新建用户
+        Integer id = cnUserMapper.getUserByOpenId(openId);
+        if (id != null){
+            return id;
         }else{
             CnUser cnUser = new CnUser();
             cnUser.setOpenId(openId);
             cnUser.setCreateTime(new Date());
             cnUser.setUpdateTime(new Date());
             cnUserMapper.insertSelective(cnUser);
+            return cnUserMapper.getUserByOpenId(openId);
         }
+    }
+
+    //更新用户信息
+    @Override
+    public void updateUserById(CnUser cnUser) {
+        cnUser.setUpdateTime(new Date());
+        cnUserMapper.updateByPrimaryKeySelective(cnUser);
     }
 }

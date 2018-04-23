@@ -1,5 +1,7 @@
 package com.cainiaoshixi.service;
 
+import com.cainiaoshixi.entity.CnUser;
+
 /**
  * @Author: Chy
  * @Param:
@@ -7,5 +9,7 @@ package com.cainiaoshixi.service;
  * @Date: 19:54 2018/4/9
  */
 public interface IUserService {
-    void createUser(String openId);  //创建用户
+    int createUser(String openId);  //创建用户
+
+    void updateUserById(CnUser cnUser);  //更新用户
 }

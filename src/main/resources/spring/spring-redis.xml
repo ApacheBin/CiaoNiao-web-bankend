@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
+
+    <!-- redis连接池的配置 -->
+    <bean id="jedisConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.maxActive}"></property>
+        <property name="maxIdle" value="${redis.maxIdle}"></property>
+        <property name="maxWaitMillis" value="${redis.maxWait}"></property>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>
+    </bean>
+
+    <!-- redis连接工厂 -->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.host}"></property>
+        <property name="port" value="${redis.port}"></property>
+        <property name="password" value="${redis.password}"></property>
+        <property name="poolConfig" ref="jedisConfig"></property>
+    </bean>
+    <!-- redis操作模板，这里采用尽量面向对象的模板 -->
+    <!--<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">-->
+    <!--<property name="connectionFactory" ref="connectionFactory"/>-->
+    <!--&lt;!&ndash;     如果不配置Serializer，那么存储的时候只能使用String，如果用对象类型存储，那么会提示错误 can't cast to String！！！&ndash;&gt;-->
+    <!--<property name="keySerializer">-->
+    <!--<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>-->
+    <!--</property>-->
+    <!--<property name="valueSerializer">-->
+    <!--<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+          p:connection-factory-ref="connectionFactory"
+          p:keySerializer-ref="stringRedisSerializer"
+          p:valueSerializer-ref="stringRedisSerializer"/>
+
+    <bean id="geneticTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+          p:connection-factory-ref="connectionFactory"
+          p:keySerializer-ref="stringRedisSerializer"
+          p:valueSerializer-ref="GenericToStringSerializer"/>
+
+
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <bean id="JdkSerializationRedisSerializer"
+          class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+
+    <bean id="GenericToStringSerializer" class="org.springframework.data.redis.serializer.GenericToStringSerializer"
+          c:type="java.lang.Long"/>
+
+    <!--自定义redis工具类,在需要缓存的地方注入此类  -->
+    <bean id="redisUtil" class="com.cainiaoshixi.util.RedisUtil">
+        <property name="redisTemplate" ref="redisTemplate"/>
+    </bean>
+</beans>

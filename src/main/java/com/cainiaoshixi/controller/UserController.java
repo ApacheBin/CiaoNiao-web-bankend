@@ -1,9 +1,12 @@
 package com.cainiaoshixi.controller;
 
+import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.CnUser;
 import com.cainiaoshixi.service.IUserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cainiaoshixi.util.RedisUtil;
+import com.cainiaoshixi.util.ResultUtil;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -17,8 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -33,9 +37,13 @@ public class UserController {
     private static final String APP_ID = "wx41311a0239485c53";
     private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";
     private static final String BASE_URL = "https://api.weixin.qq.com/sns/jscode2session?";
+    private static final long expireTime = 86400; //sessionId有效时间，以秒为单位
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private RedisUtil redisUtil;
     /**
      * @Author: Chy
      * @Param:
@@ -44,20 +52,26 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/getSessionId")
-    public String getSessionId(String code, HttpSession session) throws Exception {
+    public Result getSessionId(String code) throws Exception {
 
+        //根据code获取用户的session_key和userId
         String userInfo = getUserInfoByCode(code);
         JSONObject jsonObject = JSON.parseObject(userInfo);
         String sessionKey = (String) jsonObject.getString("session_key");
         String openId = (String) jsonObject.getString("openid");
 
+        //创建用户，并返回用户的主键
+        int id = createUser(openId);
+
+        //创建用户的sessionId，并将对应的用户id写入到redis
         String sessionId = UUID.randomUUID().toString().replace("-", "");
-        session.setAttribute(sessionId, sessionKey + " " + openId);
+        redisUtil.set(sessionId, id + "", expireTime);
 
-        //创建用户并保存到数据库
-        createUser(openId);
-
-        return sessionId;
+        //以json字符串形式返回sessionId
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("sessionId", sessionId);
+        String resultData = JSON.toJSONString(resultMap);
+        return ResultUtil.success(resultData);
     }
 
     /**
@@ -89,10 +103,11 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/createUser")
-    public void createUser(String openId) throws Exception {
-        if (openId == null)
-            throw new Exception("openId为空");
-        userService.createUser(openId);
+    private int createUser(String openId) throws Exception {
+        if (openId == null){
+            throw new Exception("openId为空，创建用户失败！");
+        }
+        return userService.createUser(openId);
     }
 
     /**
@@ -103,27 +118,15 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/saveUserInfo")
-    public String saveUserInfo(CnUser cnUser, HttpSession session, HttpServletRequest request){
+    public Result saveUserInfo(CnUser cnUser, HttpServletRequest request){
 
         Cookie[] cookies = request.getCookies();//根据请求数据，找到cookie数组
         String sessionId = cookies[0].getValue();
-        String openId = getOpenIdBySessionId(sessionId, session);
+        int id = Integer.parseInt((String) redisUtil.get(sessionId));
 
-//        userService.updateUserInfoByOpenId(openID);
-        return "success";
+        cnUser.setId(id);
+        userService.updateUserById(cnUser);
+        return ResultUtil.success("");
     }
 
-    /**
-     * @Author: Chy
-     * @Param:
-     * @Description: 从session中获取用户的openId
-     * @Date: 18:53 2018/4/9
-     */
-    private String getOpenIdBySessionId(String sessionId, HttpSession session) {
-        String userInfo =(String)session.getAttribute(sessionId);
-        if (userInfo == null){
-            return null;
-        }
-        return userInfo.split(" ")[1];
-    }
 }
