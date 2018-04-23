@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.xiaobaiqiuzhi.admin.dao.JobMapper">
-  <resultMap id="BaseResultMap" type="cn.xiaobaiqiuzhi.admin.entity.Job">
+<mapper namespace="com.cainiaoshixi.dao.JobMapper">
+  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.Job">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="companyid" jdbcType="BIGINT" property="companyid" />
     <result column="department" jdbcType="VARCHAR" property="department" />
@@ -28,7 +28,7 @@
     <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
     <result column="duration" jdbcType="VARCHAR" property="duration" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.xiaobaiqiuzhi.admin.entity.JobWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cainiaoshixi.entity.JobWithBLOBs">
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
     <result column="requirement" jdbcType="LONGVARCHAR" property="requirement" />
     <result column="others" jdbcType="LONGVARCHAR" property="others" />
@@ -55,7 +55,7 @@
     delete from job
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.xiaobaiqiuzhi.admin.entity.JobWithBLOBs">
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
     insert into job (id, companyid, department, 
       job, place, total_time, 
       day_in_week, price_in_day, welfare, 
@@ -77,7 +77,7 @@
       #{duration,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, #{requirement,jdbcType=LONGVARCHAR}, 
       #{others,jdbcType=LONGVARCHAR}, #{attachment,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.xiaobaiqiuzhi.admin.entity.JobWithBLOBs">
+  <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
     insert into job
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -258,7 +258,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.xiaobaiqiuzhi.admin.entity.JobWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
     update job
     <set>
       <if test="companyid != null">
@@ -348,7 +348,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.xiaobaiqiuzhi.admin.entity.JobWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
     update job
     set companyid = #{companyid,jdbcType=BIGINT},
       department = #{department,jdbcType=VARCHAR},
@@ -380,7 +380,7 @@
       attachment = #{attachment,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.xiaobaiqiuzhi.admin.entity.Job">
+  <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.Job">
     update job
     set companyid = #{companyid,jdbcType=BIGINT},
       department = #{department,jdbcType=VARCHAR},
@@ -408,7 +408,7 @@
       duration = #{duration,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getJobListByVo" parameterType="cn.xiaobaiqiuzhi.admin.vo.JobQueryVo" resultType="cn.xiaobaiqiuzhi.admin.entity.JobWithBLOBs">
+  <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultType="com.cainiaoshixi.entity.JobWithBLOBs">
     select id, companyid, department, job, place, total_time, day_in_week, price_in_day, welfare,
     period_validation, source, published, type, checked, created_time, updated_time,
     userid, category, company_logo, company_detail, is_full_job, degree, location, deadline,

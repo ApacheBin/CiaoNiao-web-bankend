@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.xiaobaiqiuzhi.admin.dao.CnUserMapper">
-  <resultMap id="BaseResultMap" type="cn.xiaobaiqiuzhi.admin.entity.CnUser">
-    <id column=" id" jdbcType="INTEGER" property="id" />
+<mapper namespace="com.cainiaoshixi.dao.CnUserMapper">
+  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.CnUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="TINYINT" property="sex" />
@@ -15,21 +15,21 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    " id", open_id, name, sex, identity, birthday, residence, cellphone, email, create_time, 
+    id, open_id, name, sex, identity, birthday, residence, cellphone, email, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from cn_user
-    where " id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cn_user
-    where " id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.xiaobaiqiuzhi.admin.entity.CnUser">
-    insert into cn_user (" id", open_id, name, 
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.CnUser">
+    insert into cn_user (id, open_id, name,
       sex, identity, birthday, 
       residence, cellphone, email, 
       create_time, update_time)
@@ -38,11 +38,11 @@
       #{residence,jdbcType=INTEGER}, #{cellphone,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.xiaobaiqiuzhi.admin.entity.CnUser">
+  <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.CnUser">
     insert into cn_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        " id",
+        id,
       </if>
       <if test="openId != null">
         open_id,
@@ -111,7 +111,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.xiaobaiqiuzhi.admin.entity.CnUser">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.CnUser">
     update cn_user
     <set>
       <if test="openId != null">
@@ -145,9 +145,9 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where " id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.xiaobaiqiuzhi.admin.entity.CnUser">
+  <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.CnUser">
     update cn_user
     set open_id = #{openId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
@@ -159,10 +159,10 @@
       email = #{email,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where " id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getUserByOpenId" parameterType="java.lang.String" resultType="java.lang.Integer">
-    select count(*) from cn_user
+    select id from cn_user
     where open_id = #{openId}
   </select>
 </mapper>
