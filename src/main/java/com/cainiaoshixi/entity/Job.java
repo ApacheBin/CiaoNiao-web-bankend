@@ -11,6 +11,8 @@ public class Job {
 
     private String job;
 
+    private String email;
+
     private String place;
 
     private Integer totalTime;
@@ -83,6 +85,14 @@ public class Job {
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPlace() {

@@ -6,6 +6,7 @@
     <result column="companyid" jdbcType="BIGINT" property="companyid" />
     <result column="department" jdbcType="VARCHAR" property="department" />
     <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="place" jdbcType="VARCHAR" property="place" />
     <result column="total_time" jdbcType="INTEGER" property="totalTime" />
     <result column="day_in_week" jdbcType="VARCHAR" property="dayInWeek" />
@@ -35,7 +36,7 @@
     <result column="attachment" jdbcType="LONGVARCHAR" property="attachment" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, companyid, department, job, place, total_time, day_in_week, price_in_day, welfare, 
+    id, companyid, department, job,email, place, total_time, day_in_week, price_in_day, welfare,
     period_validation, source, published, type, checked, created_time, updated_time, 
     userid, category, company_logo, company_detail, is_full_job, degree, location, deadline, 
     duration
@@ -57,7 +58,7 @@
   </delete>
   <insert id="insert" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
     insert into job (id, companyid, department, 
-      job, place, total_time, 
+      job, email,place, total_time,
       day_in_week, price_in_day, welfare, 
       period_validation, source, published, 
       type, checked, created_time, 
@@ -67,7 +68,7 @@
       duration, description, requirement, 
       others, attachment)
     values (#{id,jdbcType=BIGINT}, #{companyid,jdbcType=BIGINT}, #{department,jdbcType=VARCHAR}, 
-      #{job,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, #{totalTime,jdbcType=INTEGER}, 
+      #{job,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},#{place,jdbcType=VARCHAR}, #{totalTime,jdbcType=INTEGER},
       #{dayInWeek,jdbcType=VARCHAR}, #{priceInDay,jdbcType=VARCHAR}, #{welfare,jdbcType=VARCHAR},
       #{periodValidation,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, #{published,jdbcType=TINYINT}, 
       #{type,jdbcType=VARCHAR}, #{checked,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
@@ -91,6 +92,9 @@
       </if>
       <if test="job != null">
         job,
+      </if>
+      <if test="email != null">
+        email,
       </if>
       <if test="place != null">
         place,
@@ -181,6 +185,9 @@
       <if test="job != null">
         #{job,jdbcType=VARCHAR},
       </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
       <if test="place != null">
         #{place,jdbcType=VARCHAR},
       </if>
@@ -270,6 +277,9 @@
       <if test="job != null">
         job = #{job,jdbcType=VARCHAR},
       </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
       <if test="place != null">
         place = #{place,jdbcType=VARCHAR},
       </if>
@@ -353,6 +363,7 @@
     set companyid = #{companyid,jdbcType=BIGINT},
       department = #{department,jdbcType=VARCHAR},
       job = #{job,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
       place = #{place,jdbcType=VARCHAR},
       total_time = #{totalTime,jdbcType=INTEGER},
       day_in_week = #{dayInWeek,jdbcType=VARCHAR},
@@ -385,6 +396,7 @@
     set companyid = #{companyid,jdbcType=BIGINT},
       department = #{department,jdbcType=VARCHAR},
       job = #{job,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
       place = #{place,jdbcType=VARCHAR},
       total_time = #{totalTime,jdbcType=INTEGER},
       day_in_week = #{dayInWeek,jdbcType=VARCHAR},
@@ -409,7 +421,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultType="com.cainiaoshixi.entity.JobWithBLOBs">
-    select id, companyid, department, job, place, total_time, day_in_week, price_in_day, welfare,
+    select id, companyid, department, job,email, place, total_time, day_in_week, price_in_day, welfare,
     period_validation, source, published, type, checked, created_time, updated_time,
     userid, category, company_logo, company_detail, is_full_job, degree, location, deadline,
     duration, description, requirement, others, attachment

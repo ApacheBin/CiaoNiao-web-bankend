@@ -7,4 +7,14 @@ import java.util.List;
 
 public interface IJobService {
     List<JobWithBLOBs> getJobListByVo(JobQueryVo jobQueryVo);
+
+    JobWithBLOBs selectByPrimaryKey(Long id);
+
+    void insertJob(JobWithBLOBs jobWithBLOBs);
+
+    int updateById(JobWithBLOBs jobWithBLOBs);
+
+    int deleteByPrimaryKey(Long id);
+
+    int updateJobPublished(Long id);
 }

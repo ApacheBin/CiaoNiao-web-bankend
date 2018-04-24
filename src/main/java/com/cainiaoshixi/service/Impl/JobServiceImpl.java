@@ -23,4 +23,27 @@ public class JobServiceImpl implements IJobService {
     public List<JobWithBLOBs> getJobListByVo(JobQueryVo jobQueryVo) {
         return jobMapper.getJobListByVo(jobQueryVo);
     }
+
+    public JobWithBLOBs selectByPrimaryKey(Long id) {
+        return jobMapper.selectByPrimaryKey(id);
+    }
+
+    public void insertJob(JobWithBLOBs jobWithBLOBs) {
+        jobMapper.insertSelective(jobWithBLOBs);
+    }
+
+    public int updateById(JobWithBLOBs jobWithBLOBs) {
+        return jobMapper.updateByPrimaryKeySelective(jobWithBLOBs);
+    }
+
+    public int deleteByPrimaryKey(Long id) {
+        return jobMapper.deleteByPrimaryKey(id);
+    }
+
+    public int updateJobPublished(Long id) {
+        JobWithBLOBs jobWithBLOBs = null;
+        jobWithBLOBs.setId(id);
+        jobWithBLOBs.setPublished((byte) 1);
+        return jobMapper.updateByPrimaryKeySelective(jobWithBLOBs);
+    }
 }
