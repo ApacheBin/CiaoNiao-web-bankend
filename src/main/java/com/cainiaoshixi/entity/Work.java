@@ -1,10 +1,12 @@
 package com.cainiaoshixi.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-public class CnWork {
+@Component("CnWork")
+public class Work {
 
     private Integer id;
 

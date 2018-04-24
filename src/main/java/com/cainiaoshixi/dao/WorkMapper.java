@@ -1,13 +1,13 @@
 package com.cainiaoshixi.dao;
 
-import com.cainiaoshixi.entity.CnWork;
+import com.cainiaoshixi.entity.Work;
 
-public interface CnWorkMapper {
+public interface WorkMapper {
     /**
      * 根据ID查询
      * @param id 工作id
      * @return
      */
-    CnWork queryById(int id);
+    Work queryById(int id);
 
 }

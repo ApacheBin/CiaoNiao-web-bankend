@@ -1,7 +1,7 @@
 package com.cainiaoshixi.service.Impl;
 
-import com.cainiaoshixi.dao.CnWorkMapper;
-import com.cainiaoshixi.entity.CnWork;
+import com.cainiaoshixi.dao.WorkMapper;
+import com.cainiaoshixi.entity.Work;
 import com.cainiaoshixi.service.IWorkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class WorkServiceImpl implements IWorkService {
 
     @Autowired
-    private CnWorkMapper workMapper;
+    private WorkMapper workMapper;
 
-    public CnWork getById(int id) {
+    public Work getById(int id) {
         return workMapper.queryById(id);
     }
 }

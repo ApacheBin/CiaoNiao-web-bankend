@@ -1,8 +1,8 @@
 package com.cainiaoshixi.service;
 
-import com.cainiaoshixi.entity.CnWork;
+import com.cainiaoshixi.entity.Work;
 
 public interface IWorkService {
 
-    CnWork getById(int id);
+    Work getById(int id);
 }

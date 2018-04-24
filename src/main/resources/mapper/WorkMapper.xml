@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cainiaoshixi.dao.CnWorkMapper">
+<mapper namespace="com.cainiaoshixi.dao.WorkMapper">
 
-    <select id="queryById" resultType="CnWork" parameterType="int">
-        SELECT *
+    <select id="queryById" resultType="Work" parameterType="int">
+        SELECT id
         FROM cn_work
         WHERE id = #{id}
     </select>

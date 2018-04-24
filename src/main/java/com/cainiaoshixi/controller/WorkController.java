@@ -1,7 +1,7 @@
 package com.cainiaoshixi.controller;
 
 import com.cainiaoshixi.domain.Result;
-import com.cainiaoshixi.entity.CnWork;
+import com.cainiaoshixi.entity.Work;
 import com.cainiaoshixi.service.IWorkService;
 import com.cainiaoshixi.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class WorkController {
     @RequestMapping("/get")
     @ResponseBody
     public Result getWork(@RequestParam("sessionId") String sessionId, @RequestParam("id") Integer id) {
-        CnWork work = workService.getById(id);
+        Work work = workService.getById(id);
         return ResultUtil.success(work);
 
     }
