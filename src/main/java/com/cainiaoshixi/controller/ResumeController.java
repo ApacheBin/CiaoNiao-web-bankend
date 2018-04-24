@@ -1,9 +1,16 @@
 package com.cainiaoshixi.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Education;
+import com.cainiaoshixi.entity.JobWithBLOBs;
 import com.cainiaoshixi.entity.WorkExperience;
 import com.cainiaoshixi.entity.WxUser;
 import com.cainiaoshixi.service.IResumeService;
+import com.cainiaoshixi.util.RedisUtil;
+import com.cainiaoshixi.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -25,6 +33,7 @@ public class ResumeController {
 
     @Autowired
     private IResumeService resumeService;
+    private RedisUtil redisUtil = new RedisUtil();
 
     /**
      * @Author: Chy
@@ -55,7 +64,6 @@ public class ResumeController {
     @RequestMapping("/savePersonInfo")
     @ResponseBody
     public String savePersonInfo(@RequestBody WxUser wxUser) {
-
         resumeService.savePersonInfo(wxUser);
         return "success";
     }

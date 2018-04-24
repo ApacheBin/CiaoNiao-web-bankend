@@ -5,9 +5,17 @@ import com.cainiaoshixi.entity.Education;
 import java.util.List;
 
 public interface EducationMapper {
-    int insert(Education record);
+    Integer insert(Education record);
 
-    int insertSelective(Education record);
+    Integer insertSelective(Education record);
 
     List<Education> getEducationListByUserId(String userId);
+
+    List<Education> getEducationListByEduId(Integer userId,Integer eduId);
+
+    void addEducation(Education education);
+
+    void updateEducation(Education education);
+
+    void deleteEducation(Integer eduId);
 }
