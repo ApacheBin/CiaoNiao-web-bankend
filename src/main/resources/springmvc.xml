@@ -30,5 +30,5 @@
     </bean>
 
     <!-- 4.扫描web相关的bean -->
-    <context:component-scan base-package="com.cainiaoshixi.controller" />
+    <context:component-scan base-package="com.cainiaoshixi" />
 </beans>
