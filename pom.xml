@@ -212,10 +212,12 @@
                     <update>true</update> <!-- 热部署 -->
                     <charset>utf-8</charset> <!-- 设置字符集 -->
                     <uriEncoding>UTF-8</uriEncoding><!-- 设置uri编码 -->
-                    <url>http://localhost:8082/manager/text</url>
-                    <server>Tomcat-7.0.82</server>
-                    <path>/wx_admin</path>
-                    <port>8085</port>
+                    <url>http://cainiaoshixi.com/manager/text</url>
+                    <!--<server>Tomcat-7.0.82</server>-->
+                    <path>/app</path>
+                    <!--<port>8085</port>-->
+                    <username>admin</username>
+                    <password>cnsxadmin</password>
                 </configuration>
             </plugin>
             
