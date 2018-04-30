@@ -65,4 +65,46 @@
         from education
         where user_id = #{userId, jdbcType=VARCHAR}
     </select>
+
+    <select id="getEducationListByEduId" resultType="com.cainiaoshixi.entity.Education">
+        SELECT id,school,major,admission_time,graduation_time,user_id
+        FROM cn_education
+        WHERE
+        user_id= #{userId，jdbcType=INT}
+        <if test="eduId!= null" >
+            and id = #{eduId,jdbcType=INT}
+        </if>
+        and
+    </select>
+    <insert id="addEducation"  parameterType="com.cainiaoshixi.entity.Education">
+        INSERT INTO cn_education( school, major, degree, admission_time, graduation_time, user_id)
+        VALUES (#{school,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR},
+        #{schoolBeginDate,jdbcType=DATE}, #{schoolEndDate,jdbcType=DATE}, #{userId,jdbcType=VARCHAR}
+        )
+    </insert>
+    <update id="updateEducation" parameterType="com.cainiaoshixi.entity.Education">
+        update cn_education
+        <set>
+            <if test="school != null">
+                school = #{school,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                major = #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="degree != null">
+                degree = #{degree,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolBeginDate != null">
+                schoolBeginDate = #{schoolBeginDate,jdbcType=DATE},
+            </if>
+            <if test="schoolEndDate != null">
+                schoolEndDate = #{schoolEndDate,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteEducation" parameterType="java.lang.Integer">
+        DELETE FROM cn_education
+        WHERE id=#{eduId,jdbcType=INTEGER}
+    </delete>
 </mapper>

@@ -7,7 +7,7 @@ import com.cainiaoshixi.entity.WxUser;
 import java.util.List;
 
 public interface IResumeService {
-    
+
     void savePersonInfo(WxUser wxUser);
 
     void saveEducationExp(Education education);
@@ -19,4 +19,12 @@ public interface IResumeService {
     List<Education> getEducationListByUserId(String userId);
 
     List<WorkExperience> getWorkExpListByUserId(String userId);
+
+    List<Education> getEducationListByEduId(int userId,int eduId);
+
+    void addEducation(Education education);
+
+    void updateEducation(Education education);
+
+    void deleteEducation(int eduId);
 }

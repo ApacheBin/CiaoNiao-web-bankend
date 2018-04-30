@@ -6,7 +6,7 @@
     <properties resource="jdbc.properties"/>
     <!--mysql 连接数据库jar 这里选择自己本地位置-->
     <classPathEntry location="${jdbc.driverLocation}" />
-    <context id="default" targetRuntime="MyBatis3">
+    <context id="default" targetRuntime="MyBatis3Simple">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true" />

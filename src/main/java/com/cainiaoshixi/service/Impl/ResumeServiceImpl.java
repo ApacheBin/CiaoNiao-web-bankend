@@ -61,4 +61,20 @@ public class ResumeServiceImpl implements IResumeService{
     public List<WorkExperience> getWorkExpListByUserId(String userId) {
         return workExperienceMapper.getWorkExpListByUserId(userId);
     }
+    @Override
+    public List<Education> getEducationListByEduId(int userId,int eduId){
+        return educationMapper.getEducationListByEduId(userId,eduId);
+    }
+    @Override
+    public void addEducation(Education education){
+        educationMapper.addEducation(education);
+    }
+    @Override
+    public void updateEducation(Education education){
+        educationMapper.updateEducation(education);
+    }
+    @Override
+    public void deleteEducation(int eduId){
+        educationMapper.deleteEducation(eduId);
+    }
 }

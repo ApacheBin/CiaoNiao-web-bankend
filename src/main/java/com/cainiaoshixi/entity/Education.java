@@ -3,6 +3,8 @@ package com.cainiaoshixi.entity;
 import java.util.Date;
 
 public class Education {
+    public int id;
+
     private String school;
 
     private String major;
