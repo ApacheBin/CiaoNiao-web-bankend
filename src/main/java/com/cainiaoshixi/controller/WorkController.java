@@ -7,14 +7,12 @@ import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/work")
 @CrossOrigin
+@ResponseBody
 public class WorkController {
 
     private final IWorkService workService;
@@ -28,11 +26,14 @@ public class WorkController {
     }
 
     @RequestMapping("/get")
-    @ResponseBody
-    public Result getWork(@RequestParam("id") Integer id) {
+    public Result getWork(@RequestParam(value = "id", required = false) Integer id) {
         Integer userId = session.userId();
-        Work work = workService.getById(id);
-        return ResultUtil.success(work);
+        return getWorkById(id);
 
+    }
+
+    @RequestMapping("/get/{id}")
+    public Result getWorkById(@PathVariable Integer id) {
+        return ResultUtil.success(workService.getById(id));
     }
 }
