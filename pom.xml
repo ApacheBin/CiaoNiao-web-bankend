@@ -218,7 +218,7 @@
                     <port>8085</port>
                 </configuration>
             </plugin>
-            
+
             <!--添加mybatis-generator-maven-plugin 插件-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>

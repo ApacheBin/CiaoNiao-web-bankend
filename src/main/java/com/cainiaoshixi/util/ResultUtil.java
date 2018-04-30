@@ -6,7 +6,7 @@ public class ResultUtil {
 
     public static<T> Result<T> success(T data) {
         Result<T> result = new Result<>();
-        result.setCode(200);
+        result.setCode(300);
         result.setMsg("success");
         result.setData(data);
         return result;
