@@ -9,5 +9,10 @@ public interface WorkMapper {
      * @return
      */
     Work queryById(int id);
+    /**
+     * 根据ID更新
+
+     */
+
 
 }

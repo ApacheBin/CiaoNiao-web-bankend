@@ -69,18 +69,69 @@
     <select id="getEducationListByEduId" resultType="com.cainiaoshixi.entity.Education">
         SELECT id,school,major,admission_time,graduation_time,user_id
         FROM cn_education
-        WHERE
-        user_id= #{userId，jdbcType=INT}
-        <if test="eduId!= null" >
-            and id = #{eduId,jdbcType=INT}
-        </if>
-        and
+        <choose>
+            <when test="eduId!= null">
+                WHERE id = #{eduId,jdbcType=INT}
+            </when>
+            <otherwise>
+                WHERE user_id= #{userId，jdbcType=INT}
+            </otherwise>
+        </choose>
     </select>
     <insert id="addEducation"  parameterType="com.cainiaoshixi.entity.Education">
-        INSERT INTO cn_education( school, major, degree, admission_time, graduation_time, user_id)
-        VALUES (#{school,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR},
-        #{schoolBeginDate,jdbcType=DATE}, #{schoolEndDate,jdbcType=DATE}, #{userId,jdbcType=VARCHAR}
-        )
+        insert into education
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="school != null">
+                school,
+            </if>
+            <if test="major != null">
+                major,
+            </if>
+            <if test="degree != null">
+                degree,
+            </if>
+            <if test="admissionTime != null">
+                admission_time,
+            </if>
+            <if test="graduationTime != null">
+                graduation_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="updatedTime != null">
+                updated_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="school != null">
+                #{school,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="degree != null">
+                #{degree,jdbcType=VARCHAR},
+            </if>
+            <if test="admissionTime != null">
+                #{admissionTime,jdbcType=DATE},
+            </if>
+            <if test="graduationTime != null">
+                #{graduationTime,jdbcType=DATE},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
     </insert>
     <update id="updateEducation" parameterType="com.cainiaoshixi.entity.Education">
         update cn_education
@@ -94,11 +145,17 @@
             <if test="degree != null">
                 degree = #{degree,jdbcType=VARCHAR},
             </if>
-            <if test="schoolBeginDate != null">
-                schoolBeginDate = #{schoolBeginDate,jdbcType=DATE},
+            <if test="admissionTime != null">
+                admissionTime = #{admissionTime,jdbcType=DATE},
             </if>
-            <if test="schoolEndDate != null">
-                schoolEndDate = #{schoolEndDate,jdbcType=INTEGER},
+            <if test="graduationTime != null">
+                graduationTime = #{graduationTime,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

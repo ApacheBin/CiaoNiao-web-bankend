@@ -20,11 +20,4 @@ public interface IResumeService {
 
     List<WorkExperience> getWorkExpListByUserId(String userId);
 
-    List<Education> getEducationListByEduId(int userId,int eduId);
-
-    void addEducation(Education education);
-
-    void updateEducation(Education education);
-
-    void deleteEducation(int eduId);
 }
