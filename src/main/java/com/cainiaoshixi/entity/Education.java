@@ -9,7 +9,7 @@ public class Education {
 
     private String major;
 
-    private String degree;
+    private int degree;
 
     private Date admissionTime;
 
@@ -17,9 +17,9 @@ public class Education {
 
     private int userId;
 
-    private Date createdTime;
+    private Date createTime;
 
-    private Date updatedTime;
+    private Date updateTime;
 
     public int getId() {
         return id;
@@ -45,11 +45,11 @@ public class Education {
         this.major = major;
     }
 
-    public String getDegree() {
+    public int getDegree() {
         return degree;
     }
 
-    public void setDegree(String degree) {
+    public void setDegree(int degree) {
         this.degree = degree;
     }
 
@@ -57,7 +57,7 @@ public class Education {
         return admissionTime;
     }
 
-    public void setAdmissionTime(Date schoolBeginDate) {
+    public void setAdmissionTime(Date admissionTime) {
         this.admissionTime = admissionTime;
     }
 
@@ -65,7 +65,7 @@ public class Education {
         return graduationTime;
     }
 
-    public void setGraduationTime(Date schoolEndDate) {
+    public void setGraduationTime(Date graduationTime) {
         this.graduationTime = graduationTime;
     }
 
@@ -77,20 +77,19 @@ public class Education {
         this.userId = userId;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
-
 }

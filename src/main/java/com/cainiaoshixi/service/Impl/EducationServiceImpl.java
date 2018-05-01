@@ -19,8 +19,8 @@ public class EducationServiceImpl implements IEducationService {
     }
     @Override
     public void addEducation(Education education){
-        education.setCreatedTime(new Date());
-        education.setUpdatedTime(new Date());
+        education.setCreateTime(new Date());
+        education.setUpdateTime(new Date());
         educationMapper.addEducation(education);
     }
     @Override

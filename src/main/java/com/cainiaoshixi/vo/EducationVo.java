@@ -1,5 +1,7 @@
 package com.cainiaoshixi.vo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class EducationVo {
@@ -7,11 +9,17 @@ public class EducationVo {
 
     private String major;
 
-    private String degree;
+    private int degree;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date admissionTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date graduationTime;
+
+    public void setDegree(int degree) {
+        this.degree = degree;
+    }
 
     public String getSchool() {
         return school;
@@ -29,19 +37,15 @@ public class EducationVo {
         this.major = major;
     }
 
-    public String getDegree() {
+    public int getDegree() {
         return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
     }
 
     public Date getAdmissionTime() {
         return admissionTime;
     }
 
-    public void setAdmissionTime(Date schoolBeginDate) {
+    public void setAdmissionTime(Date admissionTime) {
         this.admissionTime = admissionTime;
     }
 
@@ -49,7 +53,7 @@ public class EducationVo {
         return graduationTime;
     }
 
-    public void setGraduationTime(Date schoolEndDate) {
+    public void setGraduationTime(Date graduationTime) {
         this.graduationTime = graduationTime;
     }
 }

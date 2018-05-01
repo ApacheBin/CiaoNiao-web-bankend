@@ -22,8 +22,8 @@ import java.util.List;
 @Api(value = "教育经历控制器", tags = {"教育经历接口"})
 @ResponseBody
 public class EducationController {
-    private IEducationService educationService;
-    private RedisUtil redisUtil = new RedisUtil();
+
+    private final IEducationService educationService;
     private final SessionUtil session;
 
     @Autowired
@@ -54,7 +54,7 @@ public class EducationController {
      */
     @RequestMapping(value="/add",method= RequestMethod.POST)
     @ResponseBody
-    public Result addEducation(@RequestBody EducationVo educationVo) {
+    public Result addEducation(EducationVo educationVo) {
         Education education=new Education();
         education.setSchool(educationVo.getSchool());
         education.setMajor(educationVo.getMajor());
@@ -75,7 +75,7 @@ public class EducationController {
     @ResponseBody
     @RequestMapping("/update")
     public Result updateEducation(@RequestBody Education education) {
-        education.setUpdatedTime(new Date());
+        education.setUpdateTime(new Date());
         educationService.updateEducation(education);
         return ResultUtil.success("");
     }
