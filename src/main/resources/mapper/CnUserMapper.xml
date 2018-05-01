@@ -11,11 +11,13 @@
     <result column="residence" jdbcType="VARCHAR" property="residence" />
     <result column="cellphone" jdbcType="CHAR" property="cellphone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, open_id, name, sex, identity, birthday, residence, cellphone, email, create_time,
+    id, open_id, name, sex, identity, birthday, residence, cellphone, email, avatar_url, nick_name, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -31,12 +33,13 @@
   <insert id="insert" parameterType="com.cainiaoshixi.entity.CnUser">
     insert into cn_user (id, open_id, name,
       sex, identity, birthday, 
-      residence, cellphone, email, 
+      residence, cellphone, email,
+      avatar_url, nick_name,
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{sex,jdbcType=TINYINT}, #{identity,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, 
       #{residence,jdbcType=VARCHAR}, #{cellphone,jdbcType=CHAR}, #{email,jdbcType=VARCHAR},
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{avatarUrl,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.CnUser">
     insert into cn_user
@@ -67,6 +70,12 @@
       </if>
       <if test="email != null">
         email,
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url,
+      </if>
+      <if test="nickName != null">
+        nick_name,
       </if>
       <if test="createTime != null">
         create_time,
@@ -103,6 +112,12 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -138,6 +153,12 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -157,6 +178,8 @@
       residence = #{residence,jdbcType=VARCHAR},
       cellphone = #{cellphone,jdbcType=CHAR},
       email = #{email,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

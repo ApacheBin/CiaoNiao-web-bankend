@@ -28,6 +28,10 @@ public class CnUser {
 
     private Date updateTime;
 
+    private String avatarUrl;
+
+    private String nickName;
+
     public Integer getId() {
         return id;
     }
@@ -114,5 +118,21 @@ public class CnUser {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }
