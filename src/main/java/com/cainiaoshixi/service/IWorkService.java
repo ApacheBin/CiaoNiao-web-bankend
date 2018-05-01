@@ -8,7 +8,7 @@ public interface IWorkService {
 
     Work getByUserId(int userId);
 
-    void insert(Work work);
+    int insert(Work work);
 
     void update(Work work);
 

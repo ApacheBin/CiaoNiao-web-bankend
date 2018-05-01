@@ -1,5 +1,6 @@
 package com.cainiaoshixi.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Work;
 import com.cainiaoshixi.service.IWorkService;
@@ -21,6 +22,9 @@ public class WorkController {
 
     private final IWorkService workService;
 
+    /**
+     * 当前会话
+     */
     private final SessionUtil session;
 
     @Autowired
@@ -51,8 +55,11 @@ public class WorkController {
     @ApiOperation("新增工作经历")
     public Result addWork(@RequestBody Work work) {
         work.setUserId(session.userId());
-        workService.insert(work);
-        return ResultUtil.success("");
+        workService.insert(work); //这个返回的是新增的记录数
+        // 返回工作ID
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("workId", work.getId());
+        return ResultUtil.success(jsonObject);
     }
 
     @PostMapping("/update")

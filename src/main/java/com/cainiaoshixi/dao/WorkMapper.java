@@ -12,5 +12,5 @@ public interface WorkMapper {
 
     void update(Work work);
 
-    void insert(Work work);
+    int insert(Work work);
 }

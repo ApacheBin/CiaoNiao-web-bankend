@@ -11,8 +11,12 @@ import java.util.Date;
 @Service
 public class WorkServiceImpl implements IWorkService {
 
+    private final WorkMapper workMapper;
+
     @Autowired
-    private WorkMapper workMapper;
+    public WorkServiceImpl(WorkMapper workMapper) {
+        this.workMapper = workMapper;
+    }
 
     @Override
     public Work getById(int id) {
@@ -25,11 +29,11 @@ public class WorkServiceImpl implements IWorkService {
     }
 
     @Override
-    public void insert(Work work) {
+    public int insert(Work work) {
         Date now = new Date();
         work.setCreateTime(now);
         work.setUpdateTime(now);
-        workMapper.insert(work);
+        return workMapper.insert(work);
     }
 
     @Override
