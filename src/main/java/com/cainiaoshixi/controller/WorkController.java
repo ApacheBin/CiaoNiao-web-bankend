@@ -31,7 +31,8 @@ public class WorkController {
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @ApiOperation("获取工作经验")
-    public Result getWork(@ApiParam(name = "id", value = "工作经验ID") Integer id) {
+    public Result getWork(@ApiParam(name = "id", value = "工作经验ID")
+                              @RequestParam("id") Integer id) {
         Integer userId = session.userId();
         return ResultUtil.success(getWorkById(id));
 

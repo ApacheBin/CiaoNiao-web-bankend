@@ -26,6 +26,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private boolean loginValidate(HttpServletRequest request, HttpServletResponse response) {
         String sessionId = request.getParameter("sessionId");
+        if(sessionId == null) {
+            sessionId = request.getHeader("SessionId");
+        }
         if (sessionId != null && redisUtil.hasKey(sessionId)) {
             Integer userId = Integer.parseInt((String) redisUtil.get(sessionId));
             request.getSession().setAttribute("userId", userId);
