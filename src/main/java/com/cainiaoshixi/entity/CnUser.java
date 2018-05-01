@@ -18,7 +18,7 @@ public class CnUser {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
-    private Integer residence;
+    private String residence;
 
     private String cellphone;
 
@@ -76,11 +76,11 @@ public class CnUser {
         this.birthday = birthday;
     }
 
-    public Integer getResidence() {
+    public String getResidence() {
         return residence;
     }
 
-    public void setResidence(Integer residence) {
+    public void setResidence(String residence) {
         this.residence = residence;
     }
 

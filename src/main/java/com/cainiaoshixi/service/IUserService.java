@@ -12,4 +12,6 @@ public interface IUserService {
     int createUser(String openId);  //创建用户
 
     void updateUserById(CnUser cnUser);  //更新用户
+
+    CnUser getUserByPrimaryKey(int userId);  //获取用户基本信息
 }

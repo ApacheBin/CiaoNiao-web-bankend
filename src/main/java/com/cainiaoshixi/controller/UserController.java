@@ -128,4 +128,18 @@ public class UserController {
         return ResultUtil.success("");
     }
 
+    /**
+     * @Author: Chy
+     * @Param:
+     * @Description: 获取用户基本信息
+     * @Date: 18:57 2018/5/1
+     */
+    @RequestMapping("/getUserInfo")
+    @ResponseBody
+    public Result getUserInfo(HttpServletRequest request){
+        int userId = (int) request.getSession().getAttribute("userId");
+        CnUser user = userService.getUserByPrimaryKey(userId);
+        return ResultUtil.success(user);
+    }
+
 }

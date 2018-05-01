@@ -17,6 +17,7 @@ import java.util.Date;
 public class UserServiceImpl implements IUserService{
     @Autowired
     private CnUserMapper cnUserMapper;
+
     /**
      * @Author: Chy
      * @Param:
@@ -38,10 +39,26 @@ public class UserServiceImpl implements IUserService{
         }
     }
 
-    //更新用户信息
+    /**
+     * @Author: Chy
+     * @Param:
+     * @Description: 更新用户信息
+     * @Date: 19:03 2018/5/1
+     */
     @Override
     public void updateUserById(CnUser cnUser) {
         cnUser.setUpdateTime(new Date());
         cnUserMapper.updateByPrimaryKeySelective(cnUser);
+    }
+
+    /**
+     * @Author: Chy
+     * @Param:
+     * @Description: 获取用户基本信息
+     * @Date: 19:03 2018/5/1
+     */
+    @Override
+    public CnUser getUserByPrimaryKey(int userId) {
+        return cnUserMapper.selectByPrimaryKey(userId);
     }
 }
