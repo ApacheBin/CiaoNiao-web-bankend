@@ -40,6 +40,7 @@
             <mvc:exclude-mapping path="/swagger*/**"/>
             <mvc:exclude-mapping path="/v2/**"/>
             <mvc:exclude-mapping path="/webjars/**"/>
+            <mvc:exclude-mapping path="/user/getSessionId"/>
             <bean class="com.cainiaoshixi.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
