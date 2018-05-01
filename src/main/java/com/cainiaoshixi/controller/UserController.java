@@ -34,8 +34,10 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final String APP_ID = "wx41311a0239485c53";
-    private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";
+//    private static final String APP_ID = "wx41311a0239485c53";
+//    private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";  //我自己的
+    private static final String APP_ID = "wx2d578cdea490f378";
+    private static final String APP_SECRET = "d942d6b119614c4d71d0247713ce9707";
     private static final String BASE_URL = "https://api.weixin.qq.com/sns/jscode2session?";
     private static final long expireTime = 86400; //sessionId有效时间，以秒为单位
 
