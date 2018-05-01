@@ -32,10 +32,12 @@ public class WorkController {
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @ApiOperation("获取工作经验")
     public Result getWork(@ApiParam(name = "id", value = "工作经验ID")
-                              @RequestParam("id") Integer id) {
-        Integer userId = session.userId();
-        return ResultUtil.success(getWorkById(id));
-
+                              @RequestParam(value = "id", required = false) Integer id) {
+        if(id != null) {
+            return getWorkById(id);
+        } else{
+            return ResultUtil.success(workService.getByUserId(session.userId()));
+        }
     }
 
     @GetMapping("/get/{id}")
@@ -43,5 +45,27 @@ public class WorkController {
     public Result getWorkById(@ApiParam(name = "id", value = "工作经验ID", required = true)
                                   @PathVariable("id") Integer id) {
         return ResultUtil.success(workService.getById(id));
+    }
+
+    @PostMapping("/add")
+    @ApiOperation("新增工作经历")
+    public Result addWork(@RequestBody Work work) {
+        work.setUserId(session.userId());
+        workService.insert(work);
+        return ResultUtil.success("");
+    }
+
+    @PostMapping("/update")
+    @ApiOperation("更新工作经历")
+    public Result updateWork(@RequestBody Work work) {
+        workService.update(work);
+        return ResultUtil.success("");
+    }
+
+    @PostMapping("/delete")
+    @ApiOperation("删除工作经历")
+    public Result deleteWork(@RequestParam("id") int id) {
+        workService.delete(id);
+        return ResultUtil.success("");
     }
 }

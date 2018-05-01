@@ -1,13 +1,18 @@
 package com.cainiaoshixi.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.swagger.annotations.ApiModel;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component("CnWork")
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(description = "工作经验实体")
 public class Work {
-
     private Integer id;
 
     private String company;
