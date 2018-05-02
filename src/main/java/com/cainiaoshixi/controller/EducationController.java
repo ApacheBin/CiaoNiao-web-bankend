@@ -1,5 +1,6 @@
 package com.cainiaoshixi.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Education;
 import com.cainiaoshixi.util.RedisUtil;
@@ -24,6 +25,9 @@ import java.util.List;
 public class EducationController {
 
     private final IEducationService educationService;
+    /**
+     * 当前会话
+     */
     private final SessionUtil session;
 
     @Autowired
@@ -39,8 +43,8 @@ public class EducationController {
      * @Date: 17:11 2018/4/23
      */
     @ResponseBody
-    @RequestMapping(value = "/get/{id}",method= RequestMethod.GET)
-    public Result getEducationListByEduId(@PathVariable("id")int eduId){
+    @RequestMapping(value = "/get",method= RequestMethod.POST)
+    public Result getEducationListByEduId(@RequestParam(value = "id", required = false,defaultValue = "-1") Integer eduId){
         Integer userId = session.userId();
         List<Education> educationList = educationService.getEducationListByEduId(userId,eduId);  //条件查询
         return ResultUtil.success(educationList);
@@ -52,18 +56,14 @@ public class EducationController {
      * @Description: 保存用户的教育经历
      * @Date: 17:20 2018/4/23
      */
-    @RequestMapping(value="/add",method= RequestMethod.POST)
-    @ResponseBody
-    public Result addEducation(EducationVo educationVo) {
-        Education education=new Education();
-        education.setSchool(educationVo.getSchool());
-        education.setMajor(educationVo.getMajor());
-        education.setDegree(educationVo.getDegree());
-        education.setAdmissionTime(educationVo.getAdmissionTime());
-        education.setGraduationTime(educationVo.getGraduationTime());
+    @PostMapping("/add")
+    @ApiOperation("新增教育经历")
+    public Result addEducation(@RequestBody Education education) {
         education.setUserId(session.userId());
         educationService.addEducation(education);
-        return ResultUtil.success("");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("EducationId", education.getId());
+        return ResultUtil.success(jsonObject);
     }
 
     /**
@@ -75,7 +75,6 @@ public class EducationController {
     @ResponseBody
     @RequestMapping("/update")
     public Result updateEducation(@RequestBody Education education) {
-        education.setUpdateTime(new Date());
         educationService.updateEducation(education);
         return ResultUtil.success("");
     }
@@ -86,9 +85,9 @@ public class EducationController {
      * @Description: 删除用户的教育经历
      * @Date: 17:31 2018/4/23
      */
-    @ResponseBody
-    @RequestMapping(value="/delete/{id}",method= RequestMethod.POST)
-    public Result deleteEducation(@PathVariable int id) {
+    @PostMapping("/delete")
+    @ApiOperation("删除教育经历")
+    public Result deleteEducation(@RequestParam("id") int id){
         educationService.deleteEducation(id);
         return ResultUtil.success("");
     }

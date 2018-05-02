@@ -11,5 +11,5 @@ public interface IEducationService {
 
     void updateEducation(Education education);
 
-    void deleteEducation(int eduId);
+    void deleteEducation(int id);
 }

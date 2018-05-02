@@ -18,5 +18,5 @@ public interface EducationMapper {
 
     void updateEducation(Education education);
 
-    void deleteEducation(Integer eduId);
+    void deleteEducation(Integer id);
 }

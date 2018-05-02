@@ -70,15 +70,15 @@
         SELECT id,school,major,admission_time,graduation_time,user_id
         FROM cn_education
         <choose>
-            <when test="eduId!= null">
-                WHERE id = #{eduId,jdbcType=INT}
+            <when test="eduId != -1">
+                WHERE id = #{eduId}
             </when>
             <otherwise>
-                WHERE user_id= #{userId，jdbcType=INT}
+                WHERE user_id= #{userId}
             </otherwise>
         </choose>
     </select>
-    <insert id="addEducation"  parameterType="com.cainiaoshixi.entity.Education">
+    <insert id="addEducation" useGeneratedKeys="true" keyProperty="id"   parameterType="com.cainiaoshixi.entity.Education">
         insert into cn_education
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="school != null">
@@ -146,10 +146,10 @@
                 degree = #{degree,jdbcType=VARCHAR},
             </if>
             <if test="admissionTime != null">
-                admissionTime = #{admissionTime,jdbcType=DATE},
+                admission_time = #{admissionTime,jdbcType=DATE},
             </if>
             <if test="graduationTime != null">
-                graduationTime = #{graduationTime,jdbcType=INTEGER},
+                graduation_time = #{graduationTime,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -161,7 +161,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <delete id="deleteEducation" parameterType="java.lang.Integer">
-        DELETE FROM cn_education
-        WHERE id=#{eduId,jdbcType=INTEGER}
+        delete from cn_education where id = #{id}
     </delete>
 </mapper>

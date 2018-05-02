@@ -1,7 +1,14 @@
 package com.cainiaoshixi.entity;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
+@Component("CnEducation")
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(description = "教育经历实体")
 public class Education {
     public int id;
 

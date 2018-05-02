@@ -24,9 +24,12 @@ public class EducationServiceImpl implements IEducationService {
         educationMapper.addEducation(education);
     }
     @Override
-    public void updateEducation(Education education){ educationMapper.updateEducation(education);}
+    public void updateEducation(Education education){
+        education.setUpdateTime(new Date());
+        educationMapper.updateEducation(education);
+    }
     @Override
-    public void deleteEducation(int eduId){
-        educationMapper.deleteEducation(eduId);
+    public void deleteEducation(int id){
+        educationMapper.deleteEducation(id);
     }
 }
