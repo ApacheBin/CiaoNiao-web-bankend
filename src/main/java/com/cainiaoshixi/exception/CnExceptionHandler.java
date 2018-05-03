@@ -15,7 +15,7 @@ public class CnExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handle(Exception e) {
-        logger.error("【系统异常】{}", e);
+        logger.error("【系统异常】:", e);
         return ResultUtil.error(-1, "未知错误");
     }
 }

@@ -4,10 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cainiaoshixi.dao.WorkMapper">
-
     <select id="queryById" resultType="Work" parameterType="int">
-        SELECT id
+        SELECT id,company, department, position,
+        entry_time, departure_time,
+        content
         FROM cn_work
         WHERE id = #{id}
     </select>
+
+    <select id="queryByUserId" resultType="Work" parameterType="int">
+        SELECT id,company, department, position,
+            entry_time, departure_time,
+            content
+        FROM cn_work
+        WHERE id = #{userId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Work">
+        insert  into cn_work (id, company, department, position,user_id,
+                              entry_time, departure_time, content, update_time, create_time)
+        values (#{id}, #{company}, #{department}, #{position},#{userId},
+                #{entryTime}, #{departureTime}, #{content}, #{updateTime}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="Work">
+        update cn_work set
+        <if test="company != null">company = #{company},</if>
+        <if test="department != null">department = #{department},</if>
+        <if test="position != null">position = #{position},</if>
+        <if test="entryTime != null">entry_time = #{entryTime},</if>
+        <if test="departureTime != null">departure_time = #{departureTime},</if>
+        <if test="content != null">content = #{content},</if>
+        <if test="updateTime != null">update_time = #{updateTime}</if>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from cn_work where id = #{id}
+    </delete>
 </mapper>

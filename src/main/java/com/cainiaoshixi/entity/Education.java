@@ -1,7 +1,14 @@
 package com.cainiaoshixi.entity;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
+@Component("CnEducation")
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(description = "教育经历实体")
 public class Education {
     public int id;
 
@@ -9,13 +16,25 @@ public class Education {
 
     private String major;
 
-    private String degree;
+    private int degree;
 
-    private Date schoolBeginDate;
+    private Date admissionTime;
 
-    private Date schoolEndDate;
+    private Date graduationTime;
 
-    private String userId;
+    private int userId;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getSchool() {
         return school;
@@ -33,35 +52,51 @@ public class Education {
         this.major = major;
     }
 
-    public String getDegree() {
+    public int getDegree() {
         return degree;
     }
 
-    public void setDegree(String degree) {
+    public void setDegree(int degree) {
         this.degree = degree;
     }
 
-    public Date getSchoolBeginDate() {
-        return schoolBeginDate;
+    public Date getAdmissionTime() {
+        return admissionTime;
     }
 
-    public void setSchoolBeginDate(Date schoolBeginDate) {
-        this.schoolBeginDate = schoolBeginDate;
+    public void setAdmissionTime(Date admissionTime) {
+        this.admissionTime = admissionTime;
     }
 
-    public Date getSchoolEndDate() {
-        return schoolEndDate;
+    public Date getGraduationTime() {
+        return graduationTime;
     }
 
-    public void setSchoolEndDate(Date schoolEndDate) {
-        this.schoolEndDate = schoolEndDate;
+    public void setGraduationTime(Date graduationTime) {
+        this.graduationTime = graduationTime;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

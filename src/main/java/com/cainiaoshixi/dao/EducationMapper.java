@@ -1,6 +1,7 @@
 package com.cainiaoshixi.dao;
 
 import com.cainiaoshixi.entity.Education;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,11 +12,11 @@ public interface EducationMapper {
 
     List<Education> getEducationListByUserId(String userId);
 
-    List<Education> getEducationListByEduId(Integer userId,Integer eduId);
+    List<Education> getEducationListByEduId(@Param("userId") Integer userId, @Param("eduId") Integer eduId);
 
     void addEducation(Education education);
 
     void updateEducation(Education education);
 
-    void deleteEducation(Integer eduId);
+    void deleteEducation(Integer id);
 }

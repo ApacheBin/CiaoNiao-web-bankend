@@ -8,14 +8,16 @@
     <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="identity" jdbcType="TINYINT" property="identity" />
     <result column="birthday" jdbcType="DATE" property="birthday" />
-    <result column="residence" jdbcType="INTEGER" property="residence" />
+    <result column="residence" jdbcType="VARCHAR" property="residence" />
     <result column="cellphone" jdbcType="CHAR" property="cellphone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, open_id, name, sex, identity, birthday, residence, cellphone, email, create_time,
+    id, open_id, name, sex, identity, birthday, residence, cellphone, email, avatar_url, nick_name, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -31,12 +33,13 @@
   <insert id="insert" parameterType="com.cainiaoshixi.entity.CnUser">
     insert into cn_user (id, open_id, name,
       sex, identity, birthday, 
-      residence, cellphone, email, 
+      residence, cellphone, email,
+      avatar_url, nick_name,
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{sex,jdbcType=TINYINT}, #{identity,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, 
-      #{residence,jdbcType=INTEGER}, #{cellphone,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{residence,jdbcType=VARCHAR}, #{cellphone,jdbcType=CHAR}, #{email,jdbcType=VARCHAR},
+      #{avatarUrl,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.CnUser">
     insert into cn_user
@@ -68,6 +71,12 @@
       <if test="email != null">
         email,
       </if>
+      <if test="avatarUrl != null">
+        avatar_url,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
       <if test="createTime != null">
         create_time,
       </if>
@@ -95,13 +104,19 @@
         #{birthday,jdbcType=DATE},
       </if>
       <if test="residence != null">
-        #{residence,jdbcType=INTEGER},
+        #{residence,jdbcType=VARCHAR},
       </if>
       <if test="cellphone != null">
         #{cellphone,jdbcType=CHAR},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -130,13 +145,19 @@
         birthday = #{birthday,jdbcType=DATE},
       </if>
       <if test="residence != null">
-        residence = #{residence,jdbcType=INTEGER},
+        residence = #{residence,jdbcType=VARCHAR},
       </if>
       <if test="cellphone != null">
         cellphone = #{cellphone,jdbcType=CHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -154,9 +175,11 @@
       sex = #{sex,jdbcType=TINYINT},
       identity = #{identity,jdbcType=TINYINT},
       birthday = #{birthday,jdbcType=DATE},
-      residence = #{residence,jdbcType=INTEGER},
+      residence = #{residence,jdbcType=VARCHAR},
       cellphone = #{cellphone,jdbcType=CHAR},
       email = #{email,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

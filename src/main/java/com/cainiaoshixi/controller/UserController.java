@@ -34,8 +34,10 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final String APP_ID = "wx41311a0239485c53";
-    private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";
+//    private static final String APP_ID = "wx41311a0239485c53";
+//    private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";  //我自己的
+    private static final String APP_ID = "wx2d578cdea490f378";
+    private static final String APP_SECRET = "d942d6b119614c4d71d0247713ce9707";
     private static final String BASE_URL = "https://api.weixin.qq.com/sns/jscode2session?";
     private static final long expireTime = 86400; //sessionId有效时间，以秒为单位
 
@@ -120,13 +122,24 @@ public class UserController {
     @RequestMapping("/saveUserInfo")
     public Result saveUserInfo(CnUser cnUser, HttpServletRequest request){
 
-        Cookie[] cookies = request.getCookies();//根据请求数据，找到cookie数组
-        String sessionId = cookies[0].getValue();
-        int id = Integer.parseInt((String) redisUtil.get(sessionId));
-
-        cnUser.setId(id);
+        int userId = (int) request.getSession().getAttribute("userId");
+        cnUser.setId(userId);
         userService.updateUserById(cnUser);
         return ResultUtil.success("");
+    }
+
+    /**
+     * @Author: Chy
+     * @Param:
+     * @Description: 获取用户基本信息
+     * @Date: 18:57 2018/5/1
+     */
+    @RequestMapping("/getUserInfo")
+    @ResponseBody
+    public Result getUserInfo(HttpServletRequest request){
+        int userId = (int) request.getSession().getAttribute("userId");
+        CnUser user = userService.getUserByPrimaryKey(userId);
+        return ResultUtil.success(user);
     }
 
 }

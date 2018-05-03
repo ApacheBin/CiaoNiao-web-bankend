@@ -7,8 +7,10 @@ import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,7 +19,8 @@ import java.io.PrintWriter;
 public class LoginInterceptor implements HandlerInterceptor {
     private final static Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
-    RedisUtil redisUtil = new RedisUtil();
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -26,6 +29,15 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private boolean loginValidate(HttpServletRequest request, HttpServletResponse response) {
         String sessionId = request.getParameter("sessionId");
+        if(sessionId == null) {
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies){
+                if (cookie.getName().equals("JSESSIONID")){
+                    sessionId = cookie.getValue();
+                    break;
+                }
+            }
+        }
         if (sessionId != null && redisUtil.hasKey(sessionId)) {
             Integer userId = Integer.parseInt((String) redisUtil.get(sessionId));
             request.getSession().setAttribute("userId", userId);

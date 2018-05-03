@@ -30,7 +30,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/resume")
 public class ResumeController {
-
     @Autowired
     private IResumeService resumeService;
     private RedisUtil redisUtil = new RedisUtil();

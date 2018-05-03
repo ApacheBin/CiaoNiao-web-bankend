@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cainiaoshixi.dao.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.Comment">
+        <result column="comment_id" jdbcType="BIGINT" property="commentId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_comment" jdbcType="VARCHAR" property="userComment"/>
+        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    </resultMap>
+    <insert id="insert" parameterType="com.cainiaoshixi.entity.Comment">
+        insert into comment(comment_id,user_id,user_name,user_comment,photo,email,created_time,updated_time)
+        values (#{commentId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{userName,jdbcType=VARCHAR},#{userComment,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},
+        #{photo,jdbcType=VARCHAR},#{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.Comment" >
+        insert into comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="userId !=null">
+                user_id,
+            </if>
+            <if test="userName !=null">
+                user_name,
+            </if>
+            <if test="userComment !=null">
+                user_comment,
+            </if>
+            <if test="photo !=null">
+                photo,
+            </if>
+            <if test="email !=null">
+                email,
+            </if>
+            <if test="createdTime !=null">
+                created_time,
+            </if>
+            <if test="updatedTime !=null">
+                updated_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="userId !=null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName !=null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userComment !=null">
+                #{userComment,jdbcType=VARCHAR},
+            </if>
+            <if test="photo !=null">
+                #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="email !=null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime !=null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime !=null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="getCommentByCommentId"  resultType="com.cainiaoshixi.entity.Comment">
+        select comment_id,user_id,user_name,user_comment,photo,email,created_time,updated_time
+        from comment
+        where comment_id=#{userId, jdbcType=BIGINT}
+    </select>
+    <select id="getCommentListByUserId" resultType="com.cainiaoshixi.entity.Comment">
+        select comment_id,user_id,user_name,user_comment,photo,email,created_time,updated_time
+        from comment
+        where user_id=#{userId, jdbcType=BIGINT}
+    </select>
+    <insert id="addComment" parameterType="com.cainiaoshixi.entity.Comment">
+        insert into comment(user_id,user_name,user_comment,photo,email,created_time,updated_time)
+        values (#{userId,jdbcType=BIGINT},#{userName,jdbcType=VARCHAR},#{userComment,jdbcType=VARCHAR},#{photo,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},#{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateComment" parameterType="com.cainiaoshixi.entity.Comment">
+        update comment
+        <set>
+            <if test="userId !=null">
+                user_id=#{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName !=null">
+                user_name=#{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userComment !=null">
+                user_comment = #{userComment,jdbcType=VARCHAR},
+            </if>
+            <if test="photo !=null">
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="email !=null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime !=null">
+                created_time=#{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime !=null">
+                updated_time=#{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where comment_id = #{commentId,jdbcType=BIGINT}
+    </update>
+    <delete id="deleteComment" parameterType="com.cainiaoshixi.entity.Comment">
+        delete from comment
+        where comment_id=#{commentId, jdbcType=BIGINT}
+    </delete>
+</mapper>
