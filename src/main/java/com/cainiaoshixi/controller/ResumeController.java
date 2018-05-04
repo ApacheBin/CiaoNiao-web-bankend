@@ -4,21 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cainiaoshixi.domain.Result;
-import com.cainiaoshixi.entity.Education;
-import com.cainiaoshixi.entity.JobWithBLOBs;
-import com.cainiaoshixi.entity.WorkExperience;
-import com.cainiaoshixi.entity.WxUser;
+import com.cainiaoshixi.entity.*;
 import com.cainiaoshixi.service.IResumeService;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
+import com.cainiaoshixi.util.SessionUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,11 +27,19 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/resume")
+@CrossOrigin
+@Api(value = "简历控制器", tags = {"简历接口"})
+@ResponseBody
 public class ResumeController {
     @Autowired
-    private IResumeService resumeService;
+    public final IResumeService resumeService;
     private RedisUtil redisUtil = new RedisUtil();
-
+    private final SessionUtil session;
+    @Autowired
+    public ResumeController(IResumeService resumeService, SessionUtil session) {
+        this.resumeService = resumeService;
+        this.session = session;
+    }
     /**
      * @Author: Chy
      * @Param:
@@ -90,5 +96,31 @@ public class ResumeController {
             resumeService.saveWorkExp(workExperience);
         }
         return "success";
+    }
+
+    @GetMapping("/get")
+    @ApiOperation("根据ID获取自我评价")
+    public Result getEvaluationByUserId(){
+        Integer userId = session.userId();
+        return ResultUtil.success(resumeService.getEvaluationByUserId(userId));
+    }
+
+    @PostMapping("/save")
+    @ApiOperation("保存自我评价")
+    public Result saveEvaluation(@RequestParam("evaluation") String evaluation) {
+        Resume resume=new Resume();
+        resume.setEvaluation(evaluation);
+        Integer userId=session.userId();
+        resume.setUserId(userId);
+        int exist=resumeService.isExistEvaluation(userId);
+        if(exist>0)
+            resumeService.updateEvaluation(resume);
+        else if(exist==0) {
+            resumeService.addEvaluation(resume);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("resumeId", resume.getId());
+            return ResultUtil.success(jsonObject);
+        }
+        return ResultUtil.success("");
     }
 }
