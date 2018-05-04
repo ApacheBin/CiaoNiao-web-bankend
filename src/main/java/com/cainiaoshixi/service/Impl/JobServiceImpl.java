@@ -28,8 +28,8 @@ public class JobServiceImpl implements IJobService {
         return jobMapper.selectByPrimaryKey(id);
     }
 
-    public void insertJob(JobWithBLOBs jobWithBLOBs) {
-        jobMapper.insertSelective(jobWithBLOBs);
+    public int insertJob(JobWithBLOBs jobWithBLOBs) {
+       return jobMapper.insertSelective(jobWithBLOBs);
     }
 
     public int updateById(JobWithBLOBs jobWithBLOBs) {

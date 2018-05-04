@@ -10,7 +10,7 @@ public interface IJobService {
 
     JobWithBLOBs selectByPrimaryKey(Long id);
 
-    void insertJob(JobWithBLOBs jobWithBLOBs);
+    int insertJob(JobWithBLOBs jobWithBLOBs);
 
     int updateById(JobWithBLOBs jobWithBLOBs);
 

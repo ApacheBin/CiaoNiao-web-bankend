@@ -19,7 +19,7 @@
     <result column="checked" jdbcType="INTEGER" property="checked" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
-    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
     <result column="category" jdbcType="INTEGER" property="category" />
     <result column="company_logo" jdbcType="VARCHAR" property="companyLogo" />
     <result column="company_detail" jdbcType="VARCHAR" property="companyDetail" />
@@ -38,7 +38,7 @@
   <sql id="Base_Column_List">
     id, companyid, department, job,email, place, total_time, day_in_week, price_in_day, welfare,
     period_validation, source, published, type, checked, created_time, updated_time, 
-    userid, category, company_logo, company_detail, is_full_job, degree, location, deadline, 
+    userId, category, company_logo, company_detail, is_full_job, degree, location, deadline,
     duration
   </sql>
   <sql id="Blob_Column_List">
@@ -62,7 +62,7 @@
       day_in_week, price_in_day, welfare, 
       period_validation, source, published, 
       type, checked, created_time, 
-      updated_time, userid, category, 
+      updated_time, userId, category,
       company_logo, company_detail, is_full_job, 
       degree, location, deadline, 
       duration, description, requirement, 
@@ -72,13 +72,13 @@
       #{dayInWeek,jdbcType=VARCHAR}, #{priceInDay,jdbcType=VARCHAR}, #{welfare,jdbcType=VARCHAR},
       #{periodValidation,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, #{published,jdbcType=TINYINT}, 
       #{type,jdbcType=VARCHAR}, #{checked,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{userid,jdbcType=BIGINT}, #{category,jdbcType=INTEGER}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{category,jdbcType=INTEGER},
       #{companyLogo,jdbcType=VARCHAR}, #{companyDetail,jdbcType=VARCHAR}, #{isFullJob,jdbcType=VARCHAR}, 
       #{degree,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{deadline,jdbcType=TIMESTAMP}, 
       #{duration,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, #{requirement,jdbcType=LONGVARCHAR}, 
       #{others,jdbcType=LONGVARCHAR}, #{attachment,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
     insert into job
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -132,8 +132,8 @@
       <if test="updatedTime != null">
         updated_time,
       </if>
-      <if test="userid != null">
-        userid,
+      <if test="userId != null">
+        userId,
       </if>
       <if test="category != null">
         category,
@@ -224,8 +224,8 @@
       <if test="updatedTime != null">
         #{updatedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userid != null">
-        #{userid,jdbcType=BIGINT},
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="category != null">
         #{category,jdbcType=INTEGER},
@@ -316,8 +316,8 @@
       <if test="updatedTime != null">
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userid != null">
-        userid = #{userid,jdbcType=BIGINT},
+      <if test="userId != null">
+        userId = #{userId,jdbcType=BIGINT},
       </if>
       <if test="category != null">
         category = #{category,jdbcType=INTEGER},
@@ -376,7 +376,7 @@
       checked = #{checked,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      userid = #{userid,jdbcType=BIGINT},
+      userId = #{userId,jdbcType=BIGINT},
       category = #{category,jdbcType=INTEGER},
       company_logo = #{companyLogo,jdbcType=VARCHAR},
       company_detail = #{companyDetail,jdbcType=VARCHAR},
@@ -409,7 +409,7 @@
       checked = #{checked,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      userid = #{userid,jdbcType=BIGINT},
+      userId = #{userId,jdbcType=BIGINT},
       category = #{category,jdbcType=INTEGER},
       company_logo = #{companyLogo,jdbcType=VARCHAR},
       company_detail = #{companyDetail,jdbcType=VARCHAR},
@@ -423,12 +423,18 @@
   <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultType="com.cainiaoshixi.entity.JobWithBLOBs">
     select id, companyid, department, job,email, place, total_time, day_in_week, price_in_day, welfare,
     period_validation, source, published, type, checked, created_time, updated_time,
-    userid, category, company_logo, company_detail, is_full_job, degree, location, deadline,
+    userId, category, company_logo, company_detail, is_full_job, degree, location, deadline,
     duration, description, requirement, others, attachment
     from job
     <where>
-      <if test="type!=null">
-        type=#{type, jdbcType=VARCHAR}
+      <if test="job!=null and job!=''">
+        and job LIKE "%"#{job, jdbcType=VARCHAR}"%"
+      </if>
+      <if test="type!=null and type!='所有'">
+        and type = #{type, jdbcType=VARCHAR}
+      </if>
+      <if test="published!=null">
+        and published = #{published, jdbcType=TINYINT}
       </if>
       <if test="category!=null">
         and category=#{category, jdbcType=INTEGER}
@@ -436,6 +442,8 @@
       <if test="searchValue!=null">
         and department like concat(concat("%",#{searchValue}),"%") or job like concat(concat("%",#{searchValue}),"%");
       </if>
+      order by created_time desc
+      limit #{iDisplayStart},#{iDisplayLength}
     </where>
   </select>
 </mapper>

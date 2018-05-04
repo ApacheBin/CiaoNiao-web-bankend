@@ -1,7 +1,15 @@
 package com.cainiaoshixi.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+@Component("CnJob")
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(description = "岗位管理实体")
 public class Job {
     private Long id;
 
@@ -37,7 +45,7 @@ public class Job {
 
     private Date updatedTime;
 
-    private Long userid;
+    private Integer userId;
 
     private Integer category;
 
@@ -191,12 +199,12 @@ public class Job {
         this.updatedTime = updatedTime;
     }
 
-    public Long getUserid() {
-        return userid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getCategory() {

@@ -1,5 +1,7 @@
 package com.cainiaoshixi.vo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -36,11 +38,13 @@ public class JobQueryVo {
 
     private Integer checked;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updatedTime;
 
-    private Long userid;
+    private Integer userId;
 
     private Integer category;
 
@@ -236,12 +240,12 @@ public class JobQueryVo {
         this.updatedTime = updatedTime;
     }
 
-    public Long getUserid() {
-        return userid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getCategory() {
