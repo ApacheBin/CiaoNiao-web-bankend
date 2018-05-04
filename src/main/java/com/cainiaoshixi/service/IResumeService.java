@@ -1,6 +1,7 @@
 package com.cainiaoshixi.service;
 
 import com.cainiaoshixi.entity.Education;
+import com.cainiaoshixi.entity.Resume;
 import com.cainiaoshixi.entity.WorkExperience;
 import com.cainiaoshixi.entity.WxUser;
 
@@ -20,4 +21,11 @@ public interface IResumeService {
 
     List<WorkExperience> getWorkExpListByUserId(String userId);
 
+    Resume getEvaluationByUserId(int userId);
+
+    public void addEvaluation(Resume resume);
+
+    public void updateEvaluation(Resume resume);
+
+    public int isExistEvaluation(int userId);
 }

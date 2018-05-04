@@ -1,15 +1,18 @@
 package com.cainiaoshixi.service.Impl;
 
 import com.cainiaoshixi.dao.EducationMapper;
+import com.cainiaoshixi.dao.ResumeMapper;
 import com.cainiaoshixi.dao.WorkExperienceMapper;
 import com.cainiaoshixi.dao.WxUserMapper;
 import com.cainiaoshixi.entity.Education;
+import com.cainiaoshixi.entity.Resume;
 import com.cainiaoshixi.entity.WorkExperience;
 import com.cainiaoshixi.entity.WxUser;
 import com.cainiaoshixi.service.IResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +29,8 @@ public class ResumeServiceImpl implements IResumeService{
     private EducationMapper educationMapper;
     @Autowired
     private WorkExperienceMapper workExperienceMapper;
+    @Autowired
+    private ResumeMapper resumeMapper;
 
     @Override
     public void savePersonInfo(WxUser wxUser) {
@@ -60,5 +65,30 @@ public class ResumeServiceImpl implements IResumeService{
     @Override
     public List<WorkExperience> getWorkExpListByUserId(String userId) {
         return workExperienceMapper.getWorkExpListByUserId(userId);
+    }
+
+    @Override
+    public Resume getEvaluationByUserId(int uid) {
+        return resumeMapper.getEvaluationByUserId(uid);
+    }
+
+    @Override
+    public void addEvaluation(Resume resume) {
+        Date now = new Date();
+        resume.setCreateTime(now);
+        resume.setUpdateTime(now);
+        resumeMapper.addEvaluation(resume);
+    }
+
+    @Override
+    public void updateEvaluation(Resume resume) {
+        Date now = new Date();
+        resume.setUpdateTime(now);
+        resumeMapper.updateEvaluation(resume);
+    }
+
+    @Override
+    public int isExistEvaluation(int userId) {
+        return resumeMapper.isExistEvaluation(userId);
     }
 }
