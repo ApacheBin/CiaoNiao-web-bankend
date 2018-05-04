@@ -2,11 +2,13 @@ package com.cainiaoshixi.dao;
 
 import com.cainiaoshixi.entity.Work;
 
+import java.util.List;
+
 public interface WorkMapper {
 
     Work queryById(int id);
 
-    Work queryByUserId(int UserId);
+    List<Work> queryByUserId(int UserId);
 
     void delete(int id);
 

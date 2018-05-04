@@ -31,71 +31,14 @@ import java.util.List;
 @Api(value = "简历控制器", tags = {"简历接口"})
 @ResponseBody
 public class ResumeController {
-    @Autowired
-    public final IResumeService resumeService;
-    private RedisUtil redisUtil = new RedisUtil();
+
+    private final IResumeService resumeService;
+
     private final SessionUtil session;
     @Autowired
     public ResumeController(IResumeService resumeService, SessionUtil session) {
         this.resumeService = resumeService;
         this.session = session;
-    }
-    /**
-     * @Author: Chy
-     * @Param:
-     * @Description: 编辑简历
-     * @Date: 11:36 2018/3/12
-     */
-    @RequestMapping("/editResume")
-    public String editResume(Model model, @RequestParam String userId) {
-
-        WxUser wxUser = resumeService.getUserByUserId(userId);
-        List<Education> educationList = resumeService.getEducationListByUserId(userId);
-        List<WorkExperience> workExperienceList = resumeService.getWorkExpListByUserId(userId);
-
-        model.addAttribute("wxUser", wxUser);
-        model.addAttribute("educationList", educationList);
-        model.addAttribute("workExperienceList", workExperienceList);
-
-        return "editResume";
-    }
-
-    /**
-     * @Author: Chy
-     * @Param:
-     * @Description: 保存用户基本信息
-     * @Date: 0:45 2018/3/13
-     */
-    @RequestMapping("/savePersonInfo")
-    @ResponseBody
-    public String savePersonInfo(@RequestBody WxUser wxUser) {
-        resumeService.savePersonInfo(wxUser);
-        return "success";
-    }
-
-    /**
-     * @Author: Chy
-     * @Param:
-     * @Description: 保存用户的教育经历
-     * @Date: 1:13 2018/3/13
-     */
-    @RequestMapping("/saveEducationExp")
-    @ResponseBody
-    public String saveEducationExp(@RequestBody List<Education> educationList) {
-        for (Education education : educationList) {
-            resumeService.saveEducationExp(education);
-        }
-        return "success";
-    }
-
-    @RequestMapping("/saveWorkExp")
-    @ResponseBody
-    public String saveWorkExp(@RequestBody List<WorkExperience> workExperienceList) {
-
-        for (WorkExperience workExperience : workExperienceList){
-            resumeService.saveWorkExp(workExperience);
-        }
-        return "success";
     }
 
     @GetMapping("/get")

@@ -2,11 +2,13 @@ package com.cainiaoshixi.service;
 
 import com.cainiaoshixi.entity.Work;
 
+import java.util.List;
+
 public interface IWorkService {
 
     Work getById(int id);
 
-    Work getByUserId(int userId);
+    List<Work> getByUserId(int userId);
 
     int insert(Work work);
 
