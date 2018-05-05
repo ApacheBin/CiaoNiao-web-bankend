@@ -36,7 +36,7 @@ public class WorkController {
         this.session = session;
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/get", method = {RequestMethod.POST, RequestMethod.GET})
     @ApiOperation("获取工作经验")
     public Result getWork(@ApiParam(name = "id", value = "工作经验ID")
                               @RequestParam(value = "id", required = false) Integer id) {
