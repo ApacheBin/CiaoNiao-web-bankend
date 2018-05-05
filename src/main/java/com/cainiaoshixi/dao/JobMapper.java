@@ -1,5 +1,6 @@
 package com.cainiaoshixi.dao;
 
+import com.cainiaoshixi.entity.CnJob;
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithBLOBs;
 import com.cainiaoshixi.vo.JobQueryVo;
@@ -21,5 +22,5 @@ public interface JobMapper {
 
     int updateByPrimaryKey(Job record);
 
-    List<JobWithBLOBs> getJobListByVo(JobQueryVo jobQueryVo);
+    List<CnJob> getJobListByVo(JobQueryVo jobQueryVo);
 }

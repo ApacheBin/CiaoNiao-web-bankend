@@ -2,14 +2,13 @@ package com.cainiaoshixi.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
-import com.cainiaoshixi.entity.JobWithBLOBs;
+import com.cainiaoshixi.entity.CnJob;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import com.cainiaoshixi.vo.JobQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +51,8 @@ public class JobController {
     @PostMapping("/jobList")
     public Result getJobList(@RequestBody JobQueryVo jobQueryVo) {
         jobQueryVo.setUserId(session.userId());
-        JSONObject jsonObject = new JSONObject();
-        List<JobWithBLOBs> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
+//        JSONObject jsonObject = new JSONObject();
+        List<CnJob> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
 //        return JSON.toJSONString(jobList, SerializerFeature.WriteMapNullValue);  //null值保留
         return ResultUtil.success(jobList);
     }
@@ -65,11 +64,10 @@ public class JobController {
      * @Date: Created in 12:28 2018/4/24
      */
     @ApiOperation("根据id查看单条岗位详情")
-    @GetMapping("/jobDetail/{id}")
-    public Result getJobDetail(@ApiParam(name = "id", value = "岗位详情ID", required = true)
-                                   @PathVariable Long id){
-        JobWithBLOBs jobWithBLOBs = jobService.selectByPrimaryKey(id);
-        return ResultUtil.success(jobWithBLOBs);
+    @PostMapping("/jobDetail")
+    public Result getJobDetail(@RequestParam(value = "id", required = true) Integer id){
+        CnJob jobDetail = jobService.selectByPrimaryKey(id);
+        return ResultUtil.success(jobDetail);
     }
 
 
@@ -80,18 +78,18 @@ public class JobController {
      * @Date: Created in 12:28 2018/4/24
      */
     @ApiOperation("添加单条岗位")
-    @PostMapping("/insertJob")
-    public Result insertJob(@RequestBody JobWithBLOBs jobWithBLOBs) {
-        jobWithBLOBs.setUserId(session.userId());
-        jobWithBLOBs.setCreatedTime(new Date());
-        jobWithBLOBs.setUpdatedTime(new Date());
-        if (jobWithBLOBs.getPublished() == null){
-            jobWithBLOBs.setPublished((byte) 0);
+    @PostMapping("/addJob")
+    public Result addJob(@RequestBody CnJob singleJob) {
+        singleJob.setUserId(session.userId());
+        singleJob.setCreateTime(new Date());
+        singleJob.setUpdateTime(new Date());
+        if (singleJob.getStatus() == null){
+            singleJob.setStatus((byte) 0);
         }
-        jobService.insertJob(jobWithBLOBs); //这个返回的是新增的记录数
+        jobService.insertJob(singleJob); //这个返回的是新增的记录数
         // 返回岗位ID
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("jobId", jobWithBLOBs.getId());
+        jsonObject.put("jobId",singleJob.getId());
         return ResultUtil.success(jsonObject);
     }
 
@@ -103,12 +101,12 @@ public class JobController {
      */
     @ApiOperation("根据Id更新岗位详情")
     @PostMapping("/update")
-    public Result updateJob(@RequestBody JobWithBLOBs jobWithBLOBs) {
-        jobWithBLOBs.setUpdatedTime(new Date());
-        if (jobWithBLOBs.getPublished() == null){
-            jobWithBLOBs.setPublished((byte) 0);
+    public Result updateJob(@RequestBody CnJob singleJob) {
+        singleJob.setUpdateTime(new Date());
+        if (singleJob.getStatus() == null){
+            singleJob.setStatus((byte) 0);
         }
-        jobService.updateById(jobWithBLOBs);
+        jobService.updateById(singleJob);
         return ResultUtil.success("");
     }
 
@@ -119,9 +117,8 @@ public class JobController {
      * @Date: 12:49 2018/4/24
      */
     @ApiOperation("根据id删除单条岗位")
-    @GetMapping("/delete/{id}")
-    public Result deleteJob(@ApiParam(name = "id", value = "岗位ID", required = true)
-                                @PathVariable Long id) {
+    @PostMapping("/delete")
+    public Result deleteJob(@RequestParam(value = "id", required = true) Integer id) {
         jobService.deleteByPrimaryKey(id);
         return ResultUtil.success("");
     }
@@ -129,14 +126,13 @@ public class JobController {
     /**
      * @Author: Zxc
      * @Param:
-     * @Description: 根据id设置发布单条岗位
+     * @Description: 根据id设置单条岗位发布状态
      * @Date: 12:49 2018/4/24
      */
     @ApiOperation("根据id设置发布单条岗位")
-    @GetMapping("/setJobPublished/{id}")
-    public Result setJobPublished(@ApiParam(name = "id", value = "岗位ID", required = true)
-                                         @PathVariable Long id) {
-        jobService.updateJobPublished(id);
+    @PostMapping("/setJobStatus")
+    public Result setJobStatus(@RequestParam(value = "id", required = true) Integer id) {
+        jobService.updateJobStatus(id);
         return ResultUtil.success("");
     }
 

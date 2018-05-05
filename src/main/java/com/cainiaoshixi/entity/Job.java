@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component("CnJob")
+@Component("Job")
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(description = "岗位管理实体")
+@ApiModel(description = "岗位管理实体V1")
 public class Job {
     private Long id;
 

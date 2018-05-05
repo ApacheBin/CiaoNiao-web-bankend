@@ -1,20 +1,20 @@
 package com.cainiaoshixi.service;
 
-import com.cainiaoshixi.entity.JobWithBLOBs;
+import com.cainiaoshixi.entity.CnJob;
 import com.cainiaoshixi.vo.JobQueryVo;
 
 import java.util.List;
 
 public interface IJobService {
-    List<JobWithBLOBs> getJobListByVo(JobQueryVo jobQueryVo);
+    List<CnJob> getJobListByVo(JobQueryVo jobQueryVo);
 
-    JobWithBLOBs selectByPrimaryKey(Long id);
+    CnJob selectByPrimaryKey(Integer id);
 
-    int insertJob(JobWithBLOBs jobWithBLOBs);
+    int insertJob(CnJob job);
 
-    int updateById(JobWithBLOBs jobWithBLOBs);
+    int updateById(CnJob job);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
-    int updateJobPublished(Long id);
+    int updateJobStatus(Integer id);
 }

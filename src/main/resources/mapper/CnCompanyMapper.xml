@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cainiaoshixi.dao.CnCompanyMapper">
+  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.CnCompany">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="abbr" jdbcType="VARCHAR" property="abbr" />
+    <result column="industry" jdbcType="INTEGER" property="industry" />
+    <result column="establish_time" jdbcType="DATE" property="establishTime" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="official_web" jdbcType="VARCHAR" property="officialWeb" />
+    <result column="product" jdbcType="VARCHAR" property="product" />
+    <result column="introducation" jdbcType="VARCHAR" property="introducation" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cn_company
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.CnCompany">
+    insert into cn_company (id, name, abbr, 
+      industry, establish_time, province, 
+      city, district, address, 
+      official_web, product, introducation, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{abbr,jdbcType=VARCHAR}, 
+      #{industry,jdbcType=INTEGER}, #{establishTime,jdbcType=DATE}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{officialWeb,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, #{introducation,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.CnCompany">
+    update cn_company
+    set name = #{name,jdbcType=VARCHAR},
+      abbr = #{abbr,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=INTEGER},
+      establish_time = #{establishTime,jdbcType=DATE},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      official_web = #{officialWeb,jdbcType=VARCHAR},
+      product = #{product,jdbcType=VARCHAR},
+      introducation = #{introducation,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, abbr, industry, establish_time, province, city, district, address, 
+    official_web, product, introducation, create_time, update_time
+    from cn_company
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, abbr, industry, establish_time, province, city, district, address, 
+    official_web, product, introducation, create_time, update_time
+    from cn_company
+  </select>
+</mapper>

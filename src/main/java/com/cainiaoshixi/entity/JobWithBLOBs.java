@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import org.springframework.stereotype.Component;
 
-@Component("CnJobWithBLOBs")
+@Component("JobWithBLOBs")
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(description = "岗位管理扩展实体")

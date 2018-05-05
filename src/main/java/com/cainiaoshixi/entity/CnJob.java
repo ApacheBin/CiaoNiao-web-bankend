@@ -1,13 +1,17 @@
-package com.cainiaoshixi.vo;
+package com.cainiaoshixi.entity;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * @Author: Chy
- * @Description:
- * @Date: Created at 18:03 2018/5/5
- */
-public class JobQueryVo {
+@Component("CnJob")
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(description = "岗位管理实体V2")
+public class CnJob {
+    private Integer id;
 
     private String name;
 
@@ -57,11 +61,13 @@ public class JobQueryVo {
 
     private Date updateTime;
 
-    private String searchValue; //前端传过来的搜索条件
+    public Integer getId() {
+        return id;
+    }
 
-    private Integer iDisplayStart;  //起始项
-
-    private Integer iDisplayLength;  //每页显示的条数
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -254,21 +260,4 @@ public class JobQueryVo {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
-    public String getSearchValue() {
-        return searchValue;
-    }
-
-    public void setSearchValue(String searchValue) {
-        this.searchValue = searchValue;
-    }
-
-    public void setiDisplayStart(Integer iDisplayStart) {
-        this.iDisplayStart = iDisplayStart;
-    }
-
-    public void setiDisplayLength(Integer iDisplayLength) {
-        this.iDisplayLength = iDisplayLength;
-    }
-
 }
