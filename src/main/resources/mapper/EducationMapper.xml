@@ -61,13 +61,13 @@
         </trim>
     </insert>
     <select id="getEducationListByUserId" parameterType="java.lang.String" resultType="com.cainiaoshixi.entity.Education">
-        select school, major, degree, school_begin_date, school_end_date
+        select school, major, degree, school_begin_date, school_end_date, user_id
         from cn_education
         where user_id = #{userId, jdbcType=VARCHAR}
     </select>
 
     <select id="getEducationListByEduId" resultType="com.cainiaoshixi.entity.Education">
-        SELECT id,school,major,admission_time,graduation_time
+        SELECT id,school,major,admission_time,graduation_time,user_id
         FROM cn_education
         <choose>
             <when test="eduId != -1">
