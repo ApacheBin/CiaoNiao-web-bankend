@@ -29,12 +29,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private boolean loginValidate(HttpServletRequest request, HttpServletResponse response) {
         String sessionId = request.getParameter("sessionId");
-        if(sessionId == null) {
+        if (sessionId == null) {
             Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies){
-                if (cookie.getName().equals("JSESSIONID")){
-                    sessionId = cookie.getValue();
-                    break;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("JSESSIONID")) {
+                        sessionId = cookie.getValue();
+                        break;
+                    }
                 }
             }
         }

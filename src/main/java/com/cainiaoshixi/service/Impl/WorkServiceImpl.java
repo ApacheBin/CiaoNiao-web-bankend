@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class WorkServiceImpl implements IWorkService {
@@ -24,7 +25,7 @@ public class WorkServiceImpl implements IWorkService {
     }
 
     @Override
-    public Work getByUserId(int uid) {
+    public List<Work> getByUserId(int uid) {
         return workMapper.queryByUserId(uid);
     }
 

@@ -43,7 +43,7 @@ public class EducationController {
      * @Date: 17:11 2018/4/23
      */
     @ResponseBody
-    @RequestMapping(value = "/get",method= RequestMethod.POST)
+    @RequestMapping(value = "/get",method= RequestMethod.GET)
     public Result getEducationListByEduId(@RequestParam(value = "id", required = false,defaultValue = "-1") Integer eduId){
         Integer userId = session.userId();
         List<Education> educationList = educationService.getEducationListByEduId(userId,eduId);  //条件查询
