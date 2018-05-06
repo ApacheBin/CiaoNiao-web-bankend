@@ -2,13 +2,14 @@ package com.cainiaoshixi.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 
-@RestController
+@Controller
 @CrossOrigin
 @RequestMapping("/file")
 public class FileController {
@@ -16,6 +17,7 @@ public class FileController {
     private final static Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @PostMapping("/upload")
+    @ResponseBody
     public void uploadFile(@RequestParam(value = "name", required = false) String name,
                            @RequestParam("file") MultipartFile file) {
         String fileName = file.getName();
@@ -27,6 +29,11 @@ public class FileController {
 //            }
 //        }
         logger.debug(fileName);
+    }
+
+    @PostMapping("/download")
+    public String download() {
+        return "redirect: http://cainiaoshixi.com/images/logo/cainiaoshixi.png";
     }
 
 }
