@@ -30,7 +30,11 @@
     </bean>
 
     <!-- 4.扫描web相关的bean -->
-    <context:component-scan base-package="com.cainiaoshixi" />
+    <context:component-scan
+            base-package="
+            com.cainiaoshixi.controller,
+            com.cainiaoshixi.conf,
+            com.cainiaoshixi.util" />
 
     <!-- 5.注册拦截器-->
     <mvc:interceptors>
