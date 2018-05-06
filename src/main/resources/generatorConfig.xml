@@ -48,7 +48,7 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
         <!--根据需要自行改动数据表-->
-        <table schema="cainiao" tableName="cn_job"
+        <table schema="cainiao" tableName="cn_job" domainObjectName="Job"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
         </table>

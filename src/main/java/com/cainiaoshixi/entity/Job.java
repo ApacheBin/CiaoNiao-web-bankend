@@ -6,77 +6,91 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component("Job")
+@Component("CnJob")
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(description = "岗位管理实体V1")
+@ApiModel(description = "岗位管理实体V2")
 public class Job {
-    private Long id;
+    private Integer id;
 
-    private Long companyid;
+    private String name;
+
+    private String company;
+
+    private Integer companyId;
 
     private String department;
 
-    private String job;
+    private Byte type;
 
-    private String email;
+    private String province;
 
-    private String place;
+    private String city;
 
-    private Integer totalTime;
+    private String district;
 
-    private String dayInWeek;
+    private String address;
 
-    private String priceInDay;
+    private Integer industry;
+
+    private Integer function;
+
+    private Byte isRemote;
+
+    private String description;
+
+    private String requirement;
+
+    private String salary;
 
     private String welfare;
 
-    private Integer periodValidation;
+    private Short dutyPerWeek;
 
-    private String source;
-
-    private Byte published;
-
-    private String type;
-
-    private Integer checked;
-
-    private Date createdTime;
-
-    private Date updatedTime;
+    private Integer duration;
 
     private Integer userId;
 
-    private Integer category;
+    private Short receiveMethod;
 
-    private String companyLogo;
+    private String receiveEmail;
 
-    private String companyDetail;
+    private Byte status;
 
-    private String isFullJob;
+    private Date createTime;
 
-    private String degree;
+    private Date updateTime;
 
-    private String location;
-
-    private Date deadline;
-
-    private String duration;
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getCompanyid() {
-        return companyid;
+    public String getName() {
+        return name;
     }
 
-    public void setCompanyid(Long companyid) {
-        this.companyid = companyid;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public String getDepartment() {
@@ -87,52 +101,92 @@ public class Job {
         this.department = department;
     }
 
-    public String getJob() {
-        return job;
+    public Byte getType() {
+        return type;
     }
 
-    public void setJob(String job) {
-        this.job = job;
+    public void setType(Byte type) {
+        this.type = type;
     }
 
-    public String getEmail() {
-        return email;
+    public String getProvince() {
+        return province;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
-    public String getPlace() {
-        return place;
+    public String getCity() {
+        return city;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public Integer getTotalTime() {
-        return totalTime;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setTotalTime(Integer totalTime) {
-        this.totalTime = totalTime;
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
-    public String getDayInWeek() {
-        return dayInWeek;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDayInWeek(String dayInWeek) {
-        this.dayInWeek = dayInWeek;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getPriceInDay() {
-        return priceInDay;
+    public Integer getIndustry() {
+        return industry;
     }
 
-    public void setPriceInDay(String priceInDay) {
-        this.priceInDay = priceInDay;
+    public void setIndustry(Integer industry) {
+        this.industry = industry;
+    }
+
+    public Integer getFunction() {
+        return function;
+    }
+
+    public void setFunction(Integer function) {
+        this.function = function;
+    }
+
+    public Byte getIsRemote() {
+        return isRemote;
+    }
+
+    public void setIsRemote(Byte isRemote) {
+        this.isRemote = isRemote;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
     }
 
     public String getWelfare() {
@@ -143,60 +197,20 @@ public class Job {
         this.welfare = welfare;
     }
 
-    public Integer getPeriodValidation() {
-        return periodValidation;
+    public Short getDutyPerWeek() {
+        return dutyPerWeek;
     }
 
-    public void setPeriodValidation(Integer periodValidation) {
-        this.periodValidation = periodValidation;
+    public void setDutyPerWeek(Short dutyPerWeek) {
+        this.dutyPerWeek = dutyPerWeek;
     }
 
-    public String getSource() {
-        return source;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public Byte getPublished() {
-        return published;
-    }
-
-    public void setPublished(Byte published) {
-        this.published = published;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Integer getChecked() {
-        return checked;
-    }
-
-    public void setChecked(Integer checked) {
-        this.checked = checked;
-    }
-
-    public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Date getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public Integer getUserId() {
@@ -207,67 +221,43 @@ public class Job {
         this.userId = userId;
     }
 
-    public Integer getCategory() {
-        return category;
+    public Short getReceiveMethod() {
+        return receiveMethod;
     }
 
-    public void setCategory(Integer category) {
-        this.category = category;
+    public void setReceiveMethod(Short receiveMethod) {
+        this.receiveMethod = receiveMethod;
     }
 
-    public String getCompanyLogo() {
-        return companyLogo;
+    public String getReceiveEmail() {
+        return receiveEmail;
     }
 
-    public void setCompanyLogo(String companyLogo) {
-        this.companyLogo = companyLogo;
+    public void setReceiveEmail(String receiveEmail) {
+        this.receiveEmail = receiveEmail;
     }
 
-    public String getCompanyDetail() {
-        return companyDetail;
+    public Byte getStatus() {
+        return status;
     }
 
-    public void setCompanyDetail(String companyDetail) {
-        this.companyDetail = companyDetail;
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
-    public String getIsFullJob() {
-        return isFullJob;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setIsFullJob(String isFullJob) {
-        this.isFullJob = isFullJob;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public String getDegree() {
-        return degree;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

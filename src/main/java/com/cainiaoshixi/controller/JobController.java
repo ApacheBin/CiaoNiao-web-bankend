@@ -2,7 +2,7 @@ package com.cainiaoshixi.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
-import com.cainiaoshixi.entity.CnJob;
+import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
@@ -22,7 +22,7 @@ import java.util.List;
  * @Date: Created at 21:51 2018/1/29
  */
 @Controller
-@RequestMapping("/jobs")
+@RequestMapping("/job")
 @CrossOrigin
 @Api(value = "岗位管理控制器", tags = {"岗位管理接口"})
 @ResponseBody
@@ -48,11 +48,11 @@ public class JobController {
      * @Date: Created in 13:47 2018/1/31
      */
     @ApiOperation("条件查询岗位列表")
-    @PostMapping("/jobList")
+    @PostMapping("/list")
     public Result getJobList(@RequestBody JobQueryVo jobQueryVo) {
         jobQueryVo.setUserId(session.userId());
 //        JSONObject jsonObject = new JSONObject();
-        List<CnJob> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
+        List<Job> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
 //        return JSON.toJSONString(jobList, SerializerFeature.WriteMapNullValue);  //null值保留
         return ResultUtil.success(jobList);
     }
@@ -64,9 +64,9 @@ public class JobController {
      * @Date: Created in 12:28 2018/4/24
      */
     @ApiOperation("根据id查看单条岗位详情")
-    @PostMapping("/jobDetail")
+    @PostMapping("/detail")
     public Result getJobDetail(@RequestParam(value = "id", required = true) Integer id){
-        CnJob jobDetail = jobService.selectByPrimaryKey(id);
+        Job jobDetail = jobService.selectByPrimaryKey(id);
         return ResultUtil.success(jobDetail);
     }
 
@@ -78,8 +78,8 @@ public class JobController {
      * @Date: Created in 12:28 2018/4/24
      */
     @ApiOperation("添加单条岗位")
-    @PostMapping("/addJob")
-    public Result addJob(@RequestBody CnJob singleJob) {
+    @PostMapping("/add")
+    public Result addJob(@RequestBody Job singleJob) {
         singleJob.setUserId(session.userId());
         singleJob.setCreateTime(new Date());
         singleJob.setUpdateTime(new Date());
@@ -101,7 +101,7 @@ public class JobController {
      */
     @ApiOperation("根据Id更新岗位详情")
     @PostMapping("/update")
-    public Result updateJob(@RequestBody CnJob singleJob) {
+    public Result updateJob(@RequestBody Job singleJob) {
         singleJob.setUpdateTime(new Date());
         if (singleJob.getStatus() == null){
             singleJob.setStatus((byte) 0);
@@ -130,7 +130,7 @@ public class JobController {
      * @Date: 12:49 2018/4/24
      */
     @ApiOperation("根据id设置发布单条岗位")
-    @PostMapping("/setJobStatus")
+    @PostMapping("/status/set")
     public Result setJobStatus(@RequestParam(value = "id", required = true) Integer id) {
         jobService.updateJobStatus(id);
         return ResultUtil.success("");

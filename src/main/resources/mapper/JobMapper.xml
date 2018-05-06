@@ -2,448 +2,357 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cainiaoshixi.dao.JobMapper">
   <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.Job">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="companyid" jdbcType="BIGINT" property="companyid" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
     <result column="department" jdbcType="VARCHAR" property="department" />
-    <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="place" jdbcType="VARCHAR" property="place" />
-    <result column="total_time" jdbcType="INTEGER" property="totalTime" />
-    <result column="day_in_week" jdbcType="VARCHAR" property="dayInWeek" />
-    <result column="price_in_day" jdbcType="VARCHAR" property="priceInDay" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="industry" jdbcType="INTEGER" property="industry" />
+    <result column="function" jdbcType="INTEGER" property="function" />
+    <result column="is_remote" jdbcType="TINYINT" property="isRemote" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="requirement" jdbcType="VARCHAR" property="requirement" />
+    <result column="salary" jdbcType="VARCHAR" property="salary" />
     <result column="welfare" jdbcType="VARCHAR" property="welfare" />
-    <result column="period_validation" jdbcType="INTEGER" property="periodValidation" />
-    <result column="source" jdbcType="VARCHAR" property="source" />
-    <result column="published" jdbcType="TINYINT" property="published" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="checked" jdbcType="INTEGER" property="checked" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
-    <result column="userId" jdbcType="INTEGER" property="userId" />
-    <result column="category" jdbcType="INTEGER" property="category" />
-    <result column="company_logo" jdbcType="VARCHAR" property="companyLogo" />
-    <result column="company_detail" jdbcType="VARCHAR" property="companyDetail" />
-    <result column="is_full_job" jdbcType="VARCHAR" property="isFullJob" />
-    <result column="degree" jdbcType="VARCHAR" property="degree" />
-    <result column="location" jdbcType="VARCHAR" property="location" />
-    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
-    <result column="duration" jdbcType="VARCHAR" property="duration" />
+    <result column="duty_per_week" jdbcType="SMALLINT" property="dutyPerWeek" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="receive_method" jdbcType="SMALLINT" property="receiveMethod" />
+    <result column="receive_email" jdbcType="VARCHAR" property="receiveEmail" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cainiaoshixi.entity.JobWithBLOBs">
-    <result column="description" jdbcType="LONGVARCHAR" property="description" />
-    <result column="requirement" jdbcType="LONGVARCHAR" property="requirement" />
-    <result column="others" jdbcType="LONGVARCHAR" property="others" />
-    <result column="attachment" jdbcType="LONGVARCHAR" property="attachment" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, companyid, department, job,email, place, total_time, day_in_week, price_in_day, welfare,
-    period_validation, source, published, type, checked, created_time, updated_time, 
-    userId, category, company_logo, company_detail, is_full_job, degree, location, deadline,
-    duration
-  </sql>
-  <sql id="Blob_Column_List">
-    description, requirement, others, attachment
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from job
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from job
-    where id = #{id,jdbcType=BIGINT}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cn_job
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
-    insert into job (id, companyid, department, 
-      job, email,place, total_time,
-      day_in_week, price_in_day, welfare, 
-      period_validation, source, published, 
-      type, checked, created_time, 
-      updated_time, userId, category,
-      company_logo, company_detail, is_full_job, 
-      degree, location, deadline, 
-      duration, description, requirement, 
-      others, attachment)
-    values (#{id,jdbcType=BIGINT}, #{companyid,jdbcType=BIGINT}, #{department,jdbcType=VARCHAR}, 
-      #{job,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},#{place,jdbcType=VARCHAR}, #{totalTime,jdbcType=INTEGER},
-      #{dayInWeek,jdbcType=VARCHAR}, #{priceInDay,jdbcType=VARCHAR}, #{welfare,jdbcType=VARCHAR},
-      #{periodValidation,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, #{published,jdbcType=TINYINT}, 
-      #{type,jdbcType=VARCHAR}, #{checked,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{category,jdbcType=INTEGER},
-      #{companyLogo,jdbcType=VARCHAR}, #{companyDetail,jdbcType=VARCHAR}, #{isFullJob,jdbcType=VARCHAR}, 
-      #{degree,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{deadline,jdbcType=TIMESTAMP}, 
-      #{duration,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, #{requirement,jdbcType=LONGVARCHAR}, 
-      #{others,jdbcType=LONGVARCHAR}, #{attachment,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.Job">
+    insert into cn_job (id, name, company, 
+      company_id, department, type, 
+      province, city, district, 
+      address, industry, function, 
+      is_remote, description, requirement, 
+      salary, welfare, duty_per_week, 
+      duration, user_id, receive_method, 
+      receive_email, status, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{industry,jdbcType=INTEGER}, #{function,jdbcType=INTEGER}, 
+      #{isRemote,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, #{requirement,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=VARCHAR}, #{welfare,jdbcType=VARCHAR}, #{dutyPerWeek,jdbcType=SMALLINT}, 
+      #{duration,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{receiveMethod,jdbcType=SMALLINT}, 
+      #{receiveEmail,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
-    insert into job
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="companyid != null">
-        companyid,
-      </if>
-      <if test="department != null">
-        department,
-      </if>
-      <if test="job != null">
-        job,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="place != null">
-        place,
-      </if>
-      <if test="totalTime != null">
-        total_time,
-      </if>
-      <if test="dayInWeek != null">
-        day_in_week,
-      </if>
-      <if test="priceInDay != null">
-        price_in_day,
-      </if>
-      <if test="welfare != null">
-        welfare,
-      </if>
-      <if test="periodValidation != null">
-        period_validation,
-      </if>
-      <if test="source != null">
-        source,
-      </if>
-      <if test="published != null">
-        published,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="checked != null">
-        checked,
-      </if>
-      <if test="createdTime != null">
-        created_time,
-      </if>
-      <if test="updatedTime != null">
-        updated_time,
-      </if>
-      <if test="userId != null">
-        userId,
-      </if>
-      <if test="category != null">
-        category,
-      </if>
-      <if test="companyLogo != null">
-        company_logo,
-      </if>
-      <if test="companyDetail != null">
-        company_detail,
-      </if>
-      <if test="isFullJob != null">
-        is_full_job,
-      </if>
-      <if test="degree != null">
-        degree,
-      </if>
-      <if test="location != null">
-        location,
-      </if>
-      <if test="deadline != null">
-        deadline,
-      </if>
-      <if test="duration != null">
-        duration,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="requirement != null">
-        requirement,
-      </if>
-      <if test="others != null">
-        others,
-      </if>
-      <if test="attachment != null">
-        attachment,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="companyid != null">
-        #{companyid,jdbcType=BIGINT},
-      </if>
-      <if test="department != null">
-        #{department,jdbcType=VARCHAR},
-      </if>
-      <if test="job != null">
-        #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="place != null">
-        #{place,jdbcType=VARCHAR},
-      </if>
-      <if test="totalTime != null">
-        #{totalTime,jdbcType=INTEGER},
-      </if>
-      <if test="dayInWeek != null">
-        #{dayInWeek,jdbcType=VARCHAR},
-      </if>
-      <if test="priceInDay != null">
-        #{priceInDay,jdbcType=VARCHAR},
-      </if>
-      <if test="welfare != null">
-        #{welfare,jdbcType=VARCHAR},
-      </if>
-      <if test="periodValidation != null">
-        #{periodValidation,jdbcType=INTEGER},
-      </if>
-      <if test="source != null">
-        #{source,jdbcType=VARCHAR},
-      </if>
-      <if test="published != null">
-        #{published,jdbcType=TINYINT},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="checked != null">
-        #{checked,jdbcType=INTEGER},
-      </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="category != null">
-        #{category,jdbcType=INTEGER},
-      </if>
-      <if test="companyLogo != null">
-        #{companyLogo,jdbcType=VARCHAR},
-      </if>
-      <if test="companyDetail != null">
-        #{companyDetail,jdbcType=VARCHAR},
-      </if>
-      <if test="isFullJob != null">
-        #{isFullJob,jdbcType=VARCHAR},
-      </if>
-      <if test="degree != null">
-        #{degree,jdbcType=VARCHAR},
-      </if>
-      <if test="location != null">
-        #{location,jdbcType=VARCHAR},
-      </if>
-      <if test="deadline != null">
-        #{deadline,jdbcType=TIMESTAMP},
-      </if>
-      <if test="duration != null">
-        #{duration,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="requirement != null">
-        #{requirement,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="others != null">
-        #{others,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="attachment != null">
-        #{attachment,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
-    update job
-    <set>
-      <if test="companyid != null">
-        companyid = #{companyid,jdbcType=BIGINT},
-      </if>
-      <if test="department != null">
-        department = #{department,jdbcType=VARCHAR},
-      </if>
-      <if test="job != null">
-        job = #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="place != null">
-        place = #{place,jdbcType=VARCHAR},
-      </if>
-      <if test="totalTime != null">
-        total_time = #{totalTime,jdbcType=INTEGER},
-      </if>
-      <if test="dayInWeek != null">
-        day_in_week = #{dayInWeek,jdbcType=VARCHAR},
-      </if>
-      <if test="priceInDay != null">
-        price_in_day = #{priceInDay,jdbcType=VARCHAR},
-      </if>
-      <if test="welfare != null">
-        welfare = #{welfare,jdbcType=VARCHAR},
-      </if>
-      <if test="periodValidation != null">
-        period_validation = #{periodValidation,jdbcType=INTEGER},
-      </if>
-      <if test="source != null">
-        source = #{source,jdbcType=VARCHAR},
-      </if>
-      <if test="published != null">
-        published = #{published,jdbcType=TINYINT},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="checked != null">
-        checked = #{checked,jdbcType=INTEGER},
-      </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userId != null">
-        userId = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="category != null">
-        category = #{category,jdbcType=INTEGER},
-      </if>
-      <if test="companyLogo != null">
-        company_logo = #{companyLogo,jdbcType=VARCHAR},
-      </if>
-      <if test="companyDetail != null">
-        company_detail = #{companyDetail,jdbcType=VARCHAR},
-      </if>
-      <if test="isFullJob != null">
-        is_full_job = #{isFullJob,jdbcType=VARCHAR},
-      </if>
-      <if test="degree != null">
-        degree = #{degree,jdbcType=VARCHAR},
-      </if>
-      <if test="location != null">
-        location = #{location,jdbcType=VARCHAR},
-      </if>
-      <if test="deadline != null">
-        deadline = #{deadline,jdbcType=TIMESTAMP},
-      </if>
-      <if test="duration != null">
-        duration = #{duration,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="requirement != null">
-        requirement = #{requirement,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="others != null">
-        others = #{others,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="attachment != null">
-        attachment = #{attachment,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cainiaoshixi.entity.JobWithBLOBs">
-    update job
-    set companyid = #{companyid,jdbcType=BIGINT},
-      department = #{department,jdbcType=VARCHAR},
-      job = #{job,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      place = #{place,jdbcType=VARCHAR},
-      total_time = #{totalTime,jdbcType=INTEGER},
-      day_in_week = #{dayInWeek,jdbcType=VARCHAR},
-      price_in_day = #{priceInDay,jdbcType=VARCHAR},
-      welfare = #{welfare,jdbcType=VARCHAR},
-      period_validation = #{periodValidation,jdbcType=INTEGER},
-      source = #{source,jdbcType=VARCHAR},
-      published = #{published,jdbcType=TINYINT},
-      type = #{type,jdbcType=VARCHAR},
-      checked = #{checked,jdbcType=INTEGER},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      userId = #{userId,jdbcType=BIGINT},
-      category = #{category,jdbcType=INTEGER},
-      company_logo = #{companyLogo,jdbcType=VARCHAR},
-      company_detail = #{companyDetail,jdbcType=VARCHAR},
-      is_full_job = #{isFullJob,jdbcType=VARCHAR},
-      degree = #{degree,jdbcType=VARCHAR},
-      location = #{location,jdbcType=VARCHAR},
-      deadline = #{deadline,jdbcType=TIMESTAMP},
-      duration = #{duration,jdbcType=VARCHAR},
-      description = #{description,jdbcType=LONGVARCHAR},
-      requirement = #{requirement,jdbcType=LONGVARCHAR},
-      others = #{others,jdbcType=LONGVARCHAR},
-      attachment = #{attachment,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.Job">
-    update job
-    set companyid = #{companyid,jdbcType=BIGINT},
+    update cn_job
+    set name = #{name,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
       department = #{department,jdbcType=VARCHAR},
-      job = #{job,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      place = #{place,jdbcType=VARCHAR},
-      total_time = #{totalTime,jdbcType=INTEGER},
-      day_in_week = #{dayInWeek,jdbcType=VARCHAR},
-      price_in_day = #{priceInDay,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=INTEGER},
+      function = #{function,jdbcType=INTEGER},
+      is_remote = #{isRemote,jdbcType=TINYINT},
+      description = #{description,jdbcType=VARCHAR},
+      requirement = #{requirement,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=VARCHAR},
       welfare = #{welfare,jdbcType=VARCHAR},
-      period_validation = #{periodValidation,jdbcType=INTEGER},
-      source = #{source,jdbcType=VARCHAR},
-      published = #{published,jdbcType=TINYINT},
-      type = #{type,jdbcType=VARCHAR},
-      checked = #{checked,jdbcType=INTEGER},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      userId = #{userId,jdbcType=BIGINT},
-      category = #{category,jdbcType=INTEGER},
-      company_logo = #{companyLogo,jdbcType=VARCHAR},
-      company_detail = #{companyDetail,jdbcType=VARCHAR},
-      is_full_job = #{isFullJob,jdbcType=VARCHAR},
-      degree = #{degree,jdbcType=VARCHAR},
-      location = #{location,jdbcType=VARCHAR},
-      deadline = #{deadline,jdbcType=TIMESTAMP},
-      duration = #{duration,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+      duty_per_week = #{dutyPerWeek,jdbcType=SMALLINT},
+      duration = #{duration,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      receive_method = #{receiveMethod,jdbcType=SMALLINT},
+      receive_email = #{receiveEmail,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultType="com.cainiaoshixi.entity.JobWithBLOBs">
-    select id, companyid, department, job,email, place, total_time, day_in_week, price_in_day, welfare,
-    period_validation, source, published, type, checked, created_time, updated_time,
-    userId, category, company_logo, company_detail, is_full_job, degree, location, deadline,
-    duration, description, requirement, others, attachment
-    from job
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, company, company_id, department, type, province, city, district, 
+    address, industry, function, is_remote, description, requirement, salary, welfare, 
+    duty_per_week, duration, user_id, receive_method, receive_email, status, create_time, 
+    update_time
+    from cn_job
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, company, company_id, department, type, province, city, district, 
+    address, industry, function, is_remote, description, requirement, salary, welfare, 
+    duty_per_week, duration, user_id, receive_method, receive_email, status, create_time, 
+    update_time
+    from cn_job
+  </select>
+  <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="BaseResultMap">
+    select id, name, company, company_id, department, type, province, city, district,address,
+    industry, function, is_remote, description, requirement, salary, welfare,duty_per_week,
+    duration, user_id, receive_method, receive_email, status, create_time,update_time
+    from cn_job
     <where>
-      <if test="job!=null and job!=''">
-        and job LIKE "%"#{job, jdbcType=VARCHAR}"%"
+      <if test="name!=null and name!=''">
+        and name LIKE "%"#{name, jdbcType=VARCHAR}"%"
       </if>
       <if test="type!=null and type!='所有'">
         and type = #{type, jdbcType=VARCHAR}
       </if>
-      <if test="published!=null">
-        and published = #{published, jdbcType=TINYINT}
-      </if>
-      <if test="category!=null">
-        and category=#{category, jdbcType=INTEGER}
+      <if test="status!=null">
+        and status = #{status, jdbcType=TINYINT}
       </if>
       <if test="searchValue!=null">
-        and department like concat(concat("%",#{searchValue}),"%") or job like concat(concat("%",#{searchValue}),"%");
+        and name like concat(concat("%",#{searchValue}),"%") or company like concat(concat("%",#{searchValue}),"%") or department like concat(concat("%",#{searchValue}),"%");
       </if>
-      order by created_time desc
-      limit #{iDisplayStart},#{iDisplayLength}
     </where>
+      order by create_time desc
+      limit #{iDisplayStart,jdbcType=INTEGER},#{iDisplayLength,jdbcType=INTEGER}
   </select>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.Job">
+        insert into cn_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="department != null">
+                department,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="district != null">
+                district,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="industry != null">
+                industry,
+            </if>
+            <if test="function != null">
+                function,
+            </if>
+            <if test="isRemote != null">
+                is_remote,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="requirement != null">
+                requirement,
+            </if>
+            <if test="salary != null">
+                salary,
+            </if>
+            <if test="welfare != null">
+                welfare,
+            </if>
+            <if test="dutyPerWeek != null">
+                duty_per_week,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="receiveMethod != null">
+                receive_method,
+            </if>
+            <if test="receiveEmail != null">
+                receive_email,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="department != null">
+                #{department,jdbcType=VARCHAR},
+            </if>
+
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="industry != null">
+                #{industry,jdbcType=INTEGER},
+            </if>
+            <if test="function != null">
+                #{function,jdbcType=INTEGER},
+            </if>
+            <if test="isRemote != null">
+                #{isRemote,jdbcType=TINYINT},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="requirement != null">
+                #{requirement,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                #{salary,jdbcType=VARCHAR},
+            </if>
+            <if test="welfare != null">
+                #{welfare,jdbcType=VARCHAR},
+            </if>
+            <if test="dutyPerWeek != null">
+                #{dutyPerWeek,jdbcType=SMALLINT},
+            </if>
+            <if test="duration != null">
+                #{duration,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="receiveMethod != null">
+                #{receiveMethod,jdbcType=SMALLINT},
+            </if>
+            <if test="receiveEmail != null">
+                #{receiveEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.Job">
+        update cn_job
+        <set>
+        <if test="name != null">
+            name = #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="company != null">
+            company = #{company,jdbcType=VARCHAR},
+        </if>
+        <if test="companyId != null">
+            company_id = #{companyId,jdbcType=INTEGER},
+        </if>
+        <if test="department != null">
+            department = #{department,jdbcType=VARCHAR},
+        </if>
+
+        <if test="type != null">
+            type = #{type,jdbcType=TINYINT},
+        </if>
+        <if test="province != null">
+            province = #{province,jdbcType=VARCHAR},
+        </if>
+        <if test="city != null">
+            city = #{city,jdbcType=VARCHAR},
+        </if>
+        <if test="district != null">
+            district = #{district,jdbcType=VARCHAR},
+        </if>
+        <if test="address != null">
+            address = #{address,jdbcType=VARCHAR},
+        </if>
+        <if test="industry != null">
+            industry = #{industry,jdbcType=INTEGER},
+        </if>
+        <if test="function != null">
+            function = #{function,jdbcType=INTEGER},
+        </if>
+        <if test="isRemote != null">
+            is_remote = #{isRemote,jdbcType=TINYINT},
+        </if>
+        <if test="description != null">
+            description = #{description,jdbcType=VARCHAR},
+        </if>
+        <if test="requirement != null">
+            requirement = #{requirement,jdbcType=VARCHAR},
+        </if>
+        <if test="salary != null">
+            salary = #{salary,jdbcType=VARCHAR},
+        </if>
+        <if test="welfare != null">
+            welfare = #{welfare,jdbcType=VARCHAR},
+        </if>
+        <if test="dutyPerWeek != null">
+            duty_per_week = #{dutyPerWeek,jdbcType=SMALLINT},
+        </if>
+        <if test="duration != null">
+            duration = #{duration,jdbcType=INTEGER},
+        </if>
+        <if test="userId != null">
+            user_id = #{userId,jdbcType=INTEGER},
+        </if>
+        <if test="receiveMethod != null">
+            receive_method = #{receiveMethod,jdbcType=SMALLINT},
+        </if>
+        <if test="receiveEmail != null">
+            receive_email = #{receiveEmail,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null">
+            status = #{status,jdbcType=TINYINT},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

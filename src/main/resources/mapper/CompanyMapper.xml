@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cainiaoshixi.dao.CnCompanyMapper">
-  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.CnCompany">
+<mapper namespace="com.cainiaoshixi.dao.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.Company">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="abbr" jdbcType="VARCHAR" property="abbr" />
@@ -21,19 +21,19 @@
     delete from cn_company
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cainiaoshixi.entity.CnCompany">
-    insert into cn_company (id, name, abbr, 
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.Company">
+    insert into cn_company (name, abbr,
       industry, establish_time, province, 
       city, district, address, 
       official_web, product, introducation, 
       create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{abbr,jdbcType=VARCHAR}, 
+    values (#{name,jdbcType=VARCHAR}, #{abbr,jdbcType=VARCHAR},
       #{industry,jdbcType=INTEGER}, #{establishTime,jdbcType=DATE}, #{province,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{officialWeb,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, #{introducation,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.CnCompany">
+  <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.Company">
     update cn_company
     set name = #{name,jdbcType=VARCHAR},
       abbr = #{abbr,jdbcType=VARCHAR},
@@ -60,5 +60,19 @@
     select id, name, abbr, industry, establish_time, province, city, district, address, 
     official_web, product, introducation, create_time, update_time
     from cn_company
+  </select>
+
+  <select id="getCompanyListById" resultType="com.cainiaoshixi.entity.Company">
+    select id, name, abbr, industry, establish_time, province, city, district, address,
+    official_web, product, introducation, create_time, update_time
+    from cn_company
+    <choose>
+      <when test="id != -1">
+        WHERE id = #{id}
+      </when>
+      <otherwise>
+        WHERE user_id= #{userId}
+      </otherwise>
+    </choose>
   </select>
 </mapper>

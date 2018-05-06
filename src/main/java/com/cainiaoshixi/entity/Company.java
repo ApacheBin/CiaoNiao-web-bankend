@@ -10,7 +10,7 @@ import java.util.Date;
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(description = "公司信息实体")
-public class CnCompany {
+public class Company {
     private Integer id;
 
     private String name;

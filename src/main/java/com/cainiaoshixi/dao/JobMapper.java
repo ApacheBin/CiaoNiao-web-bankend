@@ -1,26 +1,24 @@
 package com.cainiaoshixi.dao;
 
-import com.cainiaoshixi.entity.CnJob;
 import com.cainiaoshixi.entity.Job;
-import com.cainiaoshixi.entity.JobWithBLOBs;
 import com.cainiaoshixi.vo.JobQueryVo;
 
 import java.util.List;
 
 public interface JobMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
-    int insert(JobWithBLOBs record);
+    int insert(Job record);
 
-    int insertSelective(JobWithBLOBs record);
+    Job selectByPrimaryKey(Integer id);
 
-    JobWithBLOBs selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(JobWithBLOBs record);
-
-    int updateByPrimaryKeyWithBLOBs(JobWithBLOBs record);
+    List<Job> selectAll();
 
     int updateByPrimaryKey(Job record);
 
-    List<CnJob> getJobListByVo(JobQueryVo jobQueryVo);
+    List<Job> getJobListByVo(JobQueryVo jobQueryVo);
+
+    int insertSelective(Job job);
+
+    int updateByPrimaryKeySelective(Job job);
 }

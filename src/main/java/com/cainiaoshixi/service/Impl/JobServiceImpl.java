@@ -1,7 +1,7 @@
 package com.cainiaoshixi.service.Impl;
 
-import com.cainiaoshixi.dao.CnJobMapper;
-import com.cainiaoshixi.entity.CnJob;
+import com.cainiaoshixi.dao.JobMapper;
+import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.vo.JobQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,21 @@ import java.util.List;
 @Service
 public class JobServiceImpl implements IJobService {
     @Autowired
-    private CnJobMapper cnjobMapper;
+    private JobMapper cnjobMapper;
 
-    public List<CnJob> getJobListByVo(JobQueryVo jobQueryVo) {
+    public List<Job> getJobListByVo(JobQueryVo jobQueryVo) {
         return cnjobMapper.getJobListByVo(jobQueryVo);
     }
 
-    public CnJob selectByPrimaryKey(Integer id) {
+    public Job selectByPrimaryKey(Integer id) {
         return cnjobMapper.selectByPrimaryKey(id);
     }
 
-    public int insertJob(CnJob job) {
+    public int insertJob(Job job) {
        return cnjobMapper.insertSelective(job);
     }
 
-    public int updateById(CnJob job) {
+    public int updateById(Job job) {
         return cnjobMapper.updateByPrimaryKeySelective(job);
     }
 
@@ -41,7 +41,7 @@ public class JobServiceImpl implements IJobService {
     }
 
     public int updateJobStatus(Integer id) {
-        CnJob job = new CnJob();
+        Job job = new Job();
         job.setId(id);
         job.setStatus((byte) 1);
         return cnjobMapper.updateByPrimaryKeySelective(job);
