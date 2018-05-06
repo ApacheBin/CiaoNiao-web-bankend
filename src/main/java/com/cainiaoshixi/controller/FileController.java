@@ -1,13 +1,18 @@
 package com.cainiaoshixi.controller;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 @CrossOrigin
@@ -31,9 +36,12 @@ public class FileController {
         logger.debug(fileName);
     }
 
-    @PostMapping("/download")
-    public String download() {
-        return "redirect: http://cainiaoshixi.com/images/logo/cainiaoshixi.png";
+    @GetMapping(value = "/download/{imageName:.+}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @ResponseBody
+    public byte[] download(@PathVariable("imageName") String imageName, HttpServletResponse response) throws IOException {
+        File file = new File("E:/cainiaoshixi/images/" + imageName);
+        InputStream in = new FileInputStream(file);
+        return IOUtils.toByteArray(in);
     }
 
 }
