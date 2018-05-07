@@ -1,5 +1,6 @@
 package com.cainiaoshixi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ public class CnUser {
     private Byte identity;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date birthday;
 
     private String residence;
