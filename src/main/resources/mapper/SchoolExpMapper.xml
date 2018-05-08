@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cainiaoshixi.dao.SchoolExpMapper">
+    <select id="queryBySchId" resultType="com.cainiaoshixi.entity.SchoolExperience">
+        SELECT id,name,position,start_time,end_time,description,user_id
+        FROM cn_school_exp
+        <choose>
+            <when test="schId != -1">
+                WHERE id = #{schId}
+            </when>
+            <otherwise>
+                WHERE user_id= #{userId}
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SchoolExperience">
+        INSERT INTO cn_school_exp (name, position, start_time, end_time, user_id, description, create_time, update_time)
+        VALUES (#{name}, #{position}, #{startTime},#{endTime},#{userId}, #{description}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update" parameterType="SchoolExperience">
+        update cn_school_exp set
+        <if test="name != null">name = #{name},</if>
+        <if test="position != null">position = #{position},</if>
+        <if test="startTime != null">start_time = #{startTime},</if>
+        <if test="endTime != null">end_time = #{endTime},</if>
+        <if test="description != null">description = #{description},</if>
+        <if test="updateTime != null">update_time = #{updateTime}</if>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from cn_school_exp where id = #{id}
+    </delete>
+</mapper>
