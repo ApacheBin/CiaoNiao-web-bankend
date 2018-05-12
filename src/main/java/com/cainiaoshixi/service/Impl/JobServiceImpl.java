@@ -4,6 +4,7 @@ import com.cainiaoshixi.dao.JobMapper;
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.vo.JobQueryVo;
+import com.cainiaoshixi.vo.ResumeBriefVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,4 +47,10 @@ public class JobServiceImpl implements IJobService {
         job.setStatus((byte) 1);
         return cnjobMapper.updateByPrimaryKeySelective(job);
     }
+    @Override
+    public List<ResumeBriefVo> querySubmitByJobId(int jobId){
+        return cnjobMapper.querySubmitByJobId(jobId);
+    }
+
+
 }

@@ -1,9 +1,7 @@
 package com.cainiaoshixi.service;
 
-import com.cainiaoshixi.entity.Education;
-import com.cainiaoshixi.entity.Resume;
-import com.cainiaoshixi.entity.WorkExperience;
-import com.cainiaoshixi.entity.WxUser;
+import com.cainiaoshixi.entity.*;
+import com.cainiaoshixi.vo.JobBriefVo;
 
 import java.util.List;
 
@@ -28,4 +26,9 @@ public interface IResumeService {
     public void updateEvaluation(Resume resume);
 
     public int isExistEvaluation(int userId);
+
+    public int submitJob(JobSubmit jobSubmit);
+
+    public List<JobBriefVo> querySubmitByUserId(int userId);
+
 }

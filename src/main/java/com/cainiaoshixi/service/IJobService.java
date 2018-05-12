@@ -2,6 +2,7 @@ package com.cainiaoshixi.service;
 
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.vo.JobQueryVo;
+import com.cainiaoshixi.vo.ResumeBriefVo;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface IJobService {
     int deleteByPrimaryKey(Integer id);
 
     int updateJobStatus(Integer id);
+
+    List<ResumeBriefVo> querySubmitByJobId(int jobId);
 }

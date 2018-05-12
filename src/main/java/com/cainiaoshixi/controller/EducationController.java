@@ -3,19 +3,15 @@ package com.cainiaoshixi.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Education;
-import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.service.IEducationService;
 import com.cainiaoshixi.util.SessionUtil;
-import com.cainiaoshixi.vo.EducationVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 @Controller
 @RequestMapping("/education")

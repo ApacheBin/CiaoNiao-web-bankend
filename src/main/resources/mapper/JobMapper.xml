@@ -355,4 +355,9 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <select id="querySubmitByJobId" parameterType="java.lang.Integer" resultType="com.cainiaoshixi.vo.ResumeBriefVo">
+      SELECT submit.id as submit_id,submit.job_id, job.user_id, user.name as user_name FROM 	cn_job_submit submit
+      JOIN cn_job job ON submit.job_id=job.id
+      JOIN cn_user user ON submit.user_id=user.id where submit.job_id= #{jobId};
+    </select>
 </mapper>

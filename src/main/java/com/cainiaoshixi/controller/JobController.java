@@ -7,6 +7,7 @@ import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import com.cainiaoshixi.vo.JobQueryVo;
+import com.cainiaoshixi.vo.ResumeBriefVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,7 +137,12 @@ public class JobController {
         return ResultUtil.success("");
     }
 
-
+    @GetMapping("/resume/list")
+    @ApiOperation("获取简历列表")
+    public Result getSubmitListByJobId(@RequestParam("id") int jobId){
+        List<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(jobId);  //条件查询
+        return ResultUtil.success(resumeBriefVos);
+    }
 
 
 

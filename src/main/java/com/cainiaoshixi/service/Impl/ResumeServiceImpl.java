@@ -4,11 +4,9 @@ import com.cainiaoshixi.dao.EducationMapper;
 import com.cainiaoshixi.dao.ResumeMapper;
 import com.cainiaoshixi.dao.WorkExperienceMapper;
 import com.cainiaoshixi.dao.WxUserMapper;
-import com.cainiaoshixi.entity.Education;
-import com.cainiaoshixi.entity.Resume;
-import com.cainiaoshixi.entity.WorkExperience;
-import com.cainiaoshixi.entity.WxUser;
+import com.cainiaoshixi.entity.*;
 import com.cainiaoshixi.service.IResumeService;
+import com.cainiaoshixi.vo.JobBriefVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,7 @@ import java.util.List;
  * @Date: Created at 0:57 2018/3/13
  */
 @Service
-public class ResumeServiceImpl implements IResumeService{
+public class ResumeServiceImpl implements IResumeService {
 
     @Autowired
     private WxUserMapper wxUserMapper;
@@ -34,9 +32,9 @@ public class ResumeServiceImpl implements IResumeService{
 
     @Override
     public void savePersonInfo(WxUser wxUser) {
-        if(wxUserMapper.selectByPrimaryKey(wxUser.getUserId()) == null){
+        if (wxUserMapper.selectByPrimaryKey(wxUser.getUserId()) == null) {
             wxUserMapper.insertSelective(wxUser);
-        }else{
+        } else {
             wxUserMapper.updateByPrimaryKeySelective(wxUser);
         }
 
@@ -91,4 +89,18 @@ public class ResumeServiceImpl implements IResumeService{
     public int isExistEvaluation(int userId) {
         return resumeMapper.isExistEvaluation(userId);
     }
+
+    @Override
+    public int submitJob(JobSubmit jobSubmit) {
+        Date now = new Date();
+        jobSubmit.setCreateTime(now);
+        jobSubmit.setUpdateTime(now);
+        return resumeMapper.submitJob(jobSubmit);
+    }
+
+    @Override
+    public List<JobBriefVo> querySubmitByUserId(int userId){
+        return resumeMapper.querySubmitByUserId(userId);
+    }
+
 }

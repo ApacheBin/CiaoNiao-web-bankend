@@ -2,6 +2,7 @@ package com.cainiaoshixi.dao;
 
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.vo.JobQueryVo;
+import com.cainiaoshixi.vo.ResumeBriefVo;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface JobMapper {
     int insertSelective(Job job);
 
     int updateByPrimaryKeySelective(Job job);
+
+    List<ResumeBriefVo> querySubmitByJobId(Integer jobId);
 }

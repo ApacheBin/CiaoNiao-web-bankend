@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/schoolExp")
+@RequestMapping("/school/experience")
 @CrossOrigin
 @Api(value = "校园经历控制器", tags = {"校园经历接口"})
 @ResponseBody

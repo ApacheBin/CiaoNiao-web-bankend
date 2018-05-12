@@ -25,4 +25,15 @@
   <select id="isExistEvaluation" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT count(*) from cn_resume where user_id = #{userId}
   </select>
+
+  <insert id="submitJob" useGeneratedKeys="true" keyProperty="id" parameterType="JobSubmit">
+    INSERT INTO cn_job_submit(job_id, status, user_id, create_time, update_time)
+    VALUES (#{jobId}, #{status}, #{userId},  #{createTime}, #{updateTime})
+  </insert>
+
+    <select id="querySubmitByUserId" parameterType="java.lang.Integer" resultType="com.cainiaoshixi.vo.JobBriefVo">
+      SELECT submit.id as submit_id,submit.job_id,submit.user_id,job.name as job_name,job.company,job.company_id,submit.status
+      FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id
+      WHERE submit.user_id= #{userId};
+    </select>
 </mapper>

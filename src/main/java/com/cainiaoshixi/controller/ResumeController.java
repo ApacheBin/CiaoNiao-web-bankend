@@ -9,6 +9,7 @@ import com.cainiaoshixi.service.IResumeService;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
+import com.cainiaoshixi.vo.JobBriefVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -65,5 +66,23 @@ public class ResumeController {
             return ResultUtil.success(jsonObject);
         }
         return ResultUtil.success("");
+    }
+    @PostMapping("/submit")
+    @ApiOperation("投递简历")
+    public Result submitJob(@RequestBody JobSubmit jobSubmit) {
+        jobSubmit.setUserId(session.userId());
+        resumeService.submitJob(jobSubmit); //这个返回的是新增的记录数
+        // 返回投递ID
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("submitId", jobSubmit.getId());
+        return ResultUtil.success(jsonObject);
+    }
+
+    @GetMapping("/job/list")
+    @ApiOperation("获取工作岗位列表")
+    public Result getSubmitListByUId(){
+        Integer userId = session.userId();
+        List<JobBriefVo> jobBriefVos = resumeService.querySubmitByUserId(userId);  //条件查询
+        return ResultUtil.success(jobBriefVos);
     }
 }
