@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cainiaoshixi.dao.RewardMapper">
+  <select id="getReward" resultType="Reward">
+    SELECT
+	  id,name,reward_time,user_id,level
+    FROM cn_reward
+    <choose>
+      <when test="rewardId != -1">
+        WHERE id = #{rewardId}
+      </when>
+      <otherwise>
+        WHERE user_id= #{userId}
+      </otherwise>
+    </choose>
+  </select>
+
+  <insert id="addReward" useGeneratedKeys="true" keyProperty="id" parameterType="Reward">
+    INSERT INTO cn_reward(name, reward_time, user_id, level, create_time, update_time)
+    VALUES (#{name}, #{rewardTime},#{userId},#{level}, #{createTime}, #{updateTime})
+  </insert>
+
+  <update id="updateReward" parameterType="Reward">
+    update cn_reward set
+    <if test="name != null">name = #{name},</if>
+    <if test="rewardTime != null">reward_time = #{rewardTime},</if>
+    <if test="level != null">level = #{level},</if>
+    <if test="updateTime != null">update_time = #{updateTime}</if>
+    where id = #{id}
+  </update>
+
+  <delete id="deleteReward">
+    delete from cn_reward where id = #{id}
+  </delete>
+</mapper>
