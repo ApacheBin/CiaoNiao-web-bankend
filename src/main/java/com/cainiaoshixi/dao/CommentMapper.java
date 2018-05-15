@@ -24,7 +24,7 @@ public interface CommentMapper {
      * @param commentId
      * @return
      */
-    Comment getCommentByCommentId(int commentId);
+    Comment getCommentByCommentId(Integer commentId);
 
     /**
      * 通过userID查询
@@ -49,5 +49,5 @@ public interface CommentMapper {
      * 删除评论
      * @param commentId
      */
-    void deleteComment(int commentId);
+    void deleteComment(Integer commentId);
 }

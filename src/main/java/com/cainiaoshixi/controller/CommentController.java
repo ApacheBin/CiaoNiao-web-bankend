@@ -1,19 +1,17 @@
 package com.cainiaoshixi.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Comment;
 import com.cainiaoshixi.service.ICommentService;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
+import com.cainiaoshixi.util.SessionUtil;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,8 +20,17 @@ import java.util.List;
 @Api(value = "投诉与建议控制器", tags = {"投诉与建议接口"})
 @ResponseBody
 public class CommentController {
+
+    private final ICommentService commentService;
+
+    private final SessionUtil session;
+
     @Autowired
-    private ICommentService commentService;
+    public CommentController(ICommentService commentService,SessionUtil session) {
+        this.commentService=commentService;
+        this.session = session;
+    }
+
     @Autowired
     private RedisUtil redisUtil;
 
@@ -32,12 +39,13 @@ public class CommentController {
      * @param userId
      * @return
      */
-    @RequestMapping(value="/getComment", method = RequestMethod.GET)
-    @ResponseBody
-    public Result getCommentListByUserId(int  userId){
+    @RequestMapping(value="/getComment", method = RequestMethod.POST)
+    public Result getCommentListByUserId(@RequestParam(value = "userId", required = false,defaultValue = "-1") Integer  userId){
+        userId = session.userId();
 //        JSONObject jsonObject=new JSONObject();
         List<Comment> commentList=commentService.getCommentListByUserId(userId);
-        return ResultUtil.success(JSON.toJSONString(commentList,SerializerFeature.WriteMapNullValue));
+//        return ResultUtil.success(JSON.toJSONString(commentList,SerializerFeature.WriteMapNullValue));
+        return ResultUtil.success(commentList);
     }
     /**
      * 保存用户的comment
@@ -47,10 +55,11 @@ public class CommentController {
     @RequestMapping(value="/addComment", method = RequestMethod.POST)
     @ResponseBody
     public Result addComment(@RequestBody Comment comment){
-        comment.setCreatedTime(new Date());
-        comment.setUpdatedTime(new Date());
+        comment.setUserId(session.userId());
         commentService.addComment(comment);
-        return ResultUtil.success("");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("CommentId", comment.getCommentId());
+        return ResultUtil.success(jsonObject);
     }
 
     /**
@@ -61,7 +70,7 @@ public class CommentController {
     @RequestMapping(value="/updateComment", method = RequestMethod.POST)
     @ResponseBody
     public Result updateComment(@RequestBody Comment comment){
-        comment.setUpdatedTime(new Date());
+        comment.setUserId(session.userId());
         commentService.updateComment(comment);
         return ResultUtil.success("");
     }
@@ -72,8 +81,7 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value="/deleteComment", method = RequestMethod.POST)
-    @ResponseBody
-    public Result deleteComment(@RequestBody int commentId){
+    public Result deleteComment(@RequestParam("commentId") int  commentId){
         commentService.deleteComment(commentId);
         return ResultUtil.success("");
     }
