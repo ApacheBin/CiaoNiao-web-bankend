@@ -39,7 +39,7 @@ public class CommentController {
      * @param userId
      * @return
      */
-    @RequestMapping(value="/getComment", method = RequestMethod.POST)
+    @RequestMapping(value="/get", method = RequestMethod.POST)
     public Result getCommentListByUserId(@RequestParam(value = "userId", required = false,defaultValue = "-1") Integer  userId){
         userId = session.userId();
 //        JSONObject jsonObject=new JSONObject();
@@ -52,7 +52,7 @@ public class CommentController {
      * @param comment
      * @return
      */
-    @RequestMapping(value="/addComment", method = RequestMethod.POST)
+    @RequestMapping(value="/add", method = RequestMethod.POST)
     @ResponseBody
     public Result addComment(@RequestBody Comment comment){
         comment.setUserId(session.userId());
@@ -67,7 +67,7 @@ public class CommentController {
      * @param comment
      * @return
      */
-    @RequestMapping(value="/updateComment", method = RequestMethod.POST)
+    @RequestMapping(value="/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateComment(@RequestBody Comment comment){
         comment.setUserId(session.userId());
@@ -80,7 +80,7 @@ public class CommentController {
      * @param commentId
      * @return
      */
-    @RequestMapping(value="/deleteComment", method = RequestMethod.POST)
+    @RequestMapping(value="/delete", method = RequestMethod.POST)
     public Result deleteComment(@RequestParam("commentId") int  commentId){
         commentService.deleteComment(commentId);
         return ResultUtil.success("");
