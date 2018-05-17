@@ -24,6 +24,8 @@ public class JobBriefVo {
 
     private int userId;
 
+    private String logo;
+
     public int getSubmitId() {
         return submitId;
     }
@@ -74,5 +76,13 @@ public class JobBriefVo {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

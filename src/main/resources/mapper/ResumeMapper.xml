@@ -15,7 +15,7 @@
     values (#{evaluation}, #{userId}, #{createTime}, #{updateTime})
   </insert>
 
-  <update id="updateEvaluation" parameterType="Work">
+  <update id="updateEvaluation" parameterType="Resume">
     update cn_resume set
     <if test="evaluation != null">evaluation = #{evaluation},</if>
     <if test="updateTime != null">update_time = #{updateTime}</if>
@@ -32,8 +32,8 @@
   </insert>
 
     <select id="querySubmitByUserId" parameterType="java.lang.Integer" resultType="com.cainiaoshixi.vo.JobBriefVo">
-      SELECT submit.id as submit_id,submit.job_id,submit.user_id,job.name as job_name,job.company,job.company_id,submit.status
-      FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id
+      SELECT submit.id as submit_id,submit.job_id,submit.user_id,job.name as job_name,job.company,job.company_id,company.logo,submit.status
+      FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id JOIN cn_company company on job.company_id=company.id
       WHERE submit.user_id= #{userId};
     </select>
 </mapper>
