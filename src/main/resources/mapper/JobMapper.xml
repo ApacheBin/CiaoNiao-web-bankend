@@ -114,7 +114,7 @@
         and job.status = #{status, jdbcType=TINYINT}
       </if>
       <if test="searchValue!=null">
-        and job.name like concat(concat("%",#{searchValue}),"%") or job.company like concat(concat("%",#{searchValue}),"%") or job.department like concat(concat("%",#{searchValue}),"%");
+        and job.name like concat(concat("%",#{searchValue}),"%") or job.company like concat(concat("%",#{searchValue}),"%") or job.department like concat(concat("%",#{searchValue}),"%")
       </if>
     </where>
       order by job.create_time desc
