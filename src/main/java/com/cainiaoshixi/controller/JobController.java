@@ -68,7 +68,7 @@ public class JobController {
     @ApiOperation("根据id查看单条岗位详情")
     @PostMapping("/detail")
     public Result getJobDetail(@RequestParam(value = "id", required = true) Integer id){
-        Job jobDetail = jobService.selectByPrimaryKey(id);
+        JobWithLogo jobDetail = jobService.selectByPrimaryKey(id);
         return ResultUtil.success(jobDetail);
     }
 

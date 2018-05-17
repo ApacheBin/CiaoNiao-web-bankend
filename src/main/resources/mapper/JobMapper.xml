@@ -83,14 +83,13 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, name, company, company_id, department, type, province, city, district, 
-    address, industry, function, is_remote, description, requirement, salary, welfare, 
-    duty_per_week, duration, user_id, receive_method, receive_email, status, create_time, 
-    update_time
-    from cn_job
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithLogo">
+      select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
+      job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
+      job.duration, job.user_id, job.receive_method, job.receive_email, job.status, job.create_time,  job.update_time, company.logo
+      from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
+      where job.id = #{id,jdbcType=INTEGER}
+    </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, company, company_id, department, type, province, city, district, 
     address, industry, function, is_remote, description, requirement, salary, welfare, 

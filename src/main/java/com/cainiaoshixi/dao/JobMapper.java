@@ -12,7 +12,7 @@ public interface JobMapper {
 
     int insert(Job record);
 
-    Job selectByPrimaryKey(Integer id);
+    JobWithLogo selectByPrimaryKey(Integer id);
 
     List<Job> selectAll();
 
