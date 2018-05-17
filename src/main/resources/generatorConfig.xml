@@ -52,9 +52,12 @@
                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table schema="cainiao" tableName="cn_company"  domainObjectName="Company"
-               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false">
+        <!--<table schema="cainiao" tableName="cn_company"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <table tableName="cn_notice" domainObjectName="Notice">
+            <generatedKey column="id" identity="true" sqlStatement="Mysql"/>
         </table>
 
     </context>
