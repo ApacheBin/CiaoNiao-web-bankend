@@ -3,6 +3,7 @@ package com.cainiaoshixi.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Job;
+import com.cainiaoshixi.entity.JobWithLogo;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
@@ -53,7 +54,7 @@ public class JobController {
     public Result getJobList(@RequestBody JobQueryVo jobQueryVo) {
         jobQueryVo.setUserId(session.userId());
 //        JSONObject jsonObject = new JSONObject();
-        List<Job> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
+        List<JobWithLogo> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
 //        return JSON.toJSONString(jobList, SerializerFeature.WriteMapNullValue);  //null值保留
         return ResultUtil.success(jobList);
     }

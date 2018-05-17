@@ -16,22 +16,25 @@
     <result column="introducation" jdbcType="VARCHAR" property="introducation" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cn_company
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.Company">
-    insert into cn_company (name, abbr,
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.Company">
+    insert into cn_company (id, name, abbr, 
       industry, establish_time, province, 
       city, district, address, 
       official_web, product, introducation, 
-      create_time, update_time)
-    values (#{name,jdbcType=VARCHAR}, #{abbr,jdbcType=VARCHAR},
+      create_time, update_time, logo
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{abbr,jdbcType=VARCHAR}, 
       #{industry,jdbcType=INTEGER}, #{establishTime,jdbcType=DATE}, #{province,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{officialWeb,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, #{introducation,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{logo,jdbcType=VARCHAR}
+      )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.Company">
     update cn_company
@@ -47,32 +50,19 @@
       product = #{product,jdbcType=VARCHAR},
       introducation = #{introducation,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      logo = #{logo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, name, abbr, industry, establish_time, province, city, district, address, 
-    official_web, product, introducation, create_time, update_time
+    official_web, product, introducation, create_time, update_time, logo
     from cn_company
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, abbr, industry, establish_time, province, city, district, address, 
-    official_web, product, introducation, create_time, update_time
+    official_web, product, introducation, create_time, update_time, logo
     from cn_company
-  </select>
-
-  <select id="getCompanyListById" resultType="com.cainiaoshixi.entity.Company">
-    select id, name, abbr, industry, establish_time, province, city, district, address,
-    official_web, product, introducation, create_time, update_time
-    from cn_company
-    <choose>
-      <when test="id != -1">
-        WHERE id = #{id}
-      </when>
-      <otherwise>
-        WHERE user_id= #{userId}
-      </otherwise>
-    </choose>
   </select>
 </mapper>

@@ -1,13 +1,14 @@
 package com.cainiaoshixi.service;
 
 import com.cainiaoshixi.entity.Job;
+import com.cainiaoshixi.entity.JobWithLogo;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 
 import java.util.List;
 
 public interface IJobService {
-    List<Job> getJobListByVo(JobQueryVo jobQueryVo);
+    List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo);
 
     Job selectByPrimaryKey(Integer id);
 

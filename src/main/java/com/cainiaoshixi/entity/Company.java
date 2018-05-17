@@ -1,15 +1,7 @@
 package com.cainiaoshixi.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModel;
-import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
-@Component("CnCompany")
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(description = "公司信息实体")
 public class Company {
     private Integer id;
 
@@ -38,6 +30,8 @@ public class Company {
     private Date createTime;
 
     private Date updateTime;
+
+    private String logo;
 
     public Integer getId() {
         return id;
@@ -149,5 +143,13 @@ public class Company {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

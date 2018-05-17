@@ -1,6 +1,7 @@
 package com.cainiaoshixi.dao;
 
 import com.cainiaoshixi.entity.Job;
+import com.cainiaoshixi.entity.JobWithLogo;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 
@@ -17,7 +18,7 @@ public interface JobMapper {
 
     int updateByPrimaryKey(Job record);
 
-    List<Job> getJobListByVo(JobQueryVo jobQueryVo);
+    List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo);
 
     int insertSelective(Job job);
 

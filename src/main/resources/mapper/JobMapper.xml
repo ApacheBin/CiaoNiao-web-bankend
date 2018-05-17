@@ -28,6 +28,9 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithLogo" type="com.cainiaoshixi.entity.JobWithLogo">
+        <result column="logo" jdbcType="VARCHAR" property="logo" />
+    </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cn_job
     where id = #{id,jdbcType=INTEGER}
@@ -95,26 +98,26 @@
     update_time
     from cn_job
   </select>
-  <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="BaseResultMap">
-    select id, name, company, company_id, department, type, province, city, district,address,
-    industry, function, is_remote, description, requirement, salary, welfare,duty_per_week,
-    duration, user_id, receive_method, receive_email, status, create_time,update_time
-    from cn_job
+  <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="ResultMapWithLogo">
+    select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
+      job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
+      job.duration, job.user_id, job.receive_method, job.receive_email, job.status, job.create_time,  job.update_time, company.logo
+    from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
     <where>
       <if test="name!=null and name!=''">
-        and name LIKE "%"#{name, jdbcType=VARCHAR}"%"
+        and job.name LIKE "%"#{name, jdbcType=VARCHAR}"%"
       </if>
       <if test="type!=null and type!='所有'">
-        and type = #{type, jdbcType=VARCHAR}
+        and job.type = #{type, jdbcType=VARCHAR}
       </if>
       <if test="status!=null">
-        and status = #{status, jdbcType=TINYINT}
+        and job.status = #{status, jdbcType=TINYINT}
       </if>
       <if test="searchValue!=null">
-        and name like concat(concat("%",#{searchValue}),"%") or company like concat(concat("%",#{searchValue}),"%") or department like concat(concat("%",#{searchValue}),"%");
+        and job.name like concat(concat("%",#{searchValue}),"%") or job.company like concat(concat("%",#{searchValue}),"%") or job.department like concat(concat("%",#{searchValue}),"%");
       </if>
     </where>
-      order by create_time desc
+      order by job.create_time desc
       limit #{iDisplayStart,jdbcType=INTEGER},#{iDisplayLength,jdbcType=INTEGER}
   </select>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.Job">

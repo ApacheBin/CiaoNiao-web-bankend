@@ -2,6 +2,7 @@ package com.cainiaoshixi.service.Impl;
 
 import com.cainiaoshixi.dao.JobMapper;
 import com.cainiaoshixi.entity.Job;
+import com.cainiaoshixi.entity.JobWithLogo;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
@@ -21,7 +22,7 @@ public class JobServiceImpl implements IJobService {
     @Autowired
     private JobMapper cnjobMapper;
 
-    public List<Job> getJobListByVo(JobQueryVo jobQueryVo) {
+    public List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo) {
         return cnjobMapper.getJobListByVo(jobQueryVo);
     }
 
