@@ -11,4 +11,6 @@ public interface IFileService {
     void save(File file, MultipartFile multipartFile) throws IOException;
 
     File getFile(int type, int uploaderId);
+
+    File getFile(Integer id);
 }

@@ -111,10 +111,14 @@ public class ResumeController {
         return ResultUtil.success("");
     }
 
-    @GetMapping(value = "/download")
+    @GetMapping("/download")
     @ApiOperation("简历下载")
-    public ResponseEntity<byte[]> getResumeFile() throws IOException {
-        File file = fileService.getFile(FileTypeEnum.RESUMES.getCode(), session.userId());
+    public ResponseEntity<byte[]> getResumeFile(@RequestParam(value = "userId", required = false) Integer userId) throws IOException {
+        File file;
+        if(userId == null)
+            file = fileService.getFile(FileTypeEnum.RESUMES.getCode(), session.userId());
+        else
+            file = fileService.getFile(FileTypeEnum.RESUMES.getCode(), userId);
         InputStream in = new FileInputStream(FileTypeEnum.ROOT.getPath() +
                 FileTypeEnum.RESUMES.getPath() + file.getPath());
         HttpHeaders headers = new HttpHeaders();
@@ -122,5 +126,20 @@ public class ResumeController {
         headers.set("Content-Disposition", "attachment;filename*=UTF-8''" +
                 URLEncoder.encode(file.getName(), "UTF-8")); //解决中文乱码或不出现中文名的问题
         return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/file/get")
+    @ApiOperation("获取简历文件信息")
+    @ResponseBody
+    public Result getResumeFileInfo(@RequestParam(value = "userId", required = false) Integer userId) {
+        File file;
+        if(userId == null)
+            file = fileService.getFile(FileTypeEnum.RESUMES.getCode(), session.userId());
+        else
+            file = fileService.getFile(FileTypeEnum.RESUMES.getCode(), userId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("fileId", file.getId());
+        jsonObject.put("filename", file.getName());
+        return ResultUtil.success(jsonObject);
     }
 }

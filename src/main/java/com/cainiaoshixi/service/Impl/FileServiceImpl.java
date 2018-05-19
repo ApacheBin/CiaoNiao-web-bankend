@@ -65,4 +65,9 @@ public class FileServiceImpl implements IFileService {
     public File getFile(int type, int uploaderId) {
         return fileMapper.selectByUploaderId(type, uploaderId);
     }
+
+    @Override
+    public File getFile(Integer id) {
+        return fileMapper.selectByPrimaryKey(id);
+    }
 }
