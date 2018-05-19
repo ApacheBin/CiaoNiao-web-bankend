@@ -1,24 +1,32 @@
 package com.cainiaoshixi.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cainiaoshixi.domain.Result;
-import com.cainiaoshixi.entity.*;
+import com.cainiaoshixi.entity.File;
+import com.cainiaoshixi.entity.JobSubmit;
+import com.cainiaoshixi.entity.Resume;
+import com.cainiaoshixi.enums.FileTypeEnum;
+import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IResumeService;
-import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import com.cainiaoshixi.vo.JobBriefVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.models.auth.In;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -30,20 +38,23 @@ import java.util.List;
 @RequestMapping("/resume")
 @CrossOrigin
 @Api(value = "简历控制器", tags = {"简历接口"})
-@ResponseBody
 public class ResumeController {
 
     private final IResumeService resumeService;
 
     private final SessionUtil session;
+
+    private final IFileService fileService;
     @Autowired
-    public ResumeController(IResumeService resumeService, SessionUtil session) {
+    public ResumeController(IResumeService resumeService, SessionUtil session, IFileService fileService) {
         this.resumeService = resumeService;
         this.session = session;
+        this.fileService = fileService;
     }
 
     @GetMapping("/get")
     @ApiOperation("根据ID获取自我评价")
+    @ResponseBody
     public Result getEvaluationByUserId(){
         Integer userId = session.userId();
         return ResultUtil.success(resumeService.getEvaluationByUserId(userId));
@@ -51,6 +62,7 @@ public class ResumeController {
 
     @PostMapping("/save")
     @ApiOperation("保存自我评价")
+    @ResponseBody
     public Result saveEvaluation(@RequestParam("evaluation") String evaluation) {
         Resume resume=new Resume();
         resume.setEvaluation(evaluation);
@@ -69,6 +81,7 @@ public class ResumeController {
     }
     @PostMapping("/submit")
     @ApiOperation("投递简历")
+    @ResponseBody
     public Result submitJob(@RequestBody JobSubmit jobSubmit) {
         jobSubmit.setUserId(session.userId());
         resumeService.submitJob(jobSubmit); //这个返回的是新增的记录数
@@ -80,9 +93,32 @@ public class ResumeController {
 
     @GetMapping("/job/list")
     @ApiOperation("获取工作岗位列表")
+    @ResponseBody
     public Result getSubmitListByUId(){
         Integer userId = session.userId();
         List<JobBriefVo> jobBriefVos = resumeService.querySubmitByUserId(userId);  //条件查询
         return ResultUtil.success(jobBriefVos);
+    }
+
+    @PostMapping("/upload")
+    @ResponseBody
+    public Result upload(@RequestParam("file")MultipartFile file) throws IOException {
+        File fileEntity = new File();
+        fileEntity.setUploaderId(session.userId());
+        fileEntity.setType(FileTypeEnum.RESUMES.getCode());
+        fileService.save(fileEntity, file);
+        return ResultUtil.success("");
+    }
+
+    @GetMapping(value = "/download")
+    public ResponseEntity<byte[]> getResumeFile() throws IOException {
+        File file = fileService.getFile(FileTypeEnum.RESUMES.getCode(), session.userId());
+        InputStream in = new FileInputStream(FileTypeEnum.ROOT.getPath() +
+                FileTypeEnum.RESUMES.getPath() + file.getPath());
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", file.getMime());
+        headers.set("Content-Disposition", "attachment;filename*=UTF-8''" +
+                URLEncoder.encode(file.getName(), "UTF-8")); //解决中文乱码或不出现中文名
+        return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
     }
 }
