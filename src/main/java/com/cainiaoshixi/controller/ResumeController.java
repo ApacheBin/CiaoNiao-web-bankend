@@ -101,6 +101,7 @@ public class ResumeController {
     }
 
     @PostMapping("/upload")
+    @ApiOperation("简历上传")
     @ResponseBody
     public Result upload(@RequestParam("file")MultipartFile file) throws IOException {
         File fileEntity = new File();
@@ -111,6 +112,7 @@ public class ResumeController {
     }
 
     @GetMapping(value = "/download")
+    @ApiOperation("简历下载")
     public ResponseEntity<byte[]> getResumeFile() throws IOException {
         File file = fileService.getFile(FileTypeEnum.RESUMES.getCode(), session.userId());
         InputStream in = new FileInputStream(FileTypeEnum.ROOT.getPath() +
@@ -118,7 +120,7 @@ public class ResumeController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", file.getMime());
         headers.set("Content-Disposition", "attachment;filename*=UTF-8''" +
-                URLEncoder.encode(file.getName(), "UTF-8")); //解决中文乱码或不出现中文名
+                URLEncoder.encode(file.getName(), "UTF-8")); //解决中文乱码或不出现中文名的问题
         return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
     }
 }
