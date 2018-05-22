@@ -51,8 +51,21 @@ public class CommentController {
     public Result getCommentListByUserId(@RequestParam(value = "userId", required = false,defaultValue = "-1") Integer  userId){
         userId = session.userId();
         List<Comment> commentList=commentService.getCommentListByUserId(userId);
+        String location = null;
+
         for(Comment comment: commentList) {
-            comment.setImageLocation(image_dir + comment.getImageLocation());
+            String imageLocation = null;
+            location =comment.getImageLocation();
+            String[] locationArray= location.split(";");
+            for (int i = 0; i < locationArray.length; i++) {
+                locationArray[i] = image_dir +locationArray[i];
+                if(imageLocation==null){
+                    imageLocation = locationArray[i];
+                }else {
+                    imageLocation = imageLocation + ";" + locationArray[i];
+                }
+            }
+            comment.setImageLocation(imageLocation);
         }
         return ResultUtil.success(commentList);
     }
@@ -83,7 +96,7 @@ public class CommentController {
                     }else{
                         imageName = imageName + ";" + image.getOriginalFilename();
                         relativePath = relativePath + ";" + FileUtil.getRelativePath(image);
-                        FileUtil.save(image, COMMENT_IMAGE_DIR + relativePath);
+                        FileUtil.save(image, COMMENT_IMAGE_DIR + FileUtil.getRelativePath(image));
                     }
 
                 }
