@@ -16,7 +16,7 @@ public class NoticeServiceImpl implements INoticeService {
 
     private final NoticeMapper noticeMapper;
 
-    private final static String image_dir = "cainaioshixi.com/images/notices/";
+    private final static String image_dir = "cainiaoshixi.com/images/notices/";
 
     @Autowired
     public NoticeServiceImpl(NoticeMapper noticeMapper) {
