@@ -2,35 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cainiaoshixi.dao.CommentMapper">
     <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.Comment">
-        <result column="comment_id" jdbcType="BIGINT" property="commentId"/>
-        <result column="user_id" jdbcType="BIGINT" property="userId"/>
-        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="comment_id" jdbcType="INTEGER" property="commentId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="comment_type" jdbcType="TINYINT" property="commentType"/>
         <result column="user_comment" jdbcType="VARCHAR" property="userComment"/>
-        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="image_name" jdbcType="VARCHAR" property="imageName"/>
+        <result column="image_location" jdbcType="VARCHAR" property="imageLocation"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     </resultMap>
     <insert id="insert" parameterType="com.cainiaoshixi.entity.Comment">
-        insert into comment(comment_id,user_id,user_name,user_comment,photo,email,created_time,updated_time)
-        values (#{commentId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{userName,jdbcType=VARCHAR},#{userComment,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},
-        #{photo,jdbcType=VARCHAR},#{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
+        insert into cn_comment(user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time),
+        values (#{userId,jdbcType=INTEGER},#{commentType,jdbcType=TINYINT},
+        #{userComment,jdbcType=VARCHAR},#{imageName,jdbcType=VARCHAR},#{imageLocation,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},#{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.Comment" >
-        insert into comment
+        insert into cn_comment
         <trim prefix="(" suffix=")" suffixOverrides=",">
 
             <if test="userId !=null">
                 user_id,
             </if>
-            <if test="userName !=null">
-                user_name,
+            <if test="commentType !=null">
+                comment_type,
             </if>
             <if test="userComment !=null">
                 user_comment,
             </if>
-            <if test="photo !=null">
-                photo,
+            <if test="imageName !=null">
+                image_name,
+            </if>
+            <if test="imageLocation !=null">
+                image_location,
             </if>
             <if test="email !=null">
                 email,
@@ -45,16 +50,19 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 
             <if test="userId !=null">
-                #{userId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
             </if>
-            <if test="userName !=null">
-                #{userName,jdbcType=VARCHAR},
+            <if test="commentType !=null">
+                #{commentType,jdbcType=TINYINT},
             </if>
             <if test="userComment !=null">
                 #{userComment,jdbcType=VARCHAR},
             </if>
-            <if test="photo !=null">
-                #{photo,jdbcType=VARCHAR},
+            <if test="imageName !=null">
+                #{imageName,jdbcType=VARCHAR},
+            </if>
+            <if test="imageLocation !=null">
+                #{imageLocation,jdbcType=VARCHAR},
             </if>
             <if test="email !=null">
                 #{email,jdbcType=VARCHAR},
@@ -68,30 +76,33 @@
         </trim>
     </insert>
     <select id="getCommentByCommentId"  resultType="com.cainiaoshixi.entity.Comment">
-        select comment_id,user_id,user_name,user_comment,photo,email,created_time,updated_time
-        from comment
-        where comment_id=#{userId, jdbcType=BIGINT}
+        select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time
+        from cn_comment
+        where comment_id=#{userId, jdbcType=INTEGER}
     </select>
     <select id="getCommentListByUserId" resultType="com.cainiaoshixi.entity.Comment">
-        select comment_id,user_id,user_name,user_comment,photo,email,created_time,updated_time
-        from comment
-        where user_id=#{userId, jdbcType=BIGINT}
+        select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time
+        from cn_comment
+        where user_id=#{userId, jdbcType=INTEGER}
     </select>
     <insert id="addComment" parameterType="com.cainiaoshixi.entity.Comment">
-        insert into comment
+        insert into cn_comment
         <trim prefix="(" suffix=")" suffixOverrides=",">
         <if test="userId !=null">
             user_id,
         </if>
-        <if test="userName !=null">
-            user_name,
+        <if test="commentType !=null">
+            comment_type,
         </if>
         <if test="userComment !=null">
             user_comment,
         </if>
-        <if test="photo !=null">
-            photo,
+        <if test="imageName !=null">
+            image_name,
         </if>
+            <if test="imageLocation !=null">
+                image_location,
+            </if>
         <if test="email !=null">
             email,
         </if>
@@ -104,16 +115,19 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId !=null">
-                #{userId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
             </if>
-            <if test="userName !=null">
-                #{userName,jdbcType=VARCHAR},
+            <if test="commentType !=null">
+                #{commentType,jdbcType=TINYINT},
             </if>
             <if test="userComment !=null">
                 #{userComment,jdbcType=VARCHAR},
             </if>
-            <if test="photo !=null">
-                #{photo,jdbcType=VARCHAR},
+            <if test="imageName !=null">
+                #{imageName,jdbcType=VARCHAR},
+            </if>
+            <if test="imageLocation !=null">
+                #{imageLocation,jdbcType=VARCHAR},
             </if>
             <if test="email !=null">
                 #{email,jdbcType=VARCHAR},
@@ -127,19 +141,22 @@
         </trim>
     </insert>
     <update id="updateComment" parameterType="com.cainiaoshixi.entity.Comment">
-        update comment
+        update cn_comment
         <set>
             <if test="userId !=null">
-                user_id=#{userId,jdbcType=BIGINT},
+                user_id=#{userId,jdbcType=INTEGER},
             </if>
-            <if test="userName !=null">
-                user_name=#{userName,jdbcType=VARCHAR},
+            <if test="commentType !=null">
+                comment_type=#{commentType,jdbcType=TINYINT},
             </if>
             <if test="userComment !=null">
                 user_comment = #{userComment,jdbcType=VARCHAR},
             </if>
-            <if test="photo !=null">
-                photo = #{photo,jdbcType=VARCHAR},
+            <if test="imageName !=null">
+                image_name = #{imageName,jdbcType=VARCHAR},
+            </if>
+            <if test="imageLocation !=null">
+                image_location = #{imageLocation,jdbcType=VARCHAR},
             </if>
             <if test="email !=null">
                 email = #{email,jdbcType=VARCHAR},
@@ -151,10 +168,10 @@
                 updated_time=#{updatedTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where comment_id = #{commentId,jdbcType=BIGINT}
+        where comment_id = #{commentId,jdbcType=INTEGER}
     </update>
     <delete id="deleteComment" parameterType="com.cainiaoshixi.entity.Comment">
-        delete from comment
-        where comment_id=#{commentId, jdbcType=BIGINT}
+        delete from cn_comment
+        where comment_id=#{commentId, jdbcType=INTEGER}
     </delete>
 </mapper>

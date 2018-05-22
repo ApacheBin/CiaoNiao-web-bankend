@@ -7,11 +7,13 @@ public class Comment {
 
     private int userId;
 
-    private String userName;
+    private int commentType;
 
     private String userComment;
 
-    private String photo;
+    private String imageName;
+
+    private String imageLocation;
 
     private String email;
 
@@ -35,12 +37,12 @@ public class Comment {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public int getCommentType() {
+        return commentType;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCommentType(int commentType) {
+        this.commentType = commentType;
     }
 
     public String getUserComment() {
@@ -51,12 +53,20 @@ public class Comment {
         this.userComment = userComment;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getImageLocation() {
+        return imageLocation;
+    }
+
+    public void setImageLocation(String imageLocation) {
+        this.imageLocation = imageLocation;
     }
 
     public String getEmail() {
@@ -81,19 +91,5 @@ public class Comment {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "commentId=" + commentId +
-                ", userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userComment='" + userComment + '\'' +
-                ", photo='" + photo + '\'' +
-                ", email='" + email + '\'' +
-                ", createdTime=" + createdTime +
-                ", updatedTime=" + updatedTime +
-                '}';
     }
 }
