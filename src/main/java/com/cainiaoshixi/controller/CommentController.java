@@ -27,7 +27,7 @@ public class CommentController {
 
     private final static String COMMENT_IMAGE_DIR = "/data/images/comments/";
 
-    private final static String image_dir = "cainaioshixi.com/images/comments/";
+    private final static String image_dir = "cainiaoshixi.com/images/comments/";
 
     private final ICommentService commentService;
 
@@ -47,7 +47,7 @@ public class CommentController {
      * @param userId
      * @return
      */
-    @RequestMapping(value="/get", method = RequestMethod.POST)
+    @RequestMapping(value="/get", method = RequestMethod.GET)
     public Result getCommentListByUserId(@RequestParam(value = "userId", required = false,defaultValue = "-1") Integer  userId){
         userId = session.userId();
         List<Comment> commentList=commentService.getCommentListByUserId(userId);
@@ -110,7 +110,7 @@ public class CommentController {
         comment.setEmail(email);
         commentService.addComment(comment);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("CommentId", comment.getCommentId());
+        jsonObject.put("commentId", comment.getCommentId());
         return ResultUtil.success(jsonObject);
     }
 
