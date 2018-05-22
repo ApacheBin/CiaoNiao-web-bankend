@@ -78,14 +78,14 @@
     <select id="getCommentByCommentId"  resultType="com.cainiaoshixi.entity.Comment">
         select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time
         from cn_comment
-        where comment_id=#{userId, jdbcType=INTEGER}
+        where comment_id=#{commentId, jdbcType=INTEGER}
     </select>
     <select id="getCommentListByUserId" resultType="com.cainiaoshixi.entity.Comment">
         select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time
         from cn_comment
         where user_id=#{userId, jdbcType=INTEGER}
     </select>
-    <insert id="addComment" parameterType="com.cainiaoshixi.entity.Comment">
+    <insert id="addComment"  useGeneratedKeys="true" keyProperty="commentId" parameterType="com.cainiaoshixi.entity.Comment">
         insert into cn_comment
         <trim prefix="(" suffix=")" suffixOverrides=",">
         <if test="userId !=null">
