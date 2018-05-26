@@ -22,17 +22,25 @@ public class RandomUtil {
     public static String generateVerificationCode(int num) {
         char[] code = new char[num];
         for(int i = 0; i < num; i++) {
-            code[i] = generateRandomChar();
+            code[i] = generateRandomNum();
         }
         return String.valueOf(code);
+    }
+
+    public static char generateRandomNum() {
+        return generateRandomChar(0);
+    }
+
+    public static char generateRandomChar() {
+        return generateRandomChar(3);
     }
 
     /**
      * 生成0-9，a-z, A-Z中的随机字符
      */
-    public static char generateRandomChar() {
+    public static char generateRandomChar(int bound) {
         Random random = new Random();
-        switch (random.nextInt(3)) {
+        switch (random.nextInt(bound)) {
             case 0: return (char)('0' + random.nextInt(10));
             case 1: return (char) ('a' + random.nextInt(26));
             default: return (char) ('A' + random.nextInt(26));
