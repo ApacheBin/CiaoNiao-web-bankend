@@ -7,6 +7,8 @@ import com.cainiaoshixi.entity.StudentCertify;
 import com.cainiaoshixi.enums.FileTypeEnum;
 import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IIdentityService;
+import com.cainiaoshixi.service.Impl.MailServiceImpl;
+import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +32,9 @@ public class IdentityController {
 
     @Autowired
     private IIdentityService identityService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PostMapping("/student/upload")
     @ApiOperation("上传学生信息")
@@ -74,8 +79,7 @@ public class IdentityController {
     }
 
     private boolean verifyCode(String email, String code) {
-        //todo 验证码校验
-        return true;
+        return  code.equals(redisUtil.hget(MailServiceImpl.VERIFICATION_CODE_KEY, email));
     }
 
 }

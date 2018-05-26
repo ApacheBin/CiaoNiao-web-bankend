@@ -40,10 +40,13 @@ public class RandomUtil {
      */
     public static char generateRandomChar(int bound) {
         Random random = new Random();
-        switch (random.nextInt(bound)) {
-            case 0: return (char)('0' + random.nextInt(10));
-            case 1: return (char) ('a' + random.nextInt(26));
-            default: return (char) ('A' + random.nextInt(26));
-        }
+        if(0 < bound && bound < 4)
+            switch (random.nextInt(bound)) {
+                case 0: return (char)('0' + random.nextInt(10));
+                case 1: return (char) ('a' + random.nextInt(26));
+                default: return (char) ('A' + random.nextInt(26));
+            }
+        else
+            return (char)('0' + random.nextInt(10));
     }
 }
