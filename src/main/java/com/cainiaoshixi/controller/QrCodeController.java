@@ -22,7 +22,7 @@ public class QrCodeController {
         String uuid = UUID.randomUUID().toString().replaceAll("-", ""); //生成uuid
         response.setCharacterEncoding("utf-8");
         response.setContentType(MediaType.IMAGE_PNG_VALUE);
-        response.addHeader("UUID", uuid);
+        response.addHeader("token", uuid);
         RandomUtil.generateQRcode(uuid, response.getOutputStream());
     }
 }
