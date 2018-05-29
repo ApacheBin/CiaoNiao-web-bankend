@@ -22,7 +22,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, open_id, name, sex, identity, birthday, residence, cellphone, email, avatar_url, nick_name, create_time,
-    update_time, role, status, is_admin, company_id)
+    update_time, role, status, is_admin, company_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -41,7 +41,7 @@
       avatar_url, nick_name,
       create_time, update_time,
       role, status, is_admin,
-      company_id))
+      company_id)
     values (#{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT},
       #{identity,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, #{residence,jdbcType=VARCHAR},
       #{cellphone,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
