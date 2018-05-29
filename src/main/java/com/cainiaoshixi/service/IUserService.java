@@ -1,6 +1,6 @@
 package com.cainiaoshixi.service;
 
-import com.cainiaoshixi.entity.CnUser;
+import com.cainiaoshixi.entity.User;
 
 /**
  * @Author: Chy
@@ -9,9 +9,9 @@ import com.cainiaoshixi.entity.CnUser;
  * @Date: 19:54 2018/4/9
  */
 public interface IUserService {
-    int createUser(String openId);  //创建用户
+    User createUser(String openId);  //创建用户
 
-    void updateUserById(CnUser cnUser);  //更新用户
+    void updateUserById(User user);  //更新用户
 
-    CnUser getUserByPrimaryKey(int userId);  //获取用户基本信息
+    User getUserByPrimaryKey(int userId);  //获取用户基本信息
 }

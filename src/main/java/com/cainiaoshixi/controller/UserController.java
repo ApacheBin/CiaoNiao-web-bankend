@@ -1,7 +1,7 @@
 package com.cainiaoshixi.controller;
 
 import com.cainiaoshixi.domain.Result;
-import com.cainiaoshixi.entity.CnUser;
+import com.cainiaoshixi.entity.User;
 import com.cainiaoshixi.service.IUserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,10 +33,10 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
 
-//    private static final String APP_ID = "wx41311a0239485c53";
-//    private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";  //我自己的
-    private static final String APP_ID = "wx2d578cdea490f378";
-    private static final String APP_SECRET = "d942d6b119614c4d71d0247713ce9707";
+    private static final String APP_ID = "wx41311a0239485c53";
+    private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";  //我自己的
+//    private static final String APP_ID = "wx2d578cdea490f378";
+//    private static final String APP_SECRET = "d942d6b119614c4d71d0247713ce9707";
     private static final String BASE_URL = "https://api.weixin.qq.com/sns/jscode2session?";
     private static final long expireTime = 86400; //sessionId有效时间，以秒为单位
 
@@ -62,12 +61,12 @@ public class UserController {
         String sessionKey = (String) jsonObject.getString("session_key");
         String openId = (String) jsonObject.getString("openid");
 
-        //创建用户，并返回用户的主键
-        int id = createUser(openId);
+        //根据openId创建用户并返回
+        User user = createUser(openId);
 
         //创建用户的sessionId，并将对应的用户id写入到redis
         String sessionId = UUID.randomUUID().toString().replace("-", "");
-        redisUtil.set(sessionId, id + "", expireTime);
+        redisUtil.set(sessionId, user.getId() + "", expireTime);
 
         //以json字符串形式返回sessionId
         Map<String, String> resultMap = new HashMap<>();
@@ -105,7 +104,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/createUser")
-    private int createUser(String openId) throws Exception {
+    private User createUser(String openId) throws Exception {
         if (openId == null){
             throw new Exception("openId为空，创建用户失败！");
         }
@@ -120,11 +119,11 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/saveUserInfo")
-    public Result saveUserInfo(CnUser cnUser, HttpServletRequest request){
+    public Result saveUserInfo(User user, HttpServletRequest request){
 
         int userId = (int) request.getSession().getAttribute("userId");
-        cnUser.setId(userId);
-        userService.updateUserById(cnUser);
+        user.setId(userId);
+        userService.updateUserById(user);
         return ResultUtil.success("");
     }
 
@@ -138,7 +137,7 @@ public class UserController {
     @ResponseBody
     public Result getUserInfo(HttpServletRequest request){
         int userId = (int) request.getSession().getAttribute("userId");
-        CnUser user = userService.getUserByPrimaryKey(userId);
+        User user = userService.getUserByPrimaryKey(userId);
         return ResultUtil.success(user);
     }
 

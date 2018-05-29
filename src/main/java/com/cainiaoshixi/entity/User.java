@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class CnUser {
+public class User {
     private Integer id;
 
     private String openId;
@@ -33,6 +33,14 @@ public class CnUser {
     private String avatarUrl;
 
     private String nickName;
+
+    private Byte role;
+
+    private Byte status;
+
+    private Byte isAdmin;
+
+    private Integer companyId;
 
     public Integer getId() {
         return id;
@@ -136,5 +144,37 @@ public class CnUser {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public Byte getRole() {
+        return role;
+    }
+
+    public void setRole(Byte role) {
+        this.role = role;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Byte getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Byte isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }
