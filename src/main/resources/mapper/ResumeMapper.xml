@@ -36,4 +36,10 @@
       FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id JOIN cn_company company on job.company_id=company.id
       WHERE submit.user_id= #{userId};
     </select>
+
+    <select id="isJobSubmitted" resultType="com.cainiaoshixi.entity.JobSubmit">
+      SELECT id
+      FROM cn_job_submit
+      where user_id=#{userId} and job_id=#{jobId} limit 1;
+    </select>
 </mapper>

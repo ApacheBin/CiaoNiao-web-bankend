@@ -103,4 +103,9 @@ public class ResumeServiceImpl implements IResumeService {
         return resumeMapper.querySubmitByUserId(userId);
     }
 
+    @Override
+    public boolean isJobSubmitted(int userId,int jobId){
+        return null != resumeMapper.isJobSubmitted(userId,jobId);
+    }
+
 }

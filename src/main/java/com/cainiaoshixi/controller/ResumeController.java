@@ -142,4 +142,12 @@ public class ResumeController {
         jsonObject.put("filename", file.getName());
         return ResultUtil.success(jsonObject);
     }
+
+    @GetMapping("/job/judge")
+    @ApiOperation("根据jobId判断是否投递过")
+    @ResponseBody
+    public Result isJobSubmitted(@RequestParam("jobId") int jobId){
+        Integer userId = session.userId();
+        return ResultUtil.success(resumeService.isJobSubmitted(userId,jobId));
+    }
 }

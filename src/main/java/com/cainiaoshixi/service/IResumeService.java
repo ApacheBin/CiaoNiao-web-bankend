@@ -31,4 +31,5 @@ public interface IResumeService {
 
     public List<JobBriefVo> querySubmitByUserId(int userId);
 
+    public boolean isJobSubmitted(int userId,int jobId);
 }
