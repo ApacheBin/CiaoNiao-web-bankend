@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cainiaoshixi.dao.SkillMapper">
+  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.Skill">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="english" jdbcType="VARCHAR" property="english" />
+    <result column="computer" jdbcType="VARCHAR" property="computer" />
+    <result column="other" jdbcType="VARCHAR" property="other" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cn_skill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.Skill">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cn_skill (english, computer, other, 
+      user_id, create_time, update_time
+      )
+    values (#{english,jdbcType=VARCHAR}, #{computer,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByUserId" parameterType="com.cainiaoshixi.entity.Skill">
+    update cn_skill
+    set english = #{english,jdbcType=VARCHAR},
+      computer = #{computer,jdbcType=VARCHAR},
+      other = #{other,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, english, computer, other, user_id, create_time, update_time
+    from cn_skill
+    where id = #{id,jdbcType=INTEGER}
+  </select>-->
+  <select id="selectByUserId" resultType="com.cainiaoshixi.entity.Skill">
+    select id, english, computer, other, user_id
+    from cn_skill
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="isExistSkill" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT count(*) from cn_skill where user_id = #{userId}
+  </select>
+</mapper>
