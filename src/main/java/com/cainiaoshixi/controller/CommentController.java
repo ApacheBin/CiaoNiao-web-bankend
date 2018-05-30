@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/comment")
@@ -48,8 +49,8 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value="/get", method = RequestMethod.GET)
-    public Result getCommentListByUserId(@RequestParam(value = "userId", required = false,defaultValue = "-1") Integer  userId){
-        userId = session.userId();
+    public Result getCommentListByUserId(@RequestParam(value = "userId") Integer  userId){
+        //userId = session.userId();
         List<Comment> commentList=commentService.getCommentListByUserId(userId);
         String location = null;
 
@@ -84,7 +85,7 @@ public class CommentController {
     public Result addComment(@RequestParam("commentType") Byte commentType,
                              @RequestParam("userComment") String userComment,
                              @RequestParam("images") MultipartFile[] images,
-                             @RequestParam("email") String email) throws IOException {
+                             @RequestParam(value="email", required = false) String email) throws IOException {
         String imageName= null;
         String relativePath = null;
         if(null !=images && images.length>0){
