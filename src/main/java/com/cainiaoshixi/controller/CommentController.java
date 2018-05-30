@@ -49,11 +49,10 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value="/get", method = RequestMethod.GET)
-    public Result getCommentListByUserId(@RequestParam(value = "userId",required = false) Integer  userId){
-        //userId = session.userId();
+    public Result getCommentListByUserId(@RequestParam(value = "userId",required = false,defaultValue = "-1") Integer  userId){
+        userId = session.userId();
         List<Comment> commentList=commentService.getCommentListByUserId(userId);
         String location = null;
-
         for(Comment comment: commentList) {
             String imageLocation = null;
             location =comment.getImageLocation();
@@ -71,6 +70,30 @@ public class CommentController {
         return ResultUtil.success(commentList);
     }
 
+    /**
+     *
+     * @param commentId
+     * @return
+     */
+    @RequestMapping(value="/getByCommentId", method = RequestMethod.GET)
+    public Result getCommentByCommentId(@RequestParam(value = "commentId") Integer  commentId){
+        //userId = session.userId();
+        Comment comment=commentService.getCommentByCommentId(commentId);
+        String location = null;
+        String imageLocation = null;
+        location =comment.getImageLocation();
+        String[] locationArray= location.split(";");
+        for (int j = 0; j < locationArray.length; j++) {
+            locationArray[j] = image_dir +locationArray[j];
+            if(imageLocation==null){
+                imageLocation = locationArray[j];
+            }else {
+                imageLocation = imageLocation + ";" + locationArray[j];
+                }
+            }
+            comment.setImageLocation(imageLocation);
+        return ResultUtil.success(comment);
+    }
     /**
      * 添加投诉与建议
      * @param commentType
