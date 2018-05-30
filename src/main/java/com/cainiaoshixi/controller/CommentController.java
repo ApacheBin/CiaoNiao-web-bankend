@@ -49,7 +49,7 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value="/get", method = RequestMethod.GET)
-    public Result getCommentListByUserId(@RequestParam(value = "userId") Integer  userId){
+    public Result getCommentListByUserId(@RequestParam(value = "userId",required = false) Integer  userId){
         //userId = session.userId();
         List<Comment> commentList=commentService.getCommentListByUserId(userId);
         String location = null;
