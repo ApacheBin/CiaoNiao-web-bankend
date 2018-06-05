@@ -51,7 +51,13 @@ public class JobQueryVo {
 
     private String receiveEmail;
 
+    private Byte eduRequired;
+
+    private Byte vertifyResult;
+
     private Byte status;
+
+    private Byte becomeFull;
 
     private Date createTime;
 
@@ -237,6 +243,38 @@ public class JobQueryVo {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Byte getEduRequired() {
+        return eduRequired;
+    }
+
+    public void setEduRequired(Byte eduRequired) {
+        this.eduRequired = eduRequired;
+    }
+
+    public Byte getVertifyResult() {
+        return vertifyResult;
+    }
+
+    public void setVertifyResult(Byte vertifyResult) {
+        this.vertifyResult = vertifyResult;
+    }
+
+    public Byte getBecomeFull() {
+        return becomeFull;
+    }
+
+    public void setBecomeFull(Byte becomeFull) {
+        this.becomeFull = becomeFull;
+    }
+
+    public Integer getiDisplayStart() {
+        return iDisplayStart;
+    }
+
+    public Integer getiDisplayLength() {
+        return iDisplayLength;
     }
 
     public Date getCreateTime() {

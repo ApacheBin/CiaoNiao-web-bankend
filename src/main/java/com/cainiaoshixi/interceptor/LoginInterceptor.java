@@ -41,9 +41,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
         }
         if (sessionId != null && redisUtil.hasKey(sessionId)) {
-            Integer userId = Integer.parseInt((String) redisUtil.get(sessionId));
-            request.getSession().setAttribute("userId", userId);
-            return true;
+                Integer userId = Integer.parseInt((String) redisUtil.get(sessionId));
+                request.getSession().setAttribute("userId", userId);
+                return true;
         } else {
             // 暂时处理方案，用于测试
             if (sessionId != null && sessionId.equals("testcainiaoshixi")) {

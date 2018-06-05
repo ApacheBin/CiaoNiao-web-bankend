@@ -27,6 +27,8 @@ public class Company {
 
     private String introducation;
 
+    private Integer fileId;
+
     private Date createTime;
 
     private Date updateTime;
@@ -127,6 +129,14 @@ public class Company {
 
     public void setIntroducation(String introducation) {
         this.introducation = introducation;
+    }
+
+    public Integer getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Integer fileId) {
+        this.fileId = fileId;
     }
 
     public Date getCreateTime() {

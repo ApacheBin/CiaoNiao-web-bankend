@@ -26,6 +26,10 @@ public class JobServiceImpl implements IJobService {
         return cnjobMapper.getJobListByVo(jobQueryVo);
     }
 
+    public List<JobWithLogo> getJobListByUserId(JobQueryVo jobQueryVo) {
+        return cnjobMapper.getJobListByUserId(jobQueryVo);
+    }
+
     public JobWithLogo selectByPrimaryKey(Integer id) {
         return cnjobMapper.selectByPrimaryKey(id);
     }

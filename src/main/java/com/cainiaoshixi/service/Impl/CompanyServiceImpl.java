@@ -30,7 +30,7 @@ public class CompanyServiceImpl implements ICompanyService {
     @Override
     public void updateCompany(Company company){
         company.setUpdateTime(new Date());
-        companyMapper.updateByPrimaryKey(company);
+        companyMapper.updateByPrimaryKeySelective(company);
     }
 
     @Override

@@ -3,7 +3,11 @@ package com.cainiaoshixi.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Company;
+import com.cainiaoshixi.entity.File;
+import com.cainiaoshixi.enums.FileTypeEnum;
 import com.cainiaoshixi.service.ICompanyService;
+import com.cainiaoshixi.service.IFileService;
+import com.cainiaoshixi.util.FileUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import io.swagger.annotations.Api;
@@ -11,6 +15,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/company")
@@ -19,16 +26,21 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 public class CompanyController {
 
+    private final static String COMPANY_LOGO_IMAGE_DIR = "/data/images/company/logo/";
+
     private final ICompanyService companyService;
     /**
      * 当前会话
      */
     private final SessionUtil session;
 
+    private final IFileService fileService;
+
     @Autowired
-    public CompanyController(ICompanyService companyService, SessionUtil session) {
+    public CompanyController(ICompanyService companyService, SessionUtil session, IFileService fileService) {
         this.companyService = companyService;
         this.session = session;
+        this.fileService = fileService;
     }
 
     /**
@@ -56,7 +68,7 @@ public class CompanyController {
     public Result addCompany(@RequestBody Company company) {
         companyService.addCompany(company);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("CompanyId", company.getId());
+        jsonObject.put("companyId", company.getId());
         return ResultUtil.success(jsonObject);
     }
 
@@ -84,5 +96,35 @@ public class CompanyController {
     public Result deleteCompany(@RequestParam("id") int id){
         companyService.deleteCompany(id);
         return ResultUtil.success("");
+    }
+
+    @PostMapping("/logo/add")
+    @ApiOperation("新增公司照片")
+    public Result addCompanyLogo(@RequestParam("companyId") Integer companyId,
+                                 @RequestParam("image") MultipartFile image) throws IOException{
+        String relativePath = FileUtil.getRelativePath(image);
+        FileUtil.save(image, COMPANY_LOGO_IMAGE_DIR + relativePath);
+        Company company = new Company();
+        company.setId(companyId);
+        company.setLogo(COMPANY_LOGO_IMAGE_DIR + relativePath);
+        companyService.updateCompany(company);
+        return ResultUtil.success("");
+    }
+
+    @PostMapping("/company/upload")
+    @ApiOperation("上传公司证书信息")
+    public Result getStudentCertification(@RequestParam("companyId") Integer companyId,
+            @RequestParam("cert")MultipartFile cert) throws IOException {
+            File fileEntity = new File();
+            fileEntity.setUploaderId(session.userId());
+            String relativePath = FileUtil.getRelativePath(cert);
+            fileEntity.setType(FileTypeEnum.COMPANY.getCode());
+            //保存公司证书
+            fileService.save(fileEntity, cert);
+            Company company = new Company();
+            company.setId(companyId);
+            company.setFileId(fileEntity.getId());
+            companyService.updateCompany(company);
+            return ResultUtil.success("");
     }
 }

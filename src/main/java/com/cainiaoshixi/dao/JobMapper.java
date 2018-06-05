@@ -20,6 +20,8 @@ public interface JobMapper {
 
     List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo);
 
+    List<JobWithLogo> getJobListByUserId(JobQueryVo jobQueryVo);
+
     int insertSelective(Job job);
 
     int updateByPrimaryKeySelective(Job job);

@@ -9,7 +9,7 @@ import java.util.Date;
 @Component("CnJob")
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //可用但已过期
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(description = "岗位管理实体V2")
+@ApiModel(description = "岗位管理实体")
 public class Job {
     private Integer id;
 
@@ -55,7 +55,15 @@ public class Job {
 
     private String receiveEmail;
 
+    private Byte eduRequired;
+
+    private Byte vertifyResult;
+
     private Byte status;
+
+    private Byte becomeFull;
+
+    private Integer readCount;
 
     private Date createTime;
 
@@ -237,12 +245,44 @@ public class Job {
         this.receiveEmail = receiveEmail;
     }
 
+    public Byte getEduRequired() {
+        return eduRequired;
+    }
+
+    public void setEduRequired(Byte eduRequired) {
+        this.eduRequired = eduRequired;
+    }
+
+    public Byte getVertifyResult() {
+        return vertifyResult;
+    }
+
+    public void setVertifyResult(Byte vertifyResult) {
+        this.vertifyResult = vertifyResult;
+    }
+
     public Byte getStatus() {
         return status;
     }
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Byte getBecomeFull() {
+        return becomeFull;
+    }
+
+    public void setBecomeFull(Byte becomeFull) {
+        this.becomeFull = becomeFull;
+    }
+
+    public Integer getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Integer readCount) {
+        this.readCount = readCount;
     }
 
     public Date getCreateTime() {

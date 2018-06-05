@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithLogo;
+import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
@@ -37,7 +38,7 @@ public class JobController {
     private final SessionUtil session;
 
     @Autowired
-    public JobController(IJobService jobService,SessionUtil session) {
+    public JobController(IJobService jobService, SessionUtil session, IFileService fileService) {
         this.jobService = jobService;
         this.session = session;
     }
@@ -52,12 +53,26 @@ public class JobController {
     @ApiOperation("条件查询岗位列表")
     @PostMapping("/list")
     public Result getJobList(@RequestBody JobQueryVo jobQueryVo) {
-        jobQueryVo.setUserId(session.userId());
 //        JSONObject jsonObject = new JSONObject();
         List<JobWithLogo> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
 //        return JSON.toJSONString(jobList, SerializerFeature.WriteMapNullValue);  //null值保留
         return ResultUtil.success(jobList);
     }
+
+    /**
+     * @Author: Zxc
+     * @Param:
+     * @Description 根据用户id查询岗位列表
+     * @Date: Created in 12:28 2018/4/24
+     */
+    @ApiOperation("根据用户id条件查询岗位列表")
+    @PostMapping("/mylist")
+    public Result getMyList(@RequestBody JobQueryVo jobQueryVo){
+        jobQueryVo.setUserId(session.userId());
+        List<JobWithLogo> jobList = jobService.getJobListByUserId(jobQueryVo);
+        return ResultUtil.success(jobList);
+    }
+
 
     /**
      * @Author: Zxc
@@ -69,6 +84,17 @@ public class JobController {
     @PostMapping("/detail")
     public Result getJobDetail(@RequestParam(value = "id", required = true) Integer id){
         JobWithLogo jobDetail = jobService.selectByPrimaryKey(id);
+//        int jobReadCount=0;
+//        if(session.jobReadCount()!=null){
+//            jobReadCount = session.jobReadCount();
+//        }
+//        jobReadCount++;
+//        session.setJobReadCount(jobReadCount);
+        JobWithLogo jobDetailCopy = new JobWithLogo();
+        jobDetailCopy.setId(id);
+        jobDetailCopy.setReadCount(jobDetail.getReadCount()+1);
+        jobService.updateById(jobDetailCopy);
+
         return ResultUtil.success(jobDetail);
     }
 

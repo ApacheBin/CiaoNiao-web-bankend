@@ -10,6 +10,8 @@ import java.util.List;
 public interface IJobService {
     List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo);
 
+    List<JobWithLogo> getJobListByUserId(JobQueryVo jobQueryVo);
+
     JobWithLogo selectByPrimaryKey(Integer id);
 
     int insertJob(Job job);

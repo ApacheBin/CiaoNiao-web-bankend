@@ -2,31 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cainiaoshixi.dao.JobMapper">
   <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.Job">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="company" jdbcType="VARCHAR" property="company" />
-    <result column="company_id" jdbcType="INTEGER" property="companyId" />
-    <result column="department" jdbcType="VARCHAR" property="department" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="province" jdbcType="VARCHAR" property="province" />
-    <result column="city" jdbcType="VARCHAR" property="city" />
-    <result column="district" jdbcType="VARCHAR" property="district" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="industry" jdbcType="INTEGER" property="industry" />
-    <result column="function" jdbcType="INTEGER" property="function" />
-    <result column="is_remote" jdbcType="TINYINT" property="isRemote" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="requirement" jdbcType="VARCHAR" property="requirement" />
-    <result column="salary" jdbcType="VARCHAR" property="salary" />
-    <result column="welfare" jdbcType="VARCHAR" property="welfare" />
-    <result column="duty_per_week" jdbcType="SMALLINT" property="dutyPerWeek" />
-    <result column="duration" jdbcType="INTEGER" property="duration" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="receive_method" jdbcType="SMALLINT" property="receiveMethod" />
-    <result column="receive_email" jdbcType="VARCHAR" property="receiveEmail" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="company" jdbcType="VARCHAR" property="company" />
+      <result column="company_id" jdbcType="INTEGER" property="companyId" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="type" jdbcType="TINYINT" property="type" />
+      <result column="province" jdbcType="VARCHAR" property="province" />
+      <result column="city" jdbcType="VARCHAR" property="city" />
+      <result column="district" jdbcType="VARCHAR" property="district" />
+      <result column="address" jdbcType="VARCHAR" property="address" />
+      <result column="industry" jdbcType="INTEGER" property="industry" />
+      <result column="function" jdbcType="INTEGER" property="function" />
+      <result column="is_remote" jdbcType="TINYINT" property="isRemote" />
+      <result column="description" jdbcType="VARCHAR" property="description" />
+      <result column="requirement" jdbcType="VARCHAR" property="requirement" />
+      <result column="salary" jdbcType="VARCHAR" property="salary" />
+      <result column="welfare" jdbcType="VARCHAR" property="welfare" />
+      <result column="duty_per_week" jdbcType="SMALLINT" property="dutyPerWeek" />
+      <result column="duration" jdbcType="INTEGER" property="duration" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="receive_method" jdbcType="SMALLINT" property="receiveMethod" />
+      <result column="receive_email" jdbcType="VARCHAR" property="receiveEmail" />
+      <result column="edu_required" jdbcType="TINYINT" property="eduRequired" />
+      <result column="vertify_result" jdbcType="TINYINT" property="vertifyResult" />
+      <result column="status" jdbcType="TINYINT" property="status" />
+      <result column="become_full" jdbcType="TINYINT" property="becomeFull" />
+      <result column="read_count" jdbcType="INTEGER" property="readCount" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithLogo" type="com.cainiaoshixi.entity.JobWithLogo">
         <result column="logo" jdbcType="VARCHAR" property="logo" />
@@ -35,26 +39,6 @@
     delete from cn_job
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cainiaoshixi.entity.Job">
-    insert into cn_job (id, name, company, 
-      company_id, department, type, 
-      province, city, district, 
-      address, industry, function, 
-      is_remote, description, requirement, 
-      salary, welfare, duty_per_week, 
-      duration, user_id, receive_method, 
-      receive_email, status, create_time, 
-      update_time)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
-      #{companyId,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{industry,jdbcType=INTEGER}, #{function,jdbcType=INTEGER}, 
-      #{isRemote,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, #{requirement,jdbcType=VARCHAR}, 
-      #{salary,jdbcType=VARCHAR}, #{welfare,jdbcType=VARCHAR}, #{dutyPerWeek,jdbcType=SMALLINT}, 
-      #{duration,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{receiveMethod,jdbcType=SMALLINT}, 
-      #{receiveEmail,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
   <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.Job">
     update cn_job
     set name = #{name,jdbcType=VARCHAR},
@@ -78,209 +62,278 @@
       user_id = #{userId,jdbcType=INTEGER},
       receive_method = #{receiveMethod,jdbcType=SMALLINT},
       receive_email = #{receiveEmail,jdbcType=VARCHAR},
+      edu_required = #{eduRequired,jdbcType=TINYINT},
+      vertify_result = #{vertifyResult,jdbcType=TINYINT},
       status = #{status,jdbcType=TINYINT},
+      become_full = #{becomeFull,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithLogo">
       select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
       job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
-      job.duration, job.user_id, job.receive_method, job.receive_email, job.status, job.create_time,  job.update_time, company.logo
+      job.duration, job.user_id, job.receive_method, job.receive_email, job.edu_required,job.vertify_result,job.status,job.become_full,
+      job.read_count, job.create_time,  job.update_time, company.logo
       from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
       where job.id = #{id,jdbcType=INTEGER}
     </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, company, company_id, department, type, province, city, district, 
     address, industry, function, is_remote, description, requirement, salary, welfare, 
-    duty_per_week, duration, user_id, receive_method, receive_email, status, create_time, 
-    update_time
+    duty_per_week, duration, user_id, receive_method, receive_email, edu_required, vertify_result,
+    status, become_full, create_time, update_time
     from cn_job
   </select>
+
   <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="ResultMapWithLogo">
     select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
-      job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
-      job.duration, job.user_id, job.receive_method, job.receive_email, job.status, job.create_time,  job.update_time, company.logo
+    job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
+    job.duration, job.user_id, job.receive_method, job.receive_email, job.edu_required,job.vertify_result,job.status,job.become_full,
+    job.create_time,  job.update_time, company.logo
     from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
     <where>
+        <if test="name!=null and name!=''">
+            and job.name LIKE "%"#{name, jdbcType=VARCHAR}"%"
+        </if>
+        <if test="type!=null and type!='所有'">
+            and job.type = #{type, jdbcType=VARCHAR}
+        </if>
+        <if test="eduRequired!=null">
+            and job.edu_required = #{eduRequired, jdbcType=TINYINT}
+        </if>
+        <if test="vertifyResult!=null">
+            and job.vertify_result = #{vertifyResult, jdbcType=TINYINT}
+        </if>
+        <if test="status!=null">
+            and job.status = #{status, jdbcType=TINYINT}
+        </if>
+        <if test="becomeFull!=null">
+            and job.become_full = #{becomeFull, jdbcType=TINYINT}
+        </if>
+        <if test="searchValue!=null">
+            and job.name like concat(concat("%",#{searchValue}),"%") or job.company like concat(concat("%",#{searchValue}),"%") or job.department like concat(concat("%",#{searchValue}),"%")
+        </if>
+    </where>
+    order by job.create_time desc
+    limit #{iDisplayStart,jdbcType=INTEGER},#{iDisplayLength,jdbcType=INTEGER}
+</select>
+
+  <select id="getJobListByUserId" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="ResultMapWithLogo">
+    select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
+    job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
+    job.duration, job.user_id, job.receive_method, job.receive_email, job.edu_required,job.vertify_result,job.status,job.become_full,
+    job.create_time, job.update_time, company.logo
+    from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
+    <where>
+      <if test="userId!=null">
+          and job.user_id = #{userId, jdbcType=INTEGER}
+      </if>
       <if test="name!=null and name!=''">
-        and job.name LIKE "%"#{name, jdbcType=VARCHAR}"%"
+          and job.name LIKE "%"#{name, jdbcType=VARCHAR}"%"
       </if>
       <if test="type!=null and type!='所有'">
-        and job.type = #{type, jdbcType=VARCHAR}
+          and job.type = #{type, jdbcType=VARCHAR}
+      </if>
+      <if test="eduRequired!=null">
+          and job.edu_required = #{eduRequired, jdbcType=TINYINT}
+      </if>
+      <if test="vertifyResult!=null">
+          and job.vertify_result = #{vertifyResult, jdbcType=TINYINT}
       </if>
       <if test="status!=null">
-        and job.status = #{status, jdbcType=TINYINT}
+          and job.status = #{status, jdbcType=TINYINT}
+      </if>
+      <if test="becomeFull!=null">
+          and job.become_full = #{becomeFull, jdbcType=TINYINT}
       </if>
       <if test="searchValue!=null">
-        and job.name like concat(concat("%",#{searchValue}),"%") or job.company like concat(concat("%",#{searchValue}),"%") or job.department like concat(concat("%",#{searchValue}),"%")
+          and job.name like concat(concat("%",#{searchValue}),"%") or job.company like concat(concat("%",#{searchValue}),"%") or job.department like concat(concat("%",#{searchValue}),"%")
       </if>
     </where>
-      order by job.create_time desc
-      limit #{iDisplayStart,jdbcType=INTEGER},#{iDisplayLength,jdbcType=INTEGER}
+    order by job.create_time desc
   </select>
-    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.Job">
-        insert into cn_job
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="name != null">
-                name,
-            </if>
-            <if test="company != null">
-                company,
-            </if>
-            <if test="companyId != null">
-                company_id,
-            </if>
-            <if test="department != null">
-                department,
-            </if>
-            <if test="type != null">
-                type,
-            </if>
-            <if test="province != null">
-                province,
-            </if>
-            <if test="city != null">
-                city,
-            </if>
-            <if test="district != null">
-                district,
-            </if>
-            <if test="address != null">
-                address,
-            </if>
-            <if test="industry != null">
-                industry,
-            </if>
-            <if test="function != null">
-                function,
-            </if>
-            <if test="isRemote != null">
-                is_remote,
-            </if>
-            <if test="description != null">
-                description,
-            </if>
-            <if test="requirement != null">
-                requirement,
-            </if>
-            <if test="salary != null">
-                salary,
-            </if>
-            <if test="welfare != null">
-                welfare,
-            </if>
-            <if test="dutyPerWeek != null">
-                duty_per_week,
-            </if>
-            <if test="duration != null">
-                duration,
-            </if>
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="receiveMethod != null">
-                receive_method,
-            </if>
-            <if test="receiveEmail != null">
-                receive_email,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-            <if test="updateTime != null">
-                update_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="company != null">
-                #{company,jdbcType=VARCHAR},
-            </if>
-            <if test="companyId != null">
-                #{companyId,jdbcType=INTEGER},
-            </if>
-            <if test="department != null">
-                #{department,jdbcType=VARCHAR},
-            </if>
 
-            <if test="type != null">
-                #{type,jdbcType=TINYINT},
-            </if>
-            <if test="province != null">
-                #{province,jdbcType=VARCHAR},
-            </if>
-            <if test="city != null">
-                #{city,jdbcType=VARCHAR},
-            </if>
-            <if test="district != null">
-                #{district,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="industry != null">
-                #{industry,jdbcType=INTEGER},
-            </if>
-            <if test="function != null">
-                #{function,jdbcType=INTEGER},
-            </if>
-            <if test="isRemote != null">
-                #{isRemote,jdbcType=TINYINT},
-            </if>
-            <if test="description != null">
-                #{description,jdbcType=VARCHAR},
-            </if>
-            <if test="requirement != null">
-                #{requirement,jdbcType=VARCHAR},
-            </if>
-            <if test="salary != null">
-                #{salary,jdbcType=VARCHAR},
-            </if>
-            <if test="welfare != null">
-                #{welfare,jdbcType=VARCHAR},
-            </if>
-            <if test="dutyPerWeek != null">
-                #{dutyPerWeek,jdbcType=SMALLINT},
-            </if>
-            <if test="duration != null">
-                #{duration,jdbcType=INTEGER},
-            </if>
-            <if test="userId != null">
-                #{userId,jdbcType=INTEGER},
-            </if>
-            <if test="receiveMethod != null">
-                #{receiveMethod,jdbcType=SMALLINT},
-            </if>
-            <if test="receiveEmail != null">
-                #{receiveEmail,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=TINYINT},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.cainiaoshixi.entity.Job">
+    insert into cn_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+            id,
+        </if>
+        <if test="name != null">
+            name,
+        </if>
+        <if test="company != null">
+            company,
+        </if>
+        <if test="companyId != null">
+            company_id,
+        </if>
+        <if test="department != null">
+            department,
+        </if>
+        <if test="type != null">
+            type,
+        </if>
+        <if test="province != null">
+            province,
+        </if>
+        <if test="city != null">
+            city,
+        </if>
+        <if test="district != null">
+            district,
+        </if>
+        <if test="address != null">
+            address,
+        </if>
+        <if test="industry != null">
+            industry,
+        </if>
+        <if test="function != null">
+            function,
+        </if>
+        <if test="isRemote != null">
+            is_remote,
+        </if>
+        <if test="description != null">
+            description,
+        </if>
+        <if test="requirement != null">
+            requirement,
+        </if>
+        <if test="salary != null">
+            salary,
+        </if>
+        <if test="welfare != null">
+            welfare,
+        </if>
+        <if test="dutyPerWeek != null">
+            duty_per_week,
+        </if>
+        <if test="duration != null">
+            duration,
+        </if>
+        <if test="userId != null">
+            user_id,
+        </if>
+        <if test="receiveMethod != null">
+            receive_method,
+        </if>
+        <if test="receiveEmail != null">
+            receive_email,
+        </if>
+        <if test="eduRequired != null">
+            edu_required,
+        </if>
+        <if test="vertifyResult != null">
+            vertify_result,
+        </if>
+        <if test="status != null">
+            status,
+        </if>
+        <if test="becomeFull != null">
+            become_full,
+        </if>
+        <if test="createTime != null">
+            create_time,
+        </if>
+        <if test="updateTime != null">
+            update_time,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+            #{id,jdbcType=INTEGER},
+        </if>
+        <if test="name != null">
+            #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="company != null">
+            #{company,jdbcType=VARCHAR},
+        </if>
+        <if test="companyId != null">
+            #{companyId,jdbcType=INTEGER},
+        </if>
+        <if test="department != null">
+            #{department,jdbcType=VARCHAR},
+        </if>
+        <if test="type != null">
+            #{type,jdbcType=TINYINT},
+        </if>
+        <if test="province != null">
+            #{province,jdbcType=VARCHAR},
+        </if>
+        <if test="city != null">
+            #{city,jdbcType=VARCHAR},
+        </if>
+        <if test="district != null">
+            #{district,jdbcType=VARCHAR},
+        </if>
+        <if test="address != null">
+            #{address,jdbcType=VARCHAR},
+        </if>
+        <if test="industry != null">
+            #{industry,jdbcType=INTEGER},
+        </if>
+        <if test="function != null">
+            #{function,jdbcType=INTEGER},
+        </if>
+        <if test="isRemote != null">
+            #{isRemote,jdbcType=TINYINT},
+        </if>
+        <if test="description != null">
+            #{description,jdbcType=VARCHAR},
+        </if>
+        <if test="requirement != null">
+            #{requirement,jdbcType=VARCHAR},
+        </if>
+        <if test="salary != null">
+            #{salary,jdbcType=VARCHAR},
+        </if>
+        <if test="welfare != null">
+            #{welfare,jdbcType=VARCHAR},
+        </if>
+        <if test="dutyPerWeek != null">
+            #{dutyPerWeek,jdbcType=SMALLINT},
+        </if>
+        <if test="duration != null">
+            #{duration,jdbcType=INTEGER},
+        </if>
+        <if test="userId != null">
+            #{userId,jdbcType=INTEGER},
+        </if>
+        <if test="receiveMethod != null">
+            #{receiveMethod,jdbcType=SMALLINT},
+        </if>
+        <if test="receiveEmail != null">
+            #{receiveEmail,jdbcType=VARCHAR},
+        </if>
+        <if test="eduRequired != null">
+            #{eduRequired,jdbcType=TINYINT},
+        </if>
+        <if test="vertifyResult != null">
+            #{vertifyResult,jdbcType=TINYINT},
+        </if>
+        <if test="status != null">
+            #{status,jdbcType=TINYINT},
+        </if>
+        <if test="becomeFull != null">
+            #{becomeFull,jdbcType=TINYINT},
+        </if>
+        <if test="createTime != null">
+            #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+    </trim>
+  </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.Job">
-        update cn_job
-        <set>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.Job">
+    update cn_job
+    <set>
         <if test="name != null">
             name = #{name,jdbcType=VARCHAR},
         </if>
@@ -293,7 +346,6 @@
         <if test="department != null">
             department = #{department,jdbcType=VARCHAR},
         </if>
-
         <if test="type != null">
             type = #{type,jdbcType=TINYINT},
         </if>
@@ -345,19 +397,32 @@
         <if test="receiveEmail != null">
             receive_email = #{receiveEmail,jdbcType=VARCHAR},
         </if>
+        <if test="eduRequired != null">
+            edu_required = #{eduRequired,jdbcType=TINYINT},
+        </if>
+        <if test="vertifyResult != null">
+            vertify_result = #{vertifyResult,jdbcType=TINYINT},
+        </if>
         <if test="status != null">
             status = #{status,jdbcType=TINYINT},
         </if>
+        <if test="becomeFull != null">
+            become_full = #{becomeFull,jdbcType=TINYINT},
+        </if>
+        <if test="readCount != null">
+            read_count = #{readCount,jdbcType=INTEGER},
+        </if>
+
         <if test="createTime != null">
             create_time = #{createTime,jdbcType=TIMESTAMP},
         </if>
         <if test="updateTime != null">
             update_time = #{updateTime,jdbcType=TIMESTAMP},
         </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
+    </set>
+    where id = #{id,jdbcType=INTEGER}
     </update>
-    <select id="querySubmitByJobId" parameterType="java.lang.Integer" resultType="com.cainiaoshixi.vo.ResumeBriefVo">
+  <select id="querySubmitByJobId" parameterType="java.lang.Integer" resultType="com.cainiaoshixi.vo.ResumeBriefVo">
       SELECT submit.id as submit_id,submit.job_id, job.user_id, user.name as user_name FROM 	cn_job_submit submit
       JOIN cn_job job ON submit.job_id=job.id
       JOIN cn_user user ON submit.user_id=user.id where submit.job_id= #{jobId};

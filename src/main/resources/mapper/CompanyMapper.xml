@@ -14,6 +14,7 @@
     <result column="official_web" jdbcType="VARCHAR" property="officialWeb" />
     <result column="product" jdbcType="VARCHAR" property="product" />
     <result column="introducation" jdbcType="VARCHAR" property="introducation" />
+    <result column="file_id" jdbcType="INTEGER" property="fileId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="logo" jdbcType="VARCHAR" property="logo" />
@@ -49,6 +50,7 @@
       official_web = #{officialWeb,jdbcType=VARCHAR},
       product = #{product,jdbcType=VARCHAR},
       introducation = #{introducation,jdbcType=VARCHAR},
+      file_id = #{fileId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       logo = #{logo,jdbcType=VARCHAR}
@@ -56,13 +58,65 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, name, abbr, industry, establish_time, province, city, district, address, 
-    official_web, product, introducation, create_time, update_time, logo
+    official_web, product, introducation,file_id, create_time, update_time, logo
     from cn_company
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, abbr, industry, establish_time, province, city, district, address, 
-    official_web, product, introducation, create_time, update_time, logo
+    official_web, product, introducation, file_id,create_time, update_time, logo
     from cn_company
   </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.cainiaoshixi.entity.Company">
+    update cn_company
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="abbr != null">
+        abbr = #{abbr,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=INTEGER},
+      </if>
+      <if test="establishTime != null">
+        establish_time = #{establishTime,jdbcType=DATE},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="officialWeb != null">
+        official_web = #{officialWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="product != null">
+        product = #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="introducation != null">
+        introducation = #{introducation,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>
