@@ -7,6 +7,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,14 +19,19 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Author: Chy
@@ -38,7 +47,11 @@ public class UserController {
     private static final String APP_ID = "wx2d578cdea490f378";
     private static final String APP_SECRET = "d942d6b119614c4d71d0247713ce9707";
     private static final String BASE_URL = "https://api.weixin.qq.com/sns/jscode2session?";
+    private static final String AVATAR_PATH = "/data/files/avatar/";
+//    private static final String AVATAR_PATH = "C:\\Users\\72936\\Desktop\\";
     private static final long expireTime = 86400; //sessionId有效时间，以秒为单位
+    private static final int UPLOAD_AVATAR_FAIL_CODE = -101;  //保存头像失败错误码
+    private static final Integer SAVE_USERBASEINFO_FAIL_CODE = -102; //时间解析错误
 
     @Autowired
     private IUserService userService;
@@ -119,12 +132,52 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/saveUserInfo")
-    public Result saveUserInfo(User user, HttpServletRequest request){
+    public Result saveUserInfo(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            User user = new User();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String avatar = saveAvatar(request);
+            user.setAvatarUrl(avatar);
+            int userId = (int) request.getSession().getAttribute("userId");
+            user.setId(userId);
+            user.setName(request.getParameter("name"));
+            user.setSex(Byte.parseByte(request.getParameter("sex")));
+            user.setIdentity(Byte.parseByte(request.getParameter("identity")));
+            user.setBirthday(dateFormat.parse(request.getParameter("birthday")));
+            user.setResidence(request.getParameter("residence"));
+            user.setEmail(request.getParameter("email"));
+            user.setCellphone(request.getParameter("cellphone"));
+            userService.updateUserById(user);
+            return ResultUtil.success("");
+        } catch (IOException e) {
+            return ResultUtil.error(UPLOAD_AVATAR_FAIL_CODE, "上传头像失败");
+        } catch (ParseException e) {
+            return ResultUtil.error(SAVE_USERBASEINFO_FAIL_CODE, "时间解析错误");
+        }
+    }
 
-        int userId = (int) request.getSession().getAttribute("userId");
-        user.setId(userId);
-        userService.updateUserById(user);
-        return ResultUtil.success("");
+    /**
+     * @Author: Chy
+     * @Param:
+     * @Description: 上传头像
+     * @Date: 22:58 2018/6/6
+     */
+    private String saveAvatar(HttpServletRequest request) throws IOException {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        List<MultipartFile> fileList = multipartRequest.getFiles("avatarUrl");
+        String filePath = null;
+        for (MultipartFile mf : fileList) {
+            if(!mf.isEmpty()){
+                String originFileName = mf.getOriginalFilename();
+                String suffix = originFileName.substring(originFileName.lastIndexOf(".") + 1);
+                filePath = AVATAR_PATH + UUID.randomUUID().toString().replace("-", "") + "." + suffix;
+                File dir = new File(filePath);
+                if (!dir.exists())
+                    dir.mkdir();
+                mf.transferTo(dir);
+            }
+        }
+        return filePath;
     }
 
     /**
