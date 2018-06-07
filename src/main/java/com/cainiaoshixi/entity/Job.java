@@ -55,13 +55,13 @@ public class Job {
 
     private String receiveEmail;
 
-    private Byte eduRequired;
+    private Byte degree;
 
     private Byte vertifyResult;
 
     private Byte status;
 
-    private Byte becomeFull;
+    private Byte isFullJob;
 
     private Integer readCount;
 
@@ -245,12 +245,12 @@ public class Job {
         this.receiveEmail = receiveEmail;
     }
 
-    public Byte getEduRequired() {
-        return eduRequired;
+    public Byte getDegree() {
+        return degree;
     }
 
-    public void setEduRequired(Byte eduRequired) {
-        this.eduRequired = eduRequired;
+    public void setDegree(Byte degree) {
+        this.degree = degree;
     }
 
     public Byte getVertifyResult() {
@@ -269,12 +269,12 @@ public class Job {
         this.status = status;
     }
 
-    public Byte getBecomeFull() {
-        return becomeFull;
+    public Byte getIsFullJob() {
+        return isFullJob;
     }
 
-    public void setBecomeFull(Byte becomeFull) {
-        this.becomeFull = becomeFull;
+    public void setIsFullJob(Byte isFullJob) {
+        this.isFullJob = isFullJob;
     }
 
     public Integer getReadCount() {
