@@ -422,9 +422,18 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
     </update>
-  <select id="querySubmitByJobId" parameterType="java.lang.Integer" resultType="com.cainiaoshixi.vo.ResumeBriefVo">
-      SELECT submit.id as submit_id,submit.job_id, job.user_id, user.name as user_name FROM 	cn_job_submit submit
-      JOIN cn_job job ON submit.job_id=job.id
-      JOIN cn_user user ON submit.user_id=user.id where submit.job_id= #{jobId};
+    <select id="querySubmitByJobId"  resultType="com.cainiaoshixi.vo.ResumeBriefVo">
+        SELECT submit.id as submit_id,submit.job_id, submit.user_id, user.name as user_name,resume.id as resumeId FROM cn_job_submit submit
+        JOIN cn_job job ON submit.job_id=job.id
+        JOIN cn_user user ON submit.user_id=user.id
+        JOIN cn_resume resume ON submit.user_id=resume.user_id
+        where submit.job_id= #{jobId}
+        <if test="hrStatus != null and hrStatus !='' or hrStatus != 0"> and submit.hr_status = #{hrStatus,jdbcType=INTEGER}</if>
+        ORDER BY submit.update_time desc limit #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+    <select id="querySubmitByResumeId"  resultType="com.cainiaoshixi.vo.ResumeDetailVo">
+        SELECT submit.id as submitId,submit.job_id,resume.evaluation,submit.user_id
+        FROM cn_job_submit submit JOIN cn_job job ON (job.user_id=#{userId} and submit.job_id=job.id and job.id=#{jobId})
+        JOIN cn_job job ON (submit.id=${submitId} and submit.job_id=job.id and submit.job_id=#{jobId})
     </select>
 </mapper>

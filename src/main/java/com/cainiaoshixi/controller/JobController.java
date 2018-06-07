@@ -10,6 +10,7 @@ import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
+import com.cainiaoshixi.vo.ResumeDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,13 +167,18 @@ public class JobController {
 
     @GetMapping("/resume/list")
     @ApiOperation("获取简历列表")
-    public Result getSubmitListByJobId(@RequestParam("id") int jobId){
-        List<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(jobId);  //条件查询
+    public Result getSubmitListByJobId(@RequestParam("jobId") int jobId,@RequestParam(value="hrStatus",required = false,defaultValue = "0")int hrStatus, @RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize){
+        int pageStart=pageSize*(pageNumber-1);
+        List<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(jobId,hrStatus,pageSize,pageStart);  //条件查询
         return ResultUtil.success(resumeBriefVos);
     }
 
-
-
+    @GetMapping("/resume/get")
+    @ApiOperation("获取非个人简历")
+    public Result getResumeByResId(@RequestParam("jobId") int jobId,@RequestParam("submitId")int submitId){
+        ResumeDetailVo resumeDetailVo= jobService.querySubmitByResumeId(jobId,submitId,session.userId());  //条件查询
+        return ResultUtil.success(resumeDetailVo);
+    }
 }
 
 

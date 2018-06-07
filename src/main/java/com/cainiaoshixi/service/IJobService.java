@@ -4,6 +4,7 @@ import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithLogo;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
+import com.cainiaoshixi.vo.ResumeDetailVo;
 
 import java.util.List;
 
@@ -22,5 +23,7 @@ public interface IJobService {
 
     int updateJobStatus(Integer id);
 
-    List<ResumeBriefVo> querySubmitByJobId(int jobId);
+    List<ResumeBriefVo> querySubmitByJobId(int jobId,int hrStatus,int pageSize,int pageStart);
+
+    ResumeDetailVo querySubmitByResumeId(int jobId, int submitId, int userId);
 }

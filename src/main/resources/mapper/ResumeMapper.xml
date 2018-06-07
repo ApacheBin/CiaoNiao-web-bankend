@@ -27,14 +27,18 @@
   </select>
 
   <insert id="submitJob" useGeneratedKeys="true" keyProperty="id" parameterType="JobSubmit">
-    INSERT INTO cn_job_submit(job_id, status, user_id, create_time, update_time)
-    VALUES (#{jobId}, #{status}, #{userId},  #{createTime}, #{updateTime})
+    INSERT INTO cn_job_submit(job_id, status,hr_status,view_count,user_id, create_time, update_time)
+    VALUES (#{jobId}, #{status}, #{hrStatus},#{viewCount},#{userId},  #{createTime}, #{updateTime})
   </insert>
 
-    <select id="querySubmitByUserId" parameterType="java.lang.Integer" resultType="com.cainiaoshixi.vo.JobBriefVo">
-      SELECT submit.id as submit_id,submit.job_id,submit.user_id,job.name as job_name,job.company,job.company_id,company.logo,submit.status
+    <select id="querySubmitByUserId"  resultType="com.cainiaoshixi.vo.JobBriefVo">
+      SELECT submit.id as submit_id,submit.job_id,submit.user_id,job.name as job_name,job.company,job.company_id,company.logo,submit.status,submit.hr_status,submit.view_count
       FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id JOIN cn_company company on job.company_id=company.id
-      WHERE submit.user_id= #{userId};
+      WHERE submit.user_id= #{jobBriefVo.userId}
+        <if test="jobBriefVo.status != null and jobBriefVo.status !='' or jobBriefVo.status !=0"> and submit.status = #{jobBriefVo.status,jdbcType=INTEGER}</if>
+        <if test="jobBriefVo.viewCount != null and jobBriefVo.viewCount !='' or jobBriefVo.viewCount > 0"> and submit.view_count>0 </if>
+        <if test="jobBriefVo.hrStatus != null and jobBriefVo.hrStatus !='' or jobBriefVo.hrStatus != 0"> and submit.hr_status = #{jobBriefVo.hrStatus,jdbcType=INTEGER}</if>
+      ORDER BY submit.update_time desc limit #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
     </select>
 
     <select id="isJobSubmitted" resultType="com.cainiaoshixi.entity.JobSubmit">

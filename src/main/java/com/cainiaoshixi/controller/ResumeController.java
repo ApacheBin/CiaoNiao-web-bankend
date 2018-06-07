@@ -14,6 +14,7 @@ import com.cainiaoshixi.vo.JobBriefVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -84,6 +85,7 @@ public class ResumeController {
     @ResponseBody
     public Result submitJob(@RequestBody JobSubmit jobSubmit) {
         jobSubmit.setUserId(session.userId());
+        jobSubmit.setStatus(1);
         resumeService.submitJob(jobSubmit); //这个返回的是新增的记录数
         // 返回投递ID
         JSONObject jsonObject = new JSONObject();
@@ -94,9 +96,15 @@ public class ResumeController {
     @GetMapping("/job/list")
     @ApiOperation("获取工作岗位列表")
     @ResponseBody
-    public Result getSubmitListByUId(){
+    public Result getSubmitListByUId(@RequestParam(value = "status",required = false,defaultValue = "1")int status, @RequestParam(value="hrStatus",required = false,defaultValue = "0")int hrStatus, @RequestParam(value = "viewCount",required = false,defaultValue = "0")int viewCount, @RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize){
         Integer userId = session.userId();
-        List<JobBriefVo> jobBriefVos = resumeService.querySubmitByUserId(userId);  //条件查询
+        JobBriefVo jobBriefVo=new JobBriefVo();
+        jobBriefVo.setUserId(userId);
+        jobBriefVo.setStatus(status);
+        jobBriefVo.setHrStatus(hrStatus);
+        jobBriefVo.setViewCount(viewCount);
+        int pageStart=pageSize*(pageNumber-1);
+        List<JobBriefVo> jobBriefVos = resumeService.querySubmitByUserId(jobBriefVo,pageSize,pageStart);  //条件查询
         return ResultUtil.success(jobBriefVos);
     }
 

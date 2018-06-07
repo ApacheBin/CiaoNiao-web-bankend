@@ -29,7 +29,7 @@ public interface IResumeService {
 
     public int submitJob(JobSubmit jobSubmit);
 
-    public List<JobBriefVo> querySubmitByUserId(int userId);
+    public List<JobBriefVo> querySubmitByUserId(JobBriefVo jobBriefVo,int pageSize,int pageStart);
 
     public boolean isJobSubmitted(int userId,int jobId);
 }

@@ -18,6 +18,10 @@ public class JobSubmit {
 
     private int userId;
 
+    private int hrStatus;
+
+    private int viewCount;
+
     private Date createTime;
 
     private Date updateTime;
@@ -51,6 +55,18 @@ public class JobSubmit {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public int getHrStatus() {
+        return hrStatus;
+    }
+
+    public void setHrStatus(int hrStatus) {this.hrStatus = hrStatus; }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {this.viewCount = viewCount; }
 
     public Date getCreateTime() {
         return createTime;

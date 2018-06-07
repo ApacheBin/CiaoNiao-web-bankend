@@ -6,6 +6,7 @@ import com.cainiaoshixi.entity.JobWithLogo;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
+import com.cainiaoshixi.vo.ResumeDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,9 +54,12 @@ public class JobServiceImpl implements IJobService {
         return cnjobMapper.updateByPrimaryKeySelective(job);
     }
     @Override
-    public List<ResumeBriefVo> querySubmitByJobId(int jobId){
-        return cnjobMapper.querySubmitByJobId(jobId);
+    public List<ResumeBriefVo> querySubmitByJobId(int jobId,int hrStatus,int pageSize,int pageStart){
+        return cnjobMapper.querySubmitByJobId(jobId,hrStatus,pageSize,pageStart);
     }
 
-
+    @Override
+    public ResumeDetailVo querySubmitByResumeId(int jobId, int submitId, int userId){
+        return cnjobMapper.querySubmitByResumeId(jobId,submitId,userId);
+    }
 }
