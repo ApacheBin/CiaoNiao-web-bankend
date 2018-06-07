@@ -23,7 +23,13 @@ public interface IJobService {
 
     int updateJobStatus(Integer id);
 
-    List<ResumeBriefVo> querySubmitByJobId(int jobId,int hrStatus,int pageSize,int pageStart);
+    List<ResumeBriefVo> querySubmitByJobId(int jobId,int hrStatus,int userId,int pageSize,int pageStart);
 
-    ResumeDetailVo querySubmitByResumeId(int jobId, int submitId, int userId);
+    ResumeDetailVo querySubmitByResumeId(int jobId, int resumeId, int userId);
+
+    int updateViewCount(Integer submitId);
+
+    int updateInterest(int jobId,int submitId,int userId);
+
+    int updateUnfit(int jobId,int submitId,int userId);
 }

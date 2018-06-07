@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithLogo;
+import com.cainiaoshixi.service.IEducationService;
 import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.ResultUtil;
@@ -169,15 +170,33 @@ public class JobController {
     @ApiOperation("获取简历列表")
     public Result getSubmitListByJobId(@RequestParam("jobId") int jobId,@RequestParam(value="hrStatus",required = false,defaultValue = "0")int hrStatus, @RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize){
         int pageStart=pageSize*(pageNumber-1);
-        List<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(jobId,hrStatus,pageSize,pageStart);  //条件查询
+        int userId=session.userId();
+        List<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(jobId,hrStatus,userId,pageSize,pageStart);  //条件查询
         return ResultUtil.success(resumeBriefVos);
     }
 
     @GetMapping("/resume/get")
     @ApiOperation("获取非个人简历")
-    public Result getResumeByResId(@RequestParam("jobId") int jobId,@RequestParam("submitId")int submitId){
-        ResumeDetailVo resumeDetailVo= jobService.querySubmitByResumeId(jobId,submitId,session.userId());  //条件查询
+    public Result getResumeByResId(@RequestParam("jobId") int jobId,@RequestParam("resumeId")int resumeId){
+        ResumeDetailVo resumeDetailVo= jobService.querySubmitByResumeId(jobId,resumeId,session.userId());  //条件查询
+        if(resumeDetailVo != null){
+            jobService.updateViewCount(resumeDetailVo.getSubmitId());
+        }
         return ResultUtil.success(resumeDetailVo);
+    }
+
+    @PostMapping("/resume/interest")
+    @ApiOperation("发布者对某个简历感兴趣")
+    public Result updateInterest(@RequestParam("jobId") int jobId,@RequestParam("submitId") int submitId){
+        int userId=session.userId();
+        return ResultUtil.success(jobService.updateInterest(jobId,submitId,userId));
+    }
+
+    @PostMapping("/resume/unfit")
+    @ApiOperation("发布者对某个简历不感兴趣")
+    public Result updateUnfit(@RequestParam("jobId") int jobId,@RequestParam("submitId") int submitId){
+        int userId=session.userId();
+        return ResultUtil.success(jobService.updateUnfit(jobId,submitId,userId));
     }
 }
 

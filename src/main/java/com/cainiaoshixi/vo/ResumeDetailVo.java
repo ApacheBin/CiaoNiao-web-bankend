@@ -1,9 +1,6 @@
 package com.cainiaoshixi.vo;
 
-import com.cainiaoshixi.entity.Education;
-import com.cainiaoshixi.entity.SchoolExperience;
-import com.cainiaoshixi.entity.Skill;
-import com.cainiaoshixi.entity.WorkExperience;
+import com.cainiaoshixi.entity.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import org.springframework.stereotype.Component;
@@ -20,17 +17,19 @@ public class ResumeDetailVo {
 
     private int resumeId;
 
-    private int userId;
+    private int submitId;
+
+    private int submitUserId;
 
     private String evaluation;
 
-    private String skill;
+    private List<Skill> skill;
 
-    private String education;
+    private List<Education> education;
 
-    private String schoolExperience;
+    private List<SchoolExperience> schoolExperience;
 
-    private String workExperience;
+    private List<Work> work;
 
     public int getJobId() {
         return jobId;
@@ -48,12 +47,20 @@ public class ResumeDetailVo {
         this.resumeId = resumeId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getSubmitId() {
+        return submitId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setSubmitId(int submitId) {
+        this.submitId = submitId;
+    }
+
+    public int getSubmitUserId() {
+        return submitUserId;
+    }
+
+    public void setSubmitUserId(int submitUserId) {
+        this.submitUserId = submitUserId;
     }
 
     public String getEvaluation() {
@@ -64,31 +71,31 @@ public class ResumeDetailVo {
         this.evaluation = evaluation;
     }
 
-    public String getSkill() {
+    public List<Skill> getSkill() {
         return skill;
     }
 
-    public void setSkill(String skill) {
+    public void setSkill(List<Skill> skill) {
         this.skill = skill;
     }
 
-    public String getEducation() { return education; }
+    public List<Education> getEducation() { return education; }
 
-    public void setEducation(String education) { this.education = education; }
+    public void setEducation(List<Education> education) { this.education = education; }
 
-    public String getSchoolExperience() {
+    public List<SchoolExperience> getSchoolExperience() {
         return schoolExperience;
     }
 
-    public void setSchoolExperience(String schoolExperience) {
+    public void setSchoolExperience(List<SchoolExperience> schoolExperience) {
         this.schoolExperience = schoolExperience;
     }
 
-    public String getWorkExperience() {
-        return workExperience;
+    public List<Work> getWork() {
+        return work;
     }
 
-    public void setWorkExperience(String workExperience) {
-        this.workExperience = workExperience;
+    public void setWork(List<Work> work) {
+        this.work = work;
     }
 }
