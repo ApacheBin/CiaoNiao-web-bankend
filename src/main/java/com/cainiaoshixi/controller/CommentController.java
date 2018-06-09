@@ -151,6 +151,18 @@ public class CommentController {
         return ResultUtil.success("");
     }
 
+    @RequestMapping(value="/response", method = RequestMethod.POST)
+    public Result responseToComment(@RequestParam("status") Byte status,
+                                    @RequestParam("response") String response,
+                                    @RequestParam(value = "commentId") Integer  commentId){
+        Comment comment =commentService.getCommentByCommentId(commentId);
+        comment.setStatus(status);
+        comment.setResponse(response);
+        commentService.responseToComment(comment);
+        return ResultUtil.success("");
+    }
+
+
     /**
      * 删除评论
      * @param commentId

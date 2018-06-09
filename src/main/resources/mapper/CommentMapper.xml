@@ -9,14 +9,16 @@
         <result column="image_name" jdbcType="VARCHAR" property="imageName"/>
         <result column="image_location" jdbcType="VARCHAR" property="imageLocation"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="response" jdbcType="VARCHAR" property="response"/>
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     </resultMap>
     <insert id="insert" parameterType="com.cainiaoshixi.entity.Comment">
-        insert into cn_comment(user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time),
+        insert into cn_comment(user_id,comment_type,user_comment,image_name,image_location,email,status,response,created_time,updated_time),
         values (#{userId,jdbcType=INTEGER},#{commentType,jdbcType=TINYINT},
         #{userComment,jdbcType=VARCHAR},#{imageName,jdbcType=VARCHAR},#{imageLocation,jdbcType=VARCHAR},
-        #{email,jdbcType=VARCHAR},#{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
+        #{email,jdbcType=VARCHAR},#{status,jdbcType=TINYINT},#{response,jdbcType=VARCHAR},#{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.Comment" >
         insert into cn_comment
@@ -39,6 +41,12 @@
             </if>
             <if test="email !=null">
                 email,
+            </if>
+            <if test="status !=null">
+                status,
+            </if>
+            <if test="response !=null">
+                response,
             </if>
             <if test="createdTime !=null">
                 created_time,
@@ -67,6 +75,12 @@
             <if test="email !=null">
                 #{email,jdbcType=VARCHAR},
             </if>
+            <if test="status !=null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="response !=null">
+                #{response,jdbcType=VARCHAR},
+            </if>
             <if test="createdTime !=null">
                 #{createdTime,jdbcType=TIMESTAMP},
             </if>
@@ -76,12 +90,12 @@
         </trim>
     </insert>
     <select id="getCommentByCommentId"  resultType="com.cainiaoshixi.entity.Comment">
-        select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time
+        select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,status,response,created_time,updated_time
         from cn_comment
         where comment_id=#{commentId, jdbcType=INTEGER}
     </select>
     <select id="getCommentListByUserId" resultType="com.cainiaoshixi.entity.Comment">
-        select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,created_time,updated_time
+        select comment_id,user_id,comment_type,user_comment,image_name,image_location,email,status,response,created_time,updated_time
         from cn_comment
         where user_id=#{userId, jdbcType=INTEGER}
     </select>
@@ -167,6 +181,19 @@
             <if test="updatedTime !=null">
                 updated_time=#{updatedTime,jdbcType=TIMESTAMP},
             </if>
+        </set>
+        where comment_id = #{commentId,jdbcType=INTEGER}
+    </update>
+    <update id="responseToComment" parameterType="com.cainiaoshixi.entity.Comment">
+        update cn_comment
+        <set>
+            <if test="status !=null">
+                status=#{status,jdbcType=TINYINT},
+            </if>
+            <if test="response !=null">
+                response = #{response,jdbcType=VARCHAR},
+            </if>
+
         </set>
         where comment_id = #{commentId,jdbcType=INTEGER}
     </update>

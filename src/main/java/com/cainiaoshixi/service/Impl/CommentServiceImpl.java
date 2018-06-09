@@ -37,6 +37,11 @@ public class CommentServiceImpl implements ICommentService {
     }
 
     @Override
+    public void responseToComment(Comment comment) {
+        commentMapper.responseToComment(comment);
+    }
+
+    @Override
     public void deleteComment(Integer commentId) {
         commentMapper.deleteComment(commentId);
     }

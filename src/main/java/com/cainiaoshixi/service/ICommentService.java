@@ -14,6 +14,8 @@ public interface ICommentService {
 
     void updateComment(Comment comment);
 
+    void responseToComment(Comment comment);
+
     void deleteComment(Integer commentId);
 
 }

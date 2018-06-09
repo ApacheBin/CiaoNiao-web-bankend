@@ -46,6 +46,12 @@ public interface CommentMapper {
     void updateComment(Comment comment);
 
     /**
+     * 投诉与建议处理
+     * @param comment
+     */
+    void responseToComment(Comment comment);
+
+    /**
      * 删除评论
      * @param commentId
      */
