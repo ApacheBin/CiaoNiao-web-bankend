@@ -20,7 +20,7 @@ public interface ResumeMapper {
 
     public int submitJob(JobSubmit jobSubmit);
 
-    public List<JobBriefVo> querySubmitByUserId(Integer userId);
+    public List<JobBriefVo> querySubmitByUserId(@Param("jobBriefVo") JobBriefVo jobBriefVo,@Param("pageSize")Integer pageSize,@Param("pageStart")Integer pageStart);
 
     public JobSubmit isJobSubmitted(@Param("userId") Integer userId, @Param("jobId") Integer jobId);
 }

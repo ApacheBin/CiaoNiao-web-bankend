@@ -70,7 +70,7 @@
         SELECT id,school,major,degree,admission_time,graduation_time,user_id
         FROM cn_education
         <choose>
-            <when test="eduId != -1">
+            <when test="eduId > 0">
                 WHERE id = #{eduId}
             </when>
             <otherwise>

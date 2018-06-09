@@ -99,8 +99,8 @@ public class ResumeServiceImpl implements IResumeService {
     }
 
     @Override
-    public List<JobBriefVo> querySubmitByUserId(int userId){
-        return resumeMapper.querySubmitByUserId(userId);
+    public List<JobBriefVo> querySubmitByUserId(JobBriefVo jobBriefVo,int pageSize,int pageStart){
+        return resumeMapper.querySubmitByUserId(jobBriefVo,pageSize,pageStart);
     }
 
     @Override

@@ -26,6 +26,10 @@ public class JobBriefVo {
 
     private String logo;
 
+    private int hrStatus;
+
+    private int viewCount;
+
     public int getSubmitId() {
         return submitId;
     }
@@ -85,4 +89,16 @@ public class JobBriefVo {
     public void setLogo(String logo) {
         this.logo = logo;
     }
+
+    public int getHrStatus() {
+        return hrStatus;
+    }
+
+    public void setHrStatus(int hrStatus) {this.hrStatus = hrStatus; }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {this.viewCount = viewCount; }
 }
