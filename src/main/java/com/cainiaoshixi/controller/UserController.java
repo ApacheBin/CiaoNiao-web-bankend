@@ -17,6 +17,8 @@ import org.apache.http.client.methods.HttpGet;
 
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
@@ -42,13 +44,12 @@ import java.util.*;
 @RequestMapping("/user")
 public class UserController {
 
-//    private static final String APP_ID = "wx41311a0239485c53";
-//    private static final String APP_SECRET = "442e8bcb9fc93f4b64c8578a6a1d3077";  //我自己的
+    private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
     private static final String APP_ID = "wx2d578cdea490f378";
     private static final String APP_SECRET = "d942d6b119614c4d71d0247713ce9707";
-    private static final String BASE_URL = "https://api.weixin.qq.com/sns/jscode2session?";
-    private static final String AVATAR_PATH = "/data/files/avatar/";
-//    private static final String AVATAR_PATH = "C:\\Users\\72936\\Desktop\\";
+    private static final String TECENT_SERVER_URL = "https://api.weixin.qq.com/sns/jscode2session?";
+    private static final String AVATAR_PATH = "/images/avatar/";
+
     private static final long expireTime = 86400; //sessionId有效时间，以秒为单位
     private static final int UPLOAD_AVATAR_FAIL_CODE = -101;  //保存头像失败错误码
     private static final Integer SAVE_USERBASEINFO_FAIL_CODE = -102; //时间解析错误
@@ -99,7 +100,7 @@ public class UserController {
         HttpClient httpClient = HttpClients.createDefault();
         String param = "appid="+ APP_ID +"&secret=" + APP_SECRET + "&js_code="
                 + code + "&grant_type=authorization_code";
-        String url = BASE_URL + param;
+        String url = TECENT_SERVER_URL + param;
 
         HttpGet httpGet = new HttpGet(url);
         CloseableHttpResponse response = (CloseableHttpResponse) httpClient.execute(httpGet);
@@ -163,6 +164,7 @@ public class UserController {
      * @Date: 22:58 2018/6/6
      */
     private String saveAvatar(HttpServletRequest request) throws IOException {
+        logger.info("saveAvatar start...");
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         List<MultipartFile> fileList = multipartRequest.getFiles("avatarUrl");
         String filePath = null;
@@ -170,11 +172,14 @@ public class UserController {
             if(!mf.isEmpty()){
                 String originFileName = mf.getOriginalFilename();
                 String suffix = originFileName.substring(originFileName.lastIndexOf(".") + 1);
-                filePath = AVATAR_PATH + UUID.randomUUID().toString().replace("-", "") + "." + suffix;
-                File dir = new File(filePath);
-                if (!dir.exists())
-                    dir.mkdir();
-                mf.transferTo(dir);
+                String dirRealPath = request.getSession().getServletContext().getRealPath(AVATAR_PATH);
+                File dir = new File(dirRealPath);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                filePath = dirRealPath + File.separator + UUID.randomUUID().toString().replace("-", "") + "." + suffix;
+                logger.info("filePath: {}", filePath);
+                mf.transferTo(new File(filePath));
             }
         }
         return filePath;
