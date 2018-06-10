@@ -423,13 +423,24 @@
     where id = #{id,jdbcType=INTEGER}
     </update>
     <select id="querySubmitByJobId"  resultType="com.cainiaoshixi.vo.ResumeBriefVo">
-        SELECT submit.id as submit_id,submit.job_id, submit.user_id, user.name as user_name,resume.id as resumeId FROM cn_job_submit submit
+        SELECT submit.id as submit_id,submit.job_id, submit.user_id, user.name as user_name,resume.id as resumeId
+        FROM cn_job_submit submit
+        JOIN cn_job job ON (submit.job_id=job.id and job.user_id=#{resumeBriefVo.userId})
+        JOIN cn_user user ON submit.user_id=user.id
+        JOIN cn_resume resume ON submit.user_id=resume.user_id
+        where submit.job_id= #{resumeBriefVo.jobId}
+        <if test="resumeBriefVo.hrStatus != null and resumeBriefVo.hrStatus !='' or resumeBriefVo.hrStatus != 0"> and submit.hr_status = #{resumeBriefVo.hrStatus,jdbcType=INTEGER}</if>
+        ORDER BY submit.update_time desc limit #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+    <select id="queryCount" parameterType="com.cainiaoshixi.vo.ResumeBriefVo" resultType="int">
+        <!-- 查询总记录数-->
+        select count(1)
+        FROM cn_job_submit submit
         JOIN cn_job job ON (submit.job_id=job.id and job.user_id=#{userId})
         JOIN cn_user user ON submit.user_id=user.id
         JOIN cn_resume resume ON submit.user_id=resume.user_id
         where submit.job_id= #{jobId}
         <if test="hrStatus != null and hrStatus !='' or hrStatus != 0"> and submit.hr_status = #{hrStatus,jdbcType=INTEGER}</if>
-        ORDER BY submit.update_time desc limit #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
     </select>
     <select id="querySubmitByResumeId"  resultType="com.cainiaoshixi.vo.ResumeDetailVo">
         SELECT resume.id as resumeId,submit.id as submitId,submit.job_id,resume.evaluation,submit.user_id as submit_user_id

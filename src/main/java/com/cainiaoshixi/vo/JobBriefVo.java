@@ -1,5 +1,6 @@
 package com.cainiaoshixi.vo;
 
+import com.cainiaoshixi.util.PageUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import org.springframework.stereotype.Component;

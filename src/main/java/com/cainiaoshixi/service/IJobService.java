@@ -2,6 +2,7 @@ package com.cainiaoshixi.service;
 
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithLogo;
+import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 import com.cainiaoshixi.vo.ResumeDetailVo;
@@ -23,7 +24,9 @@ public interface IJobService {
 
     int updateJobStatus(Integer id);
 
-    List<ResumeBriefVo> querySubmitByJobId(int jobId,int hrStatus,int userId,int pageSize,int pageStart);
+    PageUtil<ResumeBriefVo> querySubmitByJobId(ResumeBriefVo resumeBriefVo, int pageSize, int pageStart);
+
+    public int queryCount(ResumeBriefVo resumeBriefVo);
 
     ResumeDetailVo querySubmitByResumeId(int jobId, int resumeId, int userId);
 

@@ -8,6 +8,7 @@ import com.cainiaoshixi.entity.Resume;
 import com.cainiaoshixi.enums.FileTypeEnum;
 import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IResumeService;
+import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import com.cainiaoshixi.vo.JobBriefVo;
@@ -96,15 +97,14 @@ public class ResumeController {
     @GetMapping("/job/list")
     @ApiOperation("获取工作岗位列表")
     @ResponseBody
-    public Result getSubmitListByUId(@RequestParam(value = "status",required = false,defaultValue = "1")int status, @RequestParam(value="hrStatus",required = false,defaultValue = "0")int hrStatus, @RequestParam(value = "viewCount",required = false,defaultValue = "0")int viewCount, @RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize){
+    public Result getSubmitListByUId1(@RequestParam(value = "status",required = false,defaultValue = "1")int status, @RequestParam(value="hrStatus",required = false,defaultValue = "0")int hrStatus, @RequestParam(value = "viewCount",required = false,defaultValue = "0")int viewCount, @RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize){
         Integer userId = session.userId();
         JobBriefVo jobBriefVo=new JobBriefVo();
         jobBriefVo.setUserId(userId);
         jobBriefVo.setStatus(status);
         jobBriefVo.setHrStatus(hrStatus);
         jobBriefVo.setViewCount(viewCount);
-        int pageStart=pageSize*(pageNumber-1);
-        List<JobBriefVo> jobBriefVos = resumeService.querySubmitByUserId(jobBriefVo,pageSize,pageStart);  //条件查询
+        PageUtil<JobBriefVo> jobBriefVos = resumeService.querySubmitByUserId(jobBriefVo,pageSize,pageNumber);  //条件查询
         return ResultUtil.success(jobBriefVos);
     }
 

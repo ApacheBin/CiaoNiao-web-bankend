@@ -29,7 +29,9 @@ public interface JobMapper {
 
     int updateByPrimaryKeySelective(Job job);
 
-    List<ResumeBriefVo> querySubmitByJobId(@Param("jobId")Integer jobId, @Param("hrStatus")Integer hrStatus,@Param("userId")Integer userId,@Param("pageSize")Integer pageSize,@Param("pageStart")Integer pageStart);
+    List<ResumeBriefVo> querySubmitByJobId(@Param("resumeBriefVo")ResumeBriefVo resumeBriefVo,@Param("pageSize")Integer pageSize,@Param("pageStart")Integer pageStart);
+
+    int queryCount(ResumeBriefVo resumeBriefVo);
 
     ResumeDetailVo querySubmitByResumeId(@Param("jobId")Integer jobId,@Param("resumeId")Integer resumeId,@Param("userId")Integer userId);
 

@@ -7,6 +7,7 @@ import com.cainiaoshixi.entity.JobWithLogo;
 import com.cainiaoshixi.service.IEducationService;
 import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IJobService;
+import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
 import com.cainiaoshixi.vo.JobQueryVo;
@@ -169,9 +170,12 @@ public class JobController {
     @GetMapping("/resume/list")
     @ApiOperation("获取简历列表")
     public Result getSubmitListByJobId(@RequestParam("jobId") int jobId,@RequestParam(value="hrStatus",required = false,defaultValue = "0")int hrStatus, @RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize){
-        int pageStart=pageSize*(pageNumber-1);
         int userId=session.userId();
-        List<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(jobId,hrStatus,userId,pageSize,pageStart);  //条件查询
+        ResumeBriefVo resumeBriefVo=new ResumeBriefVo();
+        resumeBriefVo.setUserId(userId);
+        resumeBriefVo.setJobId(jobId);
+        resumeBriefVo.setHrStatus(hrStatus);
+        PageUtil<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(resumeBriefVo,pageSize,pageNumber);  //条件查询
         return ResultUtil.success(resumeBriefVos);
     }
 

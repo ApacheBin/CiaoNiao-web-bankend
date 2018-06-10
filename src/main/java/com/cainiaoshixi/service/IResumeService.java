@@ -1,6 +1,7 @@
 package com.cainiaoshixi.service;
 
 import com.cainiaoshixi.entity.*;
+import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.vo.JobBriefVo;
 
 import java.util.List;
@@ -29,7 +30,9 @@ public interface IResumeService {
 
     public int submitJob(JobSubmit jobSubmit);
 
-    public List<JobBriefVo> querySubmitByUserId(JobBriefVo jobBriefVo,int pageSize,int pageStart);
-
     public boolean isJobSubmitted(int userId,int jobId);
+
+    public PageUtil<JobBriefVo> querySubmitByUserId(JobBriefVo jobBriefVo,int pageSize,int pageStart);
+
+    public int queryCount(JobBriefVo jobBriefVo);
 }

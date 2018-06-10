@@ -6,6 +6,7 @@ import com.cainiaoshixi.dao.WorkExperienceMapper;
 import com.cainiaoshixi.dao.WxUserMapper;
 import com.cainiaoshixi.entity.*;
 import com.cainiaoshixi.service.IResumeService;
+import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.vo.JobBriefVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,13 +100,25 @@ public class ResumeServiceImpl implements IResumeService {
     }
 
     @Override
-    public List<JobBriefVo> querySubmitByUserId(JobBriefVo jobBriefVo,int pageSize,int pageStart){
-        return resumeMapper.querySubmitByUserId(jobBriefVo,pageSize,pageStart);
+    public boolean isJobSubmitted(int userId,int jobId){
+        return null != resumeMapper.isJobSubmitted(userId,jobId);
     }
 
     @Override
-    public boolean isJobSubmitted(int userId,int jobId){
-        return null != resumeMapper.isJobSubmitted(userId,jobId);
+    public PageUtil<JobBriefVo> querySubmitByUserId(JobBriefVo jobBriefVo,int pageSize,int pageNumber){
+       PageUtil<JobBriefVo> page = new PageUtil<JobBriefVo>();
+       page.setPageNumber(pageNumber);
+       page.setPageSize(pageSize);
+       int reCount = queryCount(jobBriefVo);
+       page.setTotalDataCount(reCount);
+       int pageStart=page.getStartRow();
+       List<JobBriefVo> jobBriefVoList= resumeMapper.querySubmitByUserId(jobBriefVo,pageSize,pageStart);
+       page.setList(jobBriefVoList);
+       return page;
+    }
+    @Override
+    public int queryCount(JobBriefVo jobBriefVo){
+        return resumeMapper.queryCount(jobBriefVo);
     }
 
 }

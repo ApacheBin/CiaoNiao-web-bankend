@@ -3,6 +3,7 @@ package com.cainiaoshixi.service.Impl;
 import com.cainiaoshixi.dao.*;
 import com.cainiaoshixi.entity.*;
 import com.cainiaoshixi.service.IJobService;
+import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 import com.cainiaoshixi.vo.ResumeDetailVo;
@@ -62,8 +63,21 @@ public class JobServiceImpl implements IJobService {
         return cnjobMapper.updateByPrimaryKeySelective(job);
     }
     @Override
-    public List<ResumeBriefVo> querySubmitByJobId(int jobId,int hrStatus,int userId,int pageSize,int pageStart){
-        return cnjobMapper.querySubmitByJobId(jobId,hrStatus,userId,pageSize,pageStart);
+    public PageUtil<ResumeBriefVo> querySubmitByJobId(ResumeBriefVo resumeBriefVo,int pageSize,int pageNumber){
+        PageUtil<ResumeBriefVo> page = new PageUtil<ResumeBriefVo>();
+        page.setPageNumber(pageNumber);
+        page.setPageSize(pageSize);
+        int reCount = queryCount(resumeBriefVo);
+        page.setTotalDataCount(reCount);
+        int pageStart=page.getStartRow();
+        List<ResumeBriefVo> jobBriefVoList= cnjobMapper.querySubmitByJobId(resumeBriefVo,pageSize,pageStart);
+        page.setList(jobBriefVoList);
+        return page;
+    }
+
+    @Override
+    public int queryCount(ResumeBriefVo resumeBriefVo){
+        return cnjobMapper.queryCount(resumeBriefVo);
     }
 
     @Override
