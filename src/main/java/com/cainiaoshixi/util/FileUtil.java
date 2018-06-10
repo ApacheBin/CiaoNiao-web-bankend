@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 public class FileUtil {
@@ -74,6 +75,25 @@ public class FileUtil {
 
     public static String encodeByMd5(String content) {
         return new Md5Hash(content).toHex();
+    }
+
+    /**
+     * 上传文件至指定路径, 生成随机文件名并返回
+     * @param multipartFile
+     * @param fileDir
+     * @return
+     */
+    public static String uplodaFile(MultipartFile multipartFile, String fileDir) throws IOException {
+        File dir = new File(fileDir);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String originFileName = multipartFile.getOriginalFilename();
+        String suffix = originFileName.substring(originFileName.lastIndexOf(".") + 1);
+        String fileName = UUID.randomUUID().toString().replace("-", "") + "." + suffix;
+        String filePath = fileDir + fileName;
+        multipartFile.transferTo(new File(filePath));
+        return fileName;
     }
 
     /**
