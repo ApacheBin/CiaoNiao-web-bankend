@@ -435,10 +435,10 @@
         <!-- 查询总记录数-->
         select count(1)
         FROM cn_job_submit submit
-        JOIN cn_job job ON (submit.job_id=job.id and job.user_id=#{resumeBriefVo.jobUserId})
+        JOIN cn_job job ON (submit.job_id=job.id and job.user_id=#{jobUserId})
         JOIN cn_user user ON submit.user_id=user.id
-        where submit.job_id= #{resumeBriefVo.jobId}
-        <if test="resumeBriefVo.hrStatus != null and resumeBriefVo.hrStatus !='' or resumeBriefVo.hrStatus != 0"> and submit.hr_status = #{resumeBriefVo.hrStatus,jdbcType=INTEGER}</if>
+        where submit.job_id= #{jobId}
+        <if test="hrStatus != null and hrStatus !='' or hrStatus != 0"> and submit.hr_status = #{hrStatus,jdbcType=INTEGER}</if>
     </select>
     <select id="querySubmitByResumeId"  resultType="com.cainiaoshixi.vo.ResumeDetailVo">
         SELECT resume.id as resumeId,submit.id as submitId,submit.job_id,resume.evaluation,submit.user_id as submit_user_id

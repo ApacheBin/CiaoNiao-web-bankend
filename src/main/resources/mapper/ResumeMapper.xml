@@ -44,10 +44,10 @@
     <!-- 查询总记录数-->
     select count(1)
     FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id JOIN cn_company company on job.company_id=company.id
-    WHERE submit.user_id= #{jobBriefVo.userId}
-    <if test="jobBriefVo.status != null and jobBriefVo.status !='' or jobBriefVo.status !=0"> and submit.status = #{jobBriefVo.status,jdbcType=INTEGER}</if>
-    <if test="jobBriefVo.viewCount != null and jobBriefVo.viewCount !='' or jobBriefVo.viewCount > 0"> and submit.view_count>0 </if>
-    <if test="jobBriefVo.hrStatus != null and jobBriefVo.hrStatus !='' or jobBriefVo.hrStatus != 0"> and submit.hr_status = #{jobBriefVo.hrStatus,jdbcType=INTEGER}</if>
+    WHERE submit.user_id= #{userId}
+    <if test="status != null and status !='' or status !=0"> and submit.status = #{status,jdbcType=INTEGER}</if>
+    <if test="viewCount != null and viewCount !='' or viewCount > 0"> and submit.view_count>0 </if>
+    <if test="hrStatus != null and hrStatus !='' or hrStatus != 0"> and submit.hr_status = #{hrStatus,jdbcType=INTEGER}</if>
   </select>
 
     <select id="isJobSubmitted" resultType="com.cainiaoshixi.entity.JobSubmit">
