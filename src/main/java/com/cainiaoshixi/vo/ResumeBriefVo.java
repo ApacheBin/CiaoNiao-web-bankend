@@ -21,7 +21,15 @@ public class ResumeBriefVo {
 
     private String userName;
 
-    private int resumeId;
+    private int jobUserId;
+
+    private String avatarUrl;
+
+    private Byte sex;
+
+    private String school;
+
+    private String major;
 
     public int getJobId() {
         return jobId;
@@ -63,7 +71,43 @@ public class ResumeBriefVo {
 
     public void setViewCount(int viewCount) {this.viewCount = viewCount; }
 
-    public int getResumeId(){return resumeId;}
+    public int getJobUserId() {
+        return jobUserId;
+    }
 
-    public void setResumeId(int resumeId){this.resumeId=resumeId;}
+    public void setJobUserId(int jobUserId) {
+        this.jobUserId = jobUserId;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public Byte getSex() {
+        return sex;
+    }
+
+    public void setSex(Byte sex) {
+        this.sex = sex;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
 }

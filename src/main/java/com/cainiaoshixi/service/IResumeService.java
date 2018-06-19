@@ -35,4 +35,7 @@ public interface IResumeService {
     public PageUtil<JobBriefVo> querySubmitByUserId(JobBriefVo jobBriefVo,int pageSize,int pageStart);
 
     public int queryCount(JobBriefVo jobBriefVo);
+
+    public boolean isResumeUploaded(int userId);
+
 }

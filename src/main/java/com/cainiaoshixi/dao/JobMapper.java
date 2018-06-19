@@ -33,11 +33,11 @@ public interface JobMapper {
 
     int queryCount(ResumeBriefVo resumeBriefVo);
 
-    ResumeDetailVo querySubmitByResumeId(@Param("jobId")Integer jobId,@Param("resumeId")Integer resumeId,@Param("userId")Integer userId);
+    ResumeDetailVo querySubmitByResumeId(@Param("jobId")Integer jobId,@Param("userId")Integer userId,@Param("jobUserId")Integer jobUserId);
 
     int updateViewCount(Integer submitId);
 
-    int updateInterest(@Param("jobId")Integer jobId,@Param("submitId")Integer submitId,@Param("userId")Integer userId);
+    int updateInterest(@Param("jobId")Integer jobId,@Param("userId")Integer userId,@Param("jobUserId")Integer jobUserId);
 
-    int updateUnfit(@Param("jobId")Integer jobId,@Param("submitId")Integer submitId,@Param("userId")Integer userId);
+    int updateUnfit(@Param("jobId")Integer jobId,@Param("userId")Integer userId,@Param("jobUserId")Integer jobUserId);
 }

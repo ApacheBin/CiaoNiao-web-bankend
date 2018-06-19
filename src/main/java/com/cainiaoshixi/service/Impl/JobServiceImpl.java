@@ -25,11 +25,15 @@ public class JobServiceImpl implements IJobService {
     private EducationMapper educationMapper;
     private WorkMapper workMapper;
     private SchoolExpMapper schoolExpMapper;
+    private UserMapper userMapper;
+    private ResumeMapper resumeMapper;
 
-    public JobServiceImpl(EducationMapper educationMapper, WorkMapper workMapper, SchoolExpMapper schoolExpMapper) {
+    public JobServiceImpl(EducationMapper educationMapper, WorkMapper workMapper, SchoolExpMapper schoolExpMapper,UserMapper userMapper,ResumeMapper resumeMapper) {
         this.educationMapper = educationMapper;
         this.workMapper = workMapper;
         this.schoolExpMapper = schoolExpMapper;
+        this.userMapper = userMapper;
+        this.resumeMapper = resumeMapper;
     }
 
     public List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo) {
@@ -70,7 +74,7 @@ public class JobServiceImpl implements IJobService {
         int reCount = queryCount(resumeBriefVo);
         page.setTotalDataCount(reCount);
         int pageStart=page.getStartRow();
-        List<ResumeBriefVo> jobBriefVoList= cnjobMapper.querySubmitByJobId(resumeBriefVo,pageSize,pageStart);
+        List<ResumeBriefVo> jobBriefVoList = cnjobMapper.querySubmitByJobId(resumeBriefVo,pageSize,pageStart);
         page.setList(jobBriefVoList);
         return page;
     }
@@ -81,18 +85,23 @@ public class JobServiceImpl implements IJobService {
     }
 
     @Override
-    public ResumeDetailVo querySubmitByResumeId(int jobId, int resumeId, int userId){
-        ResumeDetailVo resumeDetailVo=cnjobMapper.querySubmitByResumeId(jobId,resumeId,userId);
+    public ResumeDetailVo querySubmitByResumeId(int jobId, int userId, int jobUserId){
+        ResumeDetailVo resumeDetailVo=cnjobMapper.querySubmitByResumeId(jobId,userId,jobUserId);
         if(resumeDetailVo != null){
-            List<Education> education=educationMapper.getEducationListByEduId(resumeDetailVo.getSubmitUserId(),-1);
+            User user = userMapper.selectByPrimaryKey(userId);
+            if(user != null)
+                resumeDetailVo.setUser(user);
+            List<Education> education=educationMapper.getEducationListByEduId(userId,-1);
             if(education != null)
                 resumeDetailVo.setEducation(education);
-            List<Work> workExperience = workMapper.queryByUserId(resumeDetailVo.getSubmitUserId());
+            List<Work> workExperience = workMapper.queryByUserId(userId);
             if(workExperience != null)
                 resumeDetailVo.setWork(workExperience);
             List<SchoolExperience>  schoolExperience = schoolExpMapper.queryBySchId(userId,-1);
             if(schoolExperience != null)
                 resumeDetailVo.setSchoolExperience(schoolExperience);
+            boolean isUploadResume = (null != resumeMapper.isResumeUploaded(userId));
+            resumeDetailVo.setIsResumeUploaded(isUploadResume);
         }
         return resumeDetailVo;
     }
@@ -102,12 +111,12 @@ public class JobServiceImpl implements IJobService {
         return cnjobMapper.updateViewCount(submitId);
     }
     @Override
-    public int updateInterest(int jobId,int submitId,int userId){
-        return cnjobMapper.updateInterest(jobId,submitId,userId);
+    public int updateInterest(int jobId,int userId,int jobUserId){
+        return cnjobMapper.updateInterest(jobId,userId,jobUserId);
     }
 
     @Override
-    public int updateUnfit(int jobId,int submitId,int userId){
-        return cnjobMapper.updateUnfit(jobId,submitId,userId);
+    public int updateUnfit(int jobId,int userId,int jobUserId){
+        return cnjobMapper.updateUnfit(jobId,userId,jobUserId);
     }
 }

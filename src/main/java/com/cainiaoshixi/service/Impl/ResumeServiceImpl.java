@@ -121,4 +121,9 @@ public class ResumeServiceImpl implements IResumeService {
         return resumeMapper.queryCount(jobBriefVo);
     }
 
+    @Override
+    public boolean isResumeUploaded(int userId){
+        return null != resumeMapper.isResumeUploaded(userId);
+    }
+
 }

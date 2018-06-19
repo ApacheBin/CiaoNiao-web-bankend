@@ -172,7 +172,7 @@ public class JobController {
     public Result getSubmitListByJobId(@RequestParam("jobId") int jobId,@RequestParam(value="hrStatus",required = false,defaultValue = "0")int hrStatus, @RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize){
         int userId=session.userId();
         ResumeBriefVo resumeBriefVo=new ResumeBriefVo();
-        resumeBriefVo.setUserId(userId);
+        resumeBriefVo.setJobUserId(userId);
         resumeBriefVo.setJobId(jobId);
         resumeBriefVo.setHrStatus(hrStatus);
         PageUtil<ResumeBriefVo> resumeBriefVos = jobService.querySubmitByJobId(resumeBriefVo,pageSize,pageNumber);  //条件查询
@@ -181,8 +181,8 @@ public class JobController {
 
     @GetMapping("/resume/get")
     @ApiOperation("获取非个人简历")
-    public Result getResumeByResId(@RequestParam("jobId") int jobId,@RequestParam("resumeId")int resumeId){
-        ResumeDetailVo resumeDetailVo= jobService.querySubmitByResumeId(jobId,resumeId,session.userId());  //条件查询
+    public Result getResumeByResId(@RequestParam("jobId") int jobId,@RequestParam("userId")int userId){
+        ResumeDetailVo resumeDetailVo= jobService.querySubmitByResumeId(jobId,userId,session.userId());  //条件查询
         if(resumeDetailVo != null){
             jobService.updateViewCount(resumeDetailVo.getSubmitId());
         }
@@ -191,16 +191,16 @@ public class JobController {
 
     @PostMapping("/resume/interest")
     @ApiOperation("发布者对某个简历感兴趣")
-    public Result updateInterest(@RequestParam("jobId") int jobId,@RequestParam("submitId") int submitId){
-        int userId=session.userId();
-        return ResultUtil.success(jobService.updateInterest(jobId,submitId,userId));
+    public Result updateInterest(@RequestParam("jobId") int jobId,@RequestParam("userId") int userId){
+        int jobUserId = session.userId();
+        return ResultUtil.success(jobService.updateInterest(jobId,userId,jobUserId));
     }
 
     @PostMapping("/resume/unfit")
     @ApiOperation("发布者对某个简历不感兴趣")
-    public Result updateUnfit(@RequestParam("jobId") int jobId,@RequestParam("submitId") int submitId){
-        int userId=session.userId();
-        return ResultUtil.success(jobService.updateUnfit(jobId,submitId,userId));
+    public Result updateUnfit(@RequestParam("jobId") int jobId,@RequestParam("userId") int userId){
+        int jobUserId = session.userId();
+        return ResultUtil.success(jobService.updateUnfit(jobId,userId,jobUserId));
     }
 }
 

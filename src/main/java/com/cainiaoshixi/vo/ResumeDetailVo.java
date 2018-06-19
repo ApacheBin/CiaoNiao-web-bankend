@@ -23,6 +23,8 @@ public class ResumeDetailVo {
 
     private String evaluation;
 
+    private User user;
+
     private List<Skill> skill;
 
     private List<Education> education;
@@ -30,6 +32,8 @@ public class ResumeDetailVo {
     private List<SchoolExperience> schoolExperience;
 
     private List<Work> work;
+
+    private boolean isResumeUploaded;
 
     public int getJobId() {
         return jobId;
@@ -71,6 +75,12 @@ public class ResumeDetailVo {
         this.evaluation = evaluation;
     }
 
+    public User getUser(){return user;}
+
+    public void setUser(User user){
+        this.user=user;
+    }
+
     public List<Skill> getSkill() {
         return skill;
     }
@@ -97,5 +107,13 @@ public class ResumeDetailVo {
 
     public void setWork(List<Work> work) {
         this.work = work;
+    }
+
+    public boolean getIsResumeUploaded() {
+        return isResumeUploaded;
+    }
+
+    public void setIsResumeUploaded(boolean isResumeUploaded) {
+        this.isResumeUploaded = isResumeUploaded;
     }
 }

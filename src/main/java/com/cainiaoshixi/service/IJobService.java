@@ -28,11 +28,11 @@ public interface IJobService {
 
     public int queryCount(ResumeBriefVo resumeBriefVo);
 
-    ResumeDetailVo querySubmitByResumeId(int jobId, int resumeId, int userId);
+    ResumeDetailVo querySubmitByResumeId(int jobId, int userId, int jobUserId);
 
     int updateViewCount(Integer submitId);
 
-    int updateInterest(int jobId,int submitId,int userId);
+    int updateInterest(int jobId,int userId,int jobUserId);
 
-    int updateUnfit(int jobId,int submitId,int userId);
+    int updateUnfit(int jobId,int userId,int jobUserId);
 }
