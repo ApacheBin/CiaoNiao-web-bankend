@@ -37,13 +37,32 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateByUid" parameterType="com.cainiaoshixi.entity.StudentCertify">
+    update cn_student_certify
+    set <if test="realName != null">real_name = #{realName,jdbcType=VARCHAR},</if>
+    <if test="school != null">school = #{school,jdbcType=VARCHAR},</if>
+    <if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+    <if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
+    <if test="status != null">status = #{status,jdbcType=SMALLINT},</if>
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{userId,jdbcType=INTEGER}
+  </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, real_name, school, email, user_id, status, create_time, update_time
     from cn_student_certify
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, real_name, school, email, user_id, status, create_time, update_time
+    from cn_student_certify
+    where id = #{userId,jdbcType=INTEGER}
+  </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
     select id, real_name, school, email, user_id, status, create_time, update_time
     from cn_student_certify
+    limit #{start,jdbcType=INTEGER}, #{limit,jdbcType=INTEGER}
+    order by update_time
   </select>
 </mapper>

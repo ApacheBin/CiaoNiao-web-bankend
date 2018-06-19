@@ -36,10 +36,36 @@ public class IdentityController {
     @Autowired
     private RedisUtil redisUtil;
 
+    @GetMapping("/student/get")
+    @ResponseBody
+    public Result getStudentCertification() {
+        StudentCertify stuCert = identityService.getStudentCertificationByUid(session.userId());
+        return ResultUtil.success(stuCert);
+    }
+
+    @GetMapping("/employee/get")
+    @ResponseBody
+    public Result getEmployeeCertification() {
+        EmployeeCertify employeeCert = identityService.getEmployeeCertificationByUid(session.userId());
+        return ResultUtil.success(employeeCert);
+    }
+
+    @GetMapping("/student/list")
+    @ResponseBody
+    public Result listStudentCertification(@RequestParam("page")int page) {
+        return ResultUtil.success(identityService.listStuCert(page));
+    }
+
+    @GetMapping("/employee/list")
+    @ResponseBody
+    public Result listEmployeeCertification(@RequestParam("page")int page) {
+        return ResultUtil.success(identityService.listEmployeeCert(page));
+    }
+
     @PostMapping("/student/upload")
     @ApiOperation("上传学生信息")
     @ResponseBody
-    public Result getStudentCertification(
+    public Result uploadStudentCertification(
             @RequestParam("cert")MultipartFile cert,
             @RequestParam("realName") String realName,
             @RequestParam("school") String school,
@@ -56,7 +82,10 @@ public class IdentityController {
             student.setSchool(school);
             student.setEmail(email);
             student.setUserId(session.userId());
-            identityService.insert(student);
+            if(!identityService.existStuCert(session.userId()))
+                identityService.insert(student);
+            else
+                identityService.updateByUid(student);
             return ResultUtil.success("");
         }else {
             return ResultUtil.error(150, "验证码不正确！");
@@ -66,18 +95,27 @@ public class IdentityController {
     @PostMapping("/employee/upload")
     @ApiOperation("上传职工信息")
     @ResponseBody
-    public Result getEmployeeCertification(
+    public Result uploadEmployeeCertification(
             @RequestBody EmployeeCertify employee,
             @RequestParam("code") String code){
         if(verifyCode(employee.getEmail(), code)) {
             employee.setUserId(session.userId());
-            identityService.insert(employee);
+            if(!identityService.existEmployeeCert(session.userId()))
+                identityService.insert(employee);
+            else
+                identityService.updateByUid(employee);
             return ResultUtil.success("");
         }else {
             return ResultUtil.error(150, "验证码不正确！");
         }
     }
 
+    /**
+     * 校验验证码
+     * @param email 接收验证码的邮箱
+     * @param code 验证码
+     * @return 是否验证成功
+     */
     private boolean verifyCode(String email, String code) {
         return  code.equals(redisUtil.hget(MailServiceImpl.VERIFICATION_CODE_KEY, email));
     }
