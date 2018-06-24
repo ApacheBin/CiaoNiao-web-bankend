@@ -1,6 +1,5 @@
 package com.cainiaoshixi.controller.web;
 
-import com.alibaba.fastjson.JSON;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
