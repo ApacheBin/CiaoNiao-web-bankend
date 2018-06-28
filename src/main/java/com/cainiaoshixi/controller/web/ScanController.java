@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,14 +23,15 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 @Controller
 @RequestMapping("/scan")
-public class LoginController {
+public class ScanController {
     @Autowired
     private RedisUtil redisUtil;
     private static final long EXPIRE_TIME = 86400; //sessionId有效时间，以秒为单位
     private static final String LOG_TITLE = "WEB_LoginController";
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ScanController.class);
 
     @RequestMapping("/login")
+    @ResponseBody
     public Result scanToLogin(HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("userId");
         String token = request.getParameter("token");
@@ -40,16 +43,18 @@ public class LoginController {
     }
 
     @RequestMapping("/checkStatus")
-    public Result checkLoginStatus(String token) {
-        if (token == null || token.isEmpty())
-            return ResultUtil.error(-201, "token为空");
-        Integer userId = (Integer) redisUtil.get(token);
-        logger.info(LOG_TITLE + "checkLoginStatus, userId: {}, token: {}", userId, token);
+    @ResponseBody
+    public Result checkLoginStatus(HttpServletRequest request) {
+        String sessionId = (String) request.getSession().getAttribute("sessionId");
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        logger.info(LOG_TITLE + "checkLoginStatus, userId: {}, token: {}", userId, sessionId);
         if (userId == null) {
             return ResultUtil.error(-301, "unLogin");
         }else {
-            redisUtil.expire(token, EXPIRE_TIME);
-            return ResultUtil.success("login success");
+            redisUtil.expire(sessionId, EXPIRE_TIME);
+            Result<String> result = ResultUtil.success("login success");
+            result.setData(Integer.toString(userId));
+            return result;
         }
     }
 }

@@ -2,6 +2,7 @@ package com.cainiaoshixi.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.cainiaoshixi.controller.web.ScanController;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
@@ -13,11 +14,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 public class LoginInterceptor implements HandlerInterceptor {
     private final static Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
+    private static final String LOG_TITLE = "LoginInterceptor";
 
     @Autowired
     private RedisUtil redisUtil;
@@ -28,7 +31,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     private boolean loginValidate(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
         String sessionId = request.getParameter("sessionId");
+        sessionId = (sessionId == null) ? request.getHeader("token") : sessionId; //web端扫码登录时传递token
         if (sessionId == null) {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
@@ -40,14 +45,16 @@ public class LoginInterceptor implements HandlerInterceptor {
                 }
             }
         }
+        logger.info(LOG_TITLE + " loginValidate, sessionId : {}", sessionId);
         if (sessionId != null && redisUtil.hasKey(sessionId)) {
-                Integer userId = Integer.parseInt((String) redisUtil.get(sessionId));
-                request.getSession().setAttribute("userId", userId);
-                return true;
+            Integer userId = Integer.parseInt((String) redisUtil.get(sessionId));
+            session.setAttribute("userId", userId);
+            session.setAttribute("sessionId", sessionId);
+            return true;
         } else {
             // 暂时处理方案，用于测试
             if (sessionId != null && sessionId.equals("testcainiaoshixi")) {
-                request.getSession().setAttribute("userId", 1);
+                session.setAttribute("userId", 1);
                 logger.debug("Test Start");
                 return true;
             }
