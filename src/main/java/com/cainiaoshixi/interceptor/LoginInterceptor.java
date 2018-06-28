@@ -2,7 +2,6 @@ package com.cainiaoshixi.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.cainiaoshixi.controller.web.ScanController;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
