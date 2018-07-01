@@ -8,6 +8,7 @@ import com.cainiaoshixi.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.Cookie;
@@ -60,6 +61,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         response.setContentType("application/json; charset=utf-8");
         response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Result result = ResultUtil.error(-2, "没有登录权限");
         String json = JSON.toJSONString(result, SerializerFeature.WriteMapNullValue);
         try (PrintWriter out = response.getWriter()) {
