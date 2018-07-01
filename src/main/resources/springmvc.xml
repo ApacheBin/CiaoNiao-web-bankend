@@ -34,7 +34,8 @@
             base-package="
             com.cainiaoshixi.controller,
             com.cainiaoshixi.conf,
-            com.cainiaoshixi.util" />
+            com.cainiaoshixi.util,
+            com.cainiaoshixi.exception" />
 
     <!-- 5.注册拦截器-->
     <mvc:interceptors>

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class CnExceptionHandler {
     private final static Logger logger = LoggerFactory.getLogger(CnExceptionHandler.class);
 
@@ -16,6 +16,6 @@ public class CnExceptionHandler {
     @ResponseBody
     public Result handle(Exception e) {
         logger.error("【系统异常】:", e);
-        return ResultUtil.error(-1, "未知错误");
+        return ResultUtil.error(-1, e.getMessage());
     }
 }
