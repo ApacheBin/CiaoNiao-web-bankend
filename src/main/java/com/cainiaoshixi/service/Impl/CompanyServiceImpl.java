@@ -31,17 +31,17 @@ public class CompanyServiceImpl implements ICompanyService {
 
 
     @Override
-    public void addCompany(Company company){
+    public int addCompany(Company company){
         company.setCreateTime(new Date());
         company.setUpdateTime(new Date());
-        companyMapper.insert(company);
+        return companyMapper.insertSelective(company);
     }
 
     @Override
-    public void addJobCompany(JobCompany jobCompany){
+    public int addJobCompany(JobCompany jobCompany){
         jobCompany.setCreateTime(new Date());
         jobCompany.setUpdateTime(new Date());
-        jobCompanyMapper.insert(jobCompany);
+        return jobCompanyMapper.insertSelective(jobCompany);
     }
 
     @Override

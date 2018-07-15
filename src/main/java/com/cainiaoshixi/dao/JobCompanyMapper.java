@@ -8,6 +8,8 @@ public interface JobCompanyMapper {
 
     int insert(JobCompany record);
 
+    int insertSelective(JobCompany jobCompany);
+
     JobCompany selectByPrimaryKey(Integer id);
 
     List<JobCompany> selectAll();

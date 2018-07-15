@@ -140,7 +140,7 @@ public class CompanyController {
      * @Description: 删除用户的认证公司信息
      * @Date: 17:11 2018/5/6
      */
-    @ApiOperation("删除公司信息")
+    @ApiOperation("删除认证公司信息")
     @PostMapping("/primary/delete")
     public Result deleteCompany(@RequestParam("id") int id){
         companyService.deleteCompany(id);
@@ -153,7 +153,7 @@ public class CompanyController {
      * @Description: 删除用户的非认证公司信息
      * @Date: 17:11 2018/7/15
      */
-    @ApiOperation("删除公司信息")
+    @ApiOperation("删除非认证公司信息")
     @PostMapping("/secondary/delete")
     public Result deleteJobCompany(@RequestParam("id") int id){
         companyService.deleteJobCompany(id);
