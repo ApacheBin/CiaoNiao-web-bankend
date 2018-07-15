@@ -40,8 +40,8 @@ import java.util.*;
 public class UserController {
 
     private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
-    private static final String APP_ID = "wx2d578cdea490f378";
-    private static final String APP_SECRET = "d942d6b119614c4d71d0247713ce9707";
+    private static final String APP_ID = "wxa0895de6bfdb7497";
+    private static final String APP_SECRET = "3a0a1c252c369015fa1ea74baf85ad50";
     private static final String TECENT_SERVER_URL = "https://api.weixin.qq.com/sns/jscode2session?";
     String AVATAR_DIR_PATH = "/data/images/avatar/";
 
