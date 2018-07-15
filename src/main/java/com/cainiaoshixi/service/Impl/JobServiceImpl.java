@@ -36,16 +36,17 @@ public class JobServiceImpl implements IJobService {
         this.resumeMapper = resumeMapper;
     }
 
-    public List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo) {
+    public List<JobWithOther> getJobListByVo(JobQueryVo jobQueryVo) {
         return cnjobMapper.getJobListByVo(jobQueryVo);
     }
 
-    public List<JobWithLogo> getJobListByUserId(JobQueryVo jobQueryVo) {
-        return cnjobMapper.getJobListByUserId(jobQueryVo);
+    public List<JobWithOther> getJobListByUserId(Integer userId) {
+        return cnjobMapper.getJobListByUserId(userId);
     }
 
-    public JobWithLogo selectByPrimaryKey(Integer id) {
-        return cnjobMapper.selectByPrimaryKey(id);
+    public JobWithOther selectByPrimaryKey(Integer id) {
+        JobWithOther jbWithOther = cnjobMapper.selectByPrimaryKey(id);
+        return convertJobWithOther(jbWithOther);
     }
 
     public int insertJob(Job job) {
@@ -118,5 +119,12 @@ public class JobServiceImpl implements IJobService {
     @Override
     public int updateUnfit(int jobId,int userId,int jobUserId){
         return cnjobMapper.updateUnfit(jobId,userId,jobUserId);
+    }
+
+    private JobWithOther convertJobWithOther(JobWithOther jbWithOther){
+        if(jbWithOther.getReadCount() == null){
+            jbWithOther.setReadCount(0);
+        }
+        return jbWithOther;
     }
 }

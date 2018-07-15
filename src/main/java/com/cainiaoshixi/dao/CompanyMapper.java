@@ -15,4 +15,6 @@ public interface CompanyMapper {
     int updateByPrimaryKey(Company record);
 
     int updateByPrimaryKeySelective(Company record);
+
+    List<Company> getCompanyListByUserId(Integer id);
 }

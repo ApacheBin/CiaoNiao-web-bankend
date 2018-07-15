@@ -1,11 +1,10 @@
 package com.cainiaoshixi.dao;
 
 import com.cainiaoshixi.entity.Job;
-import com.cainiaoshixi.entity.JobWithLogo;
+import com.cainiaoshixi.entity.JobWithOther;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 import com.cainiaoshixi.vo.ResumeDetailVo;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,17 +12,15 @@ import java.util.List;
 public interface JobMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Job record);
-
-    JobWithLogo selectByPrimaryKey(Integer id);
+    JobWithOther selectByPrimaryKey(Integer id);
 
     List<Job> selectAll();
 
     int updateByPrimaryKey(Job record);
 
-    List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo);
+    List<JobWithOther> getJobListByVo(JobQueryVo jobQueryVo);
 
-    List<JobWithLogo> getJobListByUserId(JobQueryVo jobQueryVo);
+    List<JobWithOther> getJobListByUserId(Integer userId);
 
     int insertSelective(Job job);
 

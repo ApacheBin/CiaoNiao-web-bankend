@@ -2,7 +2,7 @@ package com.cainiaoshixi.entity;
 
 import java.util.Date;
 
-public class Company {
+public class JobCompany {
     private Integer id;
 
     private Integer userId;

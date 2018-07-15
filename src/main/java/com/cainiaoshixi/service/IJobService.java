@@ -1,7 +1,7 @@
 package com.cainiaoshixi.service;
 
 import com.cainiaoshixi.entity.Job;
-import com.cainiaoshixi.entity.JobWithLogo;
+import com.cainiaoshixi.entity.JobWithOther;
 import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
@@ -10,11 +10,11 @@ import com.cainiaoshixi.vo.ResumeDetailVo;
 import java.util.List;
 
 public interface IJobService {
-    List<JobWithLogo> getJobListByVo(JobQueryVo jobQueryVo);
+    List<JobWithOther> getJobListByVo(JobQueryVo jobQueryVo);
 
-    List<JobWithLogo> getJobListByUserId(JobQueryVo jobQueryVo);
+    List<JobWithOther> getJobListByUserId(Integer userId);
 
-    JobWithLogo selectByPrimaryKey(Integer id);
+    JobWithOther selectByPrimaryKey(Integer id);
 
     int insertJob(Job job);
 

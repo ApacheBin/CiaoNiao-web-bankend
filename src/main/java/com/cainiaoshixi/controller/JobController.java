@@ -3,8 +3,7 @@ package com.cainiaoshixi.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.domain.Result;
 import com.cainiaoshixi.entity.Job;
-import com.cainiaoshixi.entity.JobWithLogo;
-import com.cainiaoshixi.service.IEducationService;
+import com.cainiaoshixi.entity.JobWithOther;
 import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.PageUtil;
@@ -57,7 +56,7 @@ public class JobController {
     @PostMapping("/list")
     public Result getJobList(@RequestBody JobQueryVo jobQueryVo) {
 //        JSONObject jsonObject = new JSONObject();
-        List<JobWithLogo> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
+        List<JobWithOther> jobList = jobService.getJobListByVo(jobQueryVo);  //条件查询
 //        return JSON.toJSONString(jobList, SerializerFeature.WriteMapNullValue);  //null值保留
         return ResultUtil.success(jobList);
     }
@@ -65,14 +64,14 @@ public class JobController {
     /**
      * @Author: Zxc
      * @Param:
-     * @Description 根据用户id查询岗位列表
+     * @Description 根据用户userid查询岗位列表
      * @Date: Created in 12:28 2018/4/24
      */
-    @ApiOperation("根据用户id条件查询岗位列表")
+    @ApiOperation("根据用户userid查询岗位列表")
     @PostMapping("/mylist")
-    public Result getMyList(@RequestBody JobQueryVo jobQueryVo){
-        jobQueryVo.setUserId(session.userId());
-        List<JobWithLogo> jobList = jobService.getJobListByUserId(jobQueryVo);
+    public Result getMyList(){
+        Integer userId = session.userId();
+        List<JobWithOther> jobList = jobService.getJobListByUserId(userId);
         return ResultUtil.success(jobList);
     }
 
@@ -86,14 +85,14 @@ public class JobController {
     @ApiOperation("根据id查看单条岗位详情")
     @PostMapping("/detail")
     public Result getJobDetail(@RequestParam(value = "id", required = true) Integer id){
-        JobWithLogo jobDetail = jobService.selectByPrimaryKey(id);
+        JobWithOther jobDetail = jobService.selectByPrimaryKey(id);
 //        int jobReadCount=0;
 //        if(session.jobReadCount()!=null){
 //            jobReadCount = session.jobReadCount();
 //        }
 //        jobReadCount++;
 //        session.setJobReadCount(jobReadCount);
-        JobWithLogo jobDetailCopy = new JobWithLogo();
+        JobWithOther jobDetailCopy = new JobWithOther();
         jobDetailCopy.setId(id);
         jobDetailCopy.setReadCount(jobDetail.getReadCount()+1);
         jobService.updateById(jobDetailCopy);

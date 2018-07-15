@@ -32,7 +32,15 @@
       <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
       <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-    <resultMap extends="BaseResultMap" id="ResultMapWithLogo" type="com.cainiaoshixi.entity.JobWithLogo">
+    <resultMap extends="BaseResultMap" id="ResultMapWithOther" type="com.cainiaoshixi.entity.JobWithOther">
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="abbr" jdbcType="VARCHAR" property="abbr" />
+        <result column="province" jdbcType="VARCHAR" property="province" />
+        <result column="city" jdbcType="VARCHAR" property="city" />
+        <result column="district" jdbcType="VARCHAR" property="district" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="introducation" jdbcType="VARCHAR" property="introducation" />
+        <result column="official_web" jdbcType="VARCHAR" property="officialWeb" />
         <result column="logo" jdbcType="VARCHAR" property="logo" />
     </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -71,13 +79,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithLogo">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithOther">
       select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
-      job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
-      job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
-      job.read_count, job.create_time,  job.update_time, company.logo
-      from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
-      where job.id = #{id,jdbcType=INTEGER}
+        job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
+        job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
+        job.read_count, job.create_time, job.update_time, company.name, company.abbr, company.province, company.city, company.district,
+        company.address, company.introducation, company.official_web, company.logo
+        from cn_job as job LEFT JOIN cn_job_company as company ON job.company_id = company.id
+        where job.id = #{id,jdbcType=INTEGER}
     </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, company, company_id, department, type, province, city, district, 
@@ -87,13 +96,14 @@
     from cn_job
   </select>
 
-  <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="ResultMapWithLogo">
-    select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
-    job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
-    job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
-    job.create_time,  job.update_time, company.logo
-    from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
-    <where>
+  <select id="getJobListByVo" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="ResultMapWithOther">
+      select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
+      job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
+      job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
+      job.read_count, job.create_time, job.update_time, company.name, company.abbr, company.province, company.city, company.district,
+      company.address, company.introducation, company.official_web, company.logo
+      from cn_job as job LEFT JOIN cn_job_company as company ON job.company_id = company.id
+      <where>
         <if test="name!=null and name!=''">
             and job.name LIKE "%"#{name, jdbcType=VARCHAR}"%"
         </if>
@@ -120,38 +130,14 @@
     limit #{iDisplayStart,jdbcType=INTEGER},#{iDisplayLength,jdbcType=INTEGER}
 </select>
 
-  <select id="getJobListByUserId" parameterType="com.cainiaoshixi.vo.JobQueryVo" resultMap="ResultMapWithLogo">
+  <select id="getJobListByUserId" parameterType="java.lang.Integer" resultMap="ResultMapWithOther">
     select job.id, job.name, job.company, job.company_id, job.department, job.type, job.province, job.city, job.district,job.address,
     job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
     job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
-    job.create_time, job.update_time, company.logo
-    from cn_job as job LEFT JOIN cn_company as company ON job.company_id = company.id
-    <where>
-      <if test="userId!=null">
-          and job.user_id = #{userId, jdbcType=INTEGER}
-      </if>
-      <if test="name!=null and name!=''">
-          and job.name LIKE "%"#{name, jdbcType=VARCHAR}"%"
-      </if>
-      <if test="type!=null and type!='所有'">
-          and job.type = #{type, jdbcType=VARCHAR}
-      </if>
-      <if test="degree!=null">
-          and job.degree = #{degree, jdbcType=TINYINT}
-      </if>
-      <if test="vertifyResult!=null">
-          and job.vertify_result = #{vertifyResult, jdbcType=TINYINT}
-      </if>
-      <if test="status!=null">
-          and job.status = #{status, jdbcType=TINYINT}
-      </if>
-      <if test="isFullJob!=null">
-          and job.is_full_job = #{isFullJob, jdbcType=TINYINT}
-      </if>
-      <if test="searchValue!=null">
-          and job.name like concat(concat("%",#{searchValue}),"%") or job.company like concat(concat("%",#{searchValue}),"%") or job.department like concat(concat("%",#{searchValue}),"%")
-      </if>
-    </where>
+    job.read_count, job.create_time, job.update_time, company.name, company.abbr, company.province, company.city, company.district,
+    company.address, company.introducation, company.official_web, company.logo
+    from cn_job as job LEFT JOIN cn_job_company as company ON job.company_id = company.id
+    where user_id=#{userId, jdbcType=INTEGER}
     order by job.create_time desc
   </select>
 
@@ -412,7 +398,6 @@
         <if test="readCount != null">
             read_count = #{readCount,jdbcType=INTEGER},
         </if>
-
         <if test="createTime != null">
             create_time = #{createTime,jdbcType=TIMESTAMP},
         </if>
