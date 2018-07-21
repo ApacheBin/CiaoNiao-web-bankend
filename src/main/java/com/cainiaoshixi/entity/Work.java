@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Component("CnWork")
@@ -15,6 +16,7 @@ import java.util.Date;
 public class Work {
     private Integer id;
 
+    @NotBlank(message = "公司名称不能为空")
     private String company;
 
     private String department;

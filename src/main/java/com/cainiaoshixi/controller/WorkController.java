@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -60,7 +61,8 @@ public class WorkController {
 
     @PostMapping("/add")
     @ApiOperation("新增工作经历")
-    public Result addWork(@RequestBody Work work) {
+    public Result addWork(@RequestBody
+                              @Validated Work work) {
         work.setUserId(session.userId());
         workService.insert(work); //这个返回的是新增的记录数
         // 返回工作ID

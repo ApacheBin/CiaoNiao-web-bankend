@@ -11,9 +11,9 @@ import java.util.Properties;
 @Configuration
 public class MailConfig {
 
-    public static  final String USERNAME = "Yzm@cainiaoshixi.com";
+    private static  final String USERNAME = "Yzm@cainiaoshixi.com";
 
-    public static  final String PASSWORD = "Yzm12345";
+    private static  final String PASSWORD = "Yzm12345";
 
     @Bean
     public JavaMailSender getJavaMailSender() {

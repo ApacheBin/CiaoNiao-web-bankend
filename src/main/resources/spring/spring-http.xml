@@ -20,7 +20,7 @@
 
     <!--定义httpClient对象，该bean一定是多例的-->
     <bean id="httpClient" class="org.apache.http.impl.client.CloseableHttpClient" factory-bean="httpClientBuilder"
-          factory-method="build" scope="prototype"></bean>
+          factory-method="build" scope="prototype" />
     <!--定义requestConfig构建器-->
     <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig.Builder">
         <!--设置创建连接的最长时间-->
@@ -32,7 +32,7 @@
     </bean>
     <!--请求参数对象-->
     <bean class="org.apache.http.client.config.RequestConfig" factory-bean="requestConfigBuilder"
-          factory-method="build"></bean>
+          factory-method="build" />
     <!--定期清理无效连接-->
     <bean class="org.apache.http.impl.client.IdleConnectionEvictor" destroy-method="shutdown">
         <constructor-arg index="0" ref="connectionManager"/>
