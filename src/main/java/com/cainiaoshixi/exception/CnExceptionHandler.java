@@ -20,7 +20,7 @@ public class CnExceptionHandler {
         if (e instanceof MethodArgumentNotValidException) {
            String message = ((MethodArgumentNotValidException) e)
                    .getBindingResult().getFieldError().getDefaultMessage();
-           return  ResultUtil.error(150, message);
+           return  ResultUtil.error(160, message);
         }
         return ResultUtil.error(-1, e.getMessage());
     }

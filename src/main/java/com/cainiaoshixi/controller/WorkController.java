@@ -6,6 +6,8 @@ import com.cainiaoshixi.entity.Work;
 import com.cainiaoshixi.service.IWorkService;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
+import com.cainiaoshixi.validation.groups.WhenAdd;
+import com.cainiaoshixi.validation.groups.WhenUpdate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -61,8 +63,7 @@ public class WorkController {
 
     @PostMapping("/add")
     @ApiOperation("新增工作经历")
-    public Result addWork(@RequestBody
-                              @Validated Work work) {
+    public Result addWork(@RequestBody @Validated({WhenAdd.class}) Work work) {
         work.setUserId(session.userId());
         workService.insert(work); //这个返回的是新增的记录数
         // 返回工作ID
@@ -73,7 +74,7 @@ public class WorkController {
 
     @PostMapping("/update")
     @ApiOperation("更新工作经历")
-    public Result updateWork(@RequestBody Work work) {
+    public Result updateWork(@RequestBody @Validated({WhenUpdate.class}) Work work) {
         workService.update(work);
         return ResultUtil.success("");
     }

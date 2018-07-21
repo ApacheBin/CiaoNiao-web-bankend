@@ -15,8 +15,12 @@ import java.io.UnsupportedEncodingException;
 @RequestMapping("/mail")
 public class MailController {
 
+    private final IMailService mailService;
+
     @Autowired
-    private IMailService mailService;
+    public MailController(IMailService mailService) {
+        this.mailService = mailService;
+    }
 
     @PostMapping("/verification/code/send")
     @ResponseBody
