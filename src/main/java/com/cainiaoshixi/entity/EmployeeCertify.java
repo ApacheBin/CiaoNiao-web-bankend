@@ -3,6 +3,7 @@ package com.cainiaoshixi.entity;
 import com.cainiaoshixi.validation.constraint.EnterpriseMail;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,6 +16,7 @@ public class EmployeeCertify {
 
     private String companyName;
 
+    @Email
     @EnterpriseMail
     private String email;
 

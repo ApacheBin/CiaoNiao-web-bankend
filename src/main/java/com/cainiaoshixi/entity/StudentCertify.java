@@ -1,8 +1,8 @@
 package com.cainiaoshixi.entity;
 
-import com.cainiaoshixi.validation.constraint.EnterpriseMail;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -13,6 +13,7 @@ public class StudentCertify {
 
     private String school;
 
+    @Email
     private String email;
 
     private Integer userId;
@@ -51,7 +52,6 @@ public class StudentCertify {
         return email;
     }
 
-    @EnterpriseMail
     public void setEmail(String email) {
         this.email = email;
     }

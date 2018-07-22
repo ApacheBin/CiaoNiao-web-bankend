@@ -31,9 +31,9 @@ public class EnterpriseMailValidator extends AbstractEmailValidator<EnterpriseMa
             return false;
         }
 
-        if (!super.isValid(value, context)) {
-            return false;
-        }
+//        if (!super.isValid(value, context)) {
+//            return false;
+//        }
 
         String stringValue = value.toString().trim();
         int splitPosition = stringValue.lastIndexOf( '@' );
