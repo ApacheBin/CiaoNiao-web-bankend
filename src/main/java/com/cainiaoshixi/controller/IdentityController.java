@@ -14,6 +14,7 @@ import com.cainiaoshixi.util.SessionUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,7 +97,7 @@ public class IdentityController {
     @ApiOperation("上传职工信息")
     @ResponseBody
     public Result uploadEmployeeCertification(
-            @RequestBody EmployeeCertify employee,
+            @RequestBody @Validated EmployeeCertify employee,
             @RequestParam("code") String code){
         if(verifyCode(employee.getEmail(), code)) {
             employee.setUserId(session.userId());

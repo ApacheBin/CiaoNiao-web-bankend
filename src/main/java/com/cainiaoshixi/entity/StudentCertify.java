@@ -1,5 +1,6 @@
 package com.cainiaoshixi.entity;
 
+import com.cainiaoshixi.validation.constraint.EnterpriseMail;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
@@ -50,6 +51,7 @@ public class StudentCertify {
         return email;
     }
 
+    @EnterpriseMail
     public void setEmail(String email) {
         this.email = email;
     }
