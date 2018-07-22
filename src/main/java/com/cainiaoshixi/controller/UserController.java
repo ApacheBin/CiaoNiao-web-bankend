@@ -8,6 +8,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.cainiaoshixi.util.FileUtil;
 import com.cainiaoshixi.util.RedisUtil;
 import com.cainiaoshixi.util.ResultUtil;
+import com.cainiaoshixi.util.SessionUtil;
+import io.swagger.annotations.ApiOperation;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -18,7 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -43,7 +47,8 @@ public class UserController {
     private static final String APP_ID = "wxa0895de6bfdb7497";
     private static final String APP_SECRET = "3a0a1c252c369015fa1ea74baf85ad50";
     private static final String TECENT_SERVER_URL = "https://api.weixin.qq.com/sns/jscode2session?";
-    String AVATAR_DIR_PATH = "/data/images/avatar/";
+    private static final String AVATAR_DIR_PATH = "/data/images/avatar/";
+    private static final String AVATAR_ROOT_URL = "cainiaoshixi.com/images/avatar/";
 
     private static final long expireTime = 86400; //sessionId有效时间，以秒为单位
     private static final int UPLOAD_AVATAR_FAIL_CODE = -101;  //保存头像失败错误码
@@ -55,6 +60,14 @@ public class UserController {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    private final SessionUtil session;
+
+    @Autowired
+    public UserController(SessionUtil session) {
+        this.session = session;
+    }
+
     /**
      * @Author: Chy
      * @Param:
@@ -136,7 +149,7 @@ public class UserController {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             List<MultipartFile> fileList = multipartRequest.getFiles("avatarUrl");
             if (fileList != null && !fileList.isEmpty()){
-                String fileName = FileUtil.uplodaFile(fileList.get(0), AVATAR_DIR_PATH);
+                String fileName = FileUtil.uploadFile(fileList.get(0), AVATAR_DIR_PATH);
                 user.setAvatarUrl("http://www.cainiaoshixi.com/data/images/avatar/" + fileName);  //配置了tomcat虚拟目录
             }else {
                 return ResultUtil.error(GET_FILE_FAIL_CODE, "获取文件失败");
@@ -161,17 +174,33 @@ public class UserController {
         }
     }
 
+    @PostMapping("/info/save")
+    @ApiOperation("保存用户信息")
+    @ResponseBody
+    public Result saveUser(
+            @RequestParam("avatar") MultipartFile avatar,
+            @RequestParam("name") String name) throws IOException {
+        String fileName = FileUtil.uploadFile(avatar, AVATAR_DIR_PATH);
+        User user = new User();
+        user.setName(name);
+        user.setId(session.userId());
+        user.setAvatarUrl(fileName);
+        userService.updateUserById(user);
+        return ResultUtil.success("保存成功");
+    }
+
     /**
      * @Author: Chy
      * @Param:
      * @Description: 获取用户基本信息
      * @Date: 18:57 2018/5/1
      */
-    @RequestMapping("/getUserInfo")
+    @RequestMapping("/info/get")
     @ResponseBody
     public Result getUserInfo(HttpServletRequest request){
         int userId = (int) request.getSession().getAttribute("userId");
         User user = userService.getUserByPrimaryKey(userId);
+        user.setAvatarUrl(AVATAR_ROOT_URL + user.getAvatarUrl());
         return ResultUtil.success(user);
     }
 

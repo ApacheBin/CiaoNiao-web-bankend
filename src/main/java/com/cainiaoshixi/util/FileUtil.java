@@ -83,7 +83,7 @@ public class FileUtil {
      * @param fileDir
      * @return
      */
-    public static String uplodaFile(MultipartFile multipartFile, String fileDir) throws IOException {
+    public static String uploadFile(MultipartFile multipartFile, String fileDir) throws IOException {
         File dir = new File(fileDir);
         if (!dir.exists()) {
             dir.mkdirs();
