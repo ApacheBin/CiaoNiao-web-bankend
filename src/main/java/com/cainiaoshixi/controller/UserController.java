@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -178,13 +179,31 @@ public class UserController {
     @ApiOperation("保存用户信息")
     @ResponseBody
     public Result saveUser(
-            @RequestParam("avatar") MultipartFile avatar,
-            @RequestParam("name") String name) throws IOException {
-        String fileName = FileUtil.uploadFile(avatar, AVATAR_DIR_PATH);
+            @RequestParam("name") String name,
+            @RequestParam(value = "avatar", required = false) MultipartFile avatar,
+            @RequestParam(value = "sex", required = false) Byte sex,
+            @RequestParam(value = "birthday",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthday,
+            @RequestParam(value = "identity",required = false) Byte identity,
+            @RequestParam(value = "residence", required = false) String residence,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "cellphone", required = false) String cellphone,
+            @RequestParam(value = "school", required = false) String school,
+            @RequestParam(value = "major", required = false) String major ) throws IOException {
         User user = new User();
+        if(avatar != null) {
+            String fileName = FileUtil.uploadFile(avatar, AVATAR_DIR_PATH);
+            user.setAvatarUrl(fileName);
+        }
         user.setName(name);
         user.setId(session.userId());
-        user.setAvatarUrl(fileName);
+        user.setSex(sex);
+        user.setBirthday(birthday);
+        user.setIdentity(identity);
+        user.setResidence(residence);
+        user.setEmail(email);
+        user.setCellphone(cellphone);
+        user.setSchool(school);
+        user.setMajor(major);
         userService.updateUserById(user);
         return ResultUtil.success("保存成功");
     }

@@ -3,6 +3,7 @@ package com.cainiaoshixi.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 
 public class User {
@@ -24,6 +25,7 @@ public class User {
 
     private String cellphone;
 
+    @Email
     private String email;
 
     private Date createTime;
