@@ -13,11 +13,12 @@ public class EnterpriseMailValidator extends AbstractEmailValidator<EnterpriseMa
     private static final String[] NOT_ENTERPRISE_EMAIL_DOMAIN_LIST = {
             "qq.com", "163.com", "gmail.com" ,
             "yahoo.com", "msn.com", "hotmail.com",
-            "aol.com", "@sk.com", "live.com",
+            "aol.com", "sk.com", "live.com",
             "0355.net", "163.net", "263.net",
             "3721.net", "yeah.net", "googlemail.com",
             "mail.com", "yahoo.com", "126.com",
-            "sogou.com", "sina.com"
+            "sogou.com", "sina.com", "189.cn",
+            "tom.com", "wo.cn", "inbox.com"
     };
 
     @Override
