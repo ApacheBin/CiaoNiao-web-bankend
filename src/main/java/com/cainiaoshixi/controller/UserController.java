@@ -205,7 +205,7 @@ public class UserController {
         user.setSchool(school);
         user.setMajor(major);
         userService.updateUserById(user);
-        return ResultUtil.success("保存成功");
+        return ResultUtil.success("", "用户信息保存成功！");
     }
 
     /**
@@ -220,6 +220,7 @@ public class UserController {
         int userId = (int) request.getSession().getAttribute("userId");
         User user = userService.getUserByPrimaryKey(userId);
         user.setAvatarUrl(AVATAR_ROOT_URL + user.getAvatarUrl());
+        user.setOpenId(null);
         return ResultUtil.success(user);
     }
 

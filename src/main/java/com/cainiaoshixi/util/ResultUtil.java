@@ -5,9 +5,13 @@ import com.cainiaoshixi.domain.Result;
 public class ResultUtil {
 
     public static<T> Result<T> success(T data) {
+        return success(data, "success");
+    }
+
+    public static<T> Result<T> success(T data, String msg) {
         Result<T> result = new Result<>();
         result.setCode(200);
-        result.setMsg("success");
+        result.setMsg(msg);
         result.setData(data);
         return result;
     }

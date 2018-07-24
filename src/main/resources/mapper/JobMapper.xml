@@ -107,6 +107,9 @@
         <if test="name!=null and name!=''">
             and job.name LIKE "%"#{name, jdbcType=VARCHAR}"%"
         </if>
+          <if test="province!=null and province !='全国'">
+              and job.province = #{type, jdbcType=VARCHAR}
+          </if>
         <if test="type!=null and type!='所有'">
             and job.type = #{type, jdbcType=VARCHAR}
         </if>
@@ -116,9 +119,15 @@
         <if test="vertifyResult!=null">
             and job.vertify_result = #{vertifyResult, jdbcType=TINYINT}
         </if>
-        <if test="status!=null">
+          <choose>
+        <when test="status!=null">
             and job.status = #{status, jdbcType=TINYINT}
-        </if>
+        </when>
+              <otherwise>
+                  job.status = 1
+              </otherwise>
+          </choose>
+
         <if test="isFullJob!=null">
             and job.is_full_job = #{isFullJob, jdbcType=TINYINT}
         </if>
@@ -137,7 +146,7 @@
     job.read_count, job.create_time, job.update_time, company.name, company.abbr, company.province, company.city, company.district,
     company.address, company.introducation, company.official_web, company.logo
     from cn_job as job LEFT JOIN cn_job_company as company ON job.company_id = company.id
-    where user_id=#{userId, jdbcType=INTEGER}
+    where job.user_id=#{userId, jdbcType=INTEGER}
     order by job.create_time desc
   </select>
 

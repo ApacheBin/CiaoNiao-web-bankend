@@ -84,7 +84,7 @@ public class JobController {
      */
     @ApiOperation("根据id查看单条岗位详情")
     @PostMapping("/detail")
-    public Result getJobDetail(@RequestParam(value = "id", required = true) Integer id){
+    public Result getJobDetail(@RequestParam(value = "id") Integer id){
         JobWithOther jobDetail = jobService.selectByPrimaryKey(id);
 //        int jobReadCount=0;
 //        if(session.jobReadCount()!=null){
@@ -148,7 +148,7 @@ public class JobController {
      */
     @ApiOperation("根据id删除单条岗位")
     @PostMapping("/delete")
-    public Result deleteJob(@RequestParam(value = "id", required = true) Integer id) {
+    public Result deleteJob(@RequestParam(value = "id") Integer id) {
         jobService.deleteByPrimaryKey(id);
         return ResultUtil.success("");
     }
