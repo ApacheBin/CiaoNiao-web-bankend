@@ -14,7 +14,7 @@
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="official_web" jdbcType="VARCHAR" property="officialWeb" />
     <result column="product" jdbcType="VARCHAR" property="product" />
-    <result column="introducation" jdbcType="VARCHAR" property="introducation" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="file_id" jdbcType="INTEGER" property="fileId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -29,13 +29,13 @@
       abbr, industry, establish_time, 
       province, city, district, 
       address, official_web, product, 
-      introducation, file_id, create_time, 
+      introduction, file_id, create_time,
       update_time, logo)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{abbr,jdbcType=VARCHAR}, #{industry,jdbcType=INTEGER}, #{establishTime,jdbcType=DATE}, 
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{officialWeb,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, 
-      #{introducation,jdbcType=VARCHAR}, #{fileId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{introduction,jdbcType=VARCHAR}, #{fileId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{logo,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.JobCompany">
@@ -51,7 +51,7 @@
       address = #{address,jdbcType=VARCHAR},
       official_web = #{officialWeb,jdbcType=VARCHAR},
       product = #{product,jdbcType=VARCHAR},
-      introducation = #{introducation,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
       file_id = #{fileId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -60,14 +60,14 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, user_id, name, abbr, industry, establish_time, province, city, district, 
-    address, official_web, product, introducation, file_id, create_time, update_time, 
+    address, official_web, product, introduction, file_id, create_time, update_time,
     logo
     from cn_job_company
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, user_id, name, abbr, industry, establish_time, province, city, district, 
-    address, official_web, product, introducation, file_id, create_time, update_time, 
+    address, official_web, product, introduction, file_id, create_time, update_time,
     logo
     from cn_job_company
   </select>
@@ -108,8 +108,8 @@
       <if test="product != null">
         product = #{product,jdbcType=VARCHAR},
       </if>
-      <if test="introducation != null">
-        introducation = #{introducation,jdbcType=VARCHAR},
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="fileId != null">
         file_id = #{fileId,jdbcType=INTEGER},
@@ -128,7 +128,7 @@
   </update>
   <select id="getJobCompanyListByUserId" resultType="com.cainiaoshixi.entity.JobCompany">
     select id, user_id, name, abbr, industry, establish_time, province, city, district,
-    address, official_web, product, introducation, file_id, create_time, update_time,
+    address, official_web, product, introduction, file_id, create_time, update_time,
     logo
     from cn_job_company
     where user_id=#{userId, jdbcType=INTEGER}
@@ -169,8 +169,8 @@
       <if test="product != null">
         product,
       </if>
-      <if test="introducation != null">
-        introducation,
+      <if test="introduction != null">
+        introduction,
       </if>
       <if test="fileId != null">
         file_id,
@@ -219,8 +219,8 @@
       <if test="product != null">
         #{product,jdbcType=VARCHAR},
       </if>
-      <if test="introducation != null">
-        #{introducation,jdbcType=VARCHAR},
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="fileId != null">
         #{fileId,jdbcType=INTEGER},

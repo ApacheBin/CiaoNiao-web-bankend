@@ -16,7 +16,7 @@ public class JobWithOther extends Job{
 
     private String address;
 
-    private String introducation;
+    private String introduction;
 
     private String officialWeb;
 
@@ -80,12 +80,12 @@ public class JobWithOther extends Job{
         this.address = address;
     }
 
-    public String getIntroducation() {
-        return introducation;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIntroducation(String introducation) {
-        this.introducation = introducation;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public String getOfficialWeb() {

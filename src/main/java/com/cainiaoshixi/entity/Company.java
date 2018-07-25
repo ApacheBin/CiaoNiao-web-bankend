@@ -27,7 +27,7 @@ public class Company {
 
     private String product;
 
-    private String introducation;
+    private String introduction;
 
     private Integer fileId;
 
@@ -133,12 +133,12 @@ public class Company {
         this.product = product;
     }
 
-    public String getIntroducation() {
-        return introducation;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIntroducation(String introducation) {
-        this.introducation = introducation;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public Integer getFileId() {

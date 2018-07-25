@@ -39,7 +39,7 @@
         <result column="city" jdbcType="VARCHAR" property="city" />
         <result column="district" jdbcType="VARCHAR" property="district" />
         <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="introducation" jdbcType="VARCHAR" property="introducation" />
+        <result column="introduction" jdbcType="VARCHAR" property="introduction" />
         <result column="official_web" jdbcType="VARCHAR" property="officialWeb" />
         <result column="logo" jdbcType="VARCHAR" property="logo" />
     </resultMap>
@@ -84,7 +84,7 @@
         job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
         job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
         job.read_count, job.create_time, job.update_time, company.name, company.abbr, company.province, company.city, company.district,
-        company.address, company.introducation, company.official_web, company.logo
+        company.address, company.introduction, company.official_web, company.logo
         from cn_job as job LEFT JOIN cn_job_company as company ON job.company_id = company.id
         where job.id = #{id,jdbcType=INTEGER}
     </select>
@@ -101,7 +101,7 @@
       job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
       job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
       job.read_count, job.create_time, job.update_time, company.name, company.abbr, company.province, company.city, company.district,
-      company.address, company.introducation, company.official_web, company.logo
+      company.address, company.introduction, company.official_web, company.logo
       from cn_job as job LEFT JOIN cn_job_company as company ON job.company_id = company.id
       <where>
         <if test="name!=null and name!=''">
@@ -144,7 +144,7 @@
     job.industry, job.function, job.is_remote, job.description, job.requirement, job.salary, job.welfare,job.duty_per_week,
     job.duration, job.user_id, job.receive_method, job.receive_email, job.degree,job.vertify_result,job.status,job.is_full_job,
     job.read_count, job.create_time, job.update_time, company.name, company.abbr, company.province, company.city, company.district,
-    company.address, company.introducation, company.official_web, company.logo
+    company.address, company.introduction, company.official_web, company.logo
     from cn_job as job LEFT JOIN cn_job_company as company ON job.company_id = company.id
     where job.user_id=#{userId, jdbcType=INTEGER}
     order by job.create_time desc
