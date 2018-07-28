@@ -29,5 +29,5 @@ public interface ResumeMapper {
 
     public int queryCount(JobBriefVo jobBriefVo);
 
-    public File isResumeUploaded(Integer userId);
+    public String getResumePath(Integer userId);
 }

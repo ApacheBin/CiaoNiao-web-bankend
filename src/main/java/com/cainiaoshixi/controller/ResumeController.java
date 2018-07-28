@@ -151,11 +151,19 @@ public class ResumeController {
         return ResultUtil.success(jsonObject);
     }
 
-    @GetMapping("/job/judge")
+    @GetMapping("/job/judge/submit")
     @ApiOperation("根据jobId判断是否投递过")
     @ResponseBody
     public Result isJobSubmitted(@RequestParam("jobId") int jobId){
         Integer userId = session.userId();
         return ResultUtil.success(resumeService.isJobSubmitted(userId,jobId));
+    }
+
+    @GetMapping("/job/judge/file")
+    @ApiOperation("根据userId返回上传的附件简历")
+    @ResponseBody
+    public Result resumeUploaded(){
+        Integer userId = session.userId();
+        return ResultUtil.success(resumeService.resumeUploaded(userId));
     }
 }

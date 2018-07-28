@@ -56,8 +56,8 @@
       where user_id=#{userId} and job_id=#{jobId} limit 1;
     </select>
 
-  <select id="isResumeUploaded" resultType="com.cainiaoshixi.entity.File">
-    SELECT id
+  <select id="getResumePath" resultType="String">
+    SELECT CASE path WHEN null THEN '' ELSE path END
     FROM cn_file
     WHERE uploader_id=#{userId} and type=1 limit 1;
   </select>

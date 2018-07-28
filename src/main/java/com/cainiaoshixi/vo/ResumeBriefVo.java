@@ -31,6 +31,8 @@ public class ResumeBriefVo {
 
     private String major;
 
+    private String resumePath;
+
     public int getJobId() {
         return jobId;
     }
@@ -109,5 +111,13 @@ public class ResumeBriefVo {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public String getResumePath() {
+        return resumePath;
+    }
+
+    public void setResumePath(String resumePath) {
+        this.resumePath = resumePath;
     }
 }

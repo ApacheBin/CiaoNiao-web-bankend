@@ -417,10 +417,11 @@
     where id = #{id,jdbcType=INTEGER}
     </update>
     <select id="querySubmitByJobId"  resultType="com.cainiaoshixi.vo.ResumeBriefVo">
-        SELECT submit.id as submit_id,submit.job_id, submit.user_id, user.name as user_name,user.avatar_url,user.sex,user.school,user.major
-        FROM cn_job_submit submit
+        SELECT submit.id as submit_id,submit.job_id, submit.user_id, user.name as user_name,user.avatar_url,user.sex,user.school,user.major,file.path as resume_path
+        FROM cn_job_submit submitquerySubmitByJobId
         JOIN cn_job job ON (submit.job_id=job.id and job.user_id=#{resumeBriefVo.jobUserId})
         JOIN cn_user user ON submit.user_id=user.id
+        JOIN cn_file file on (submit.user_id=file.uploader_id and file.type=1)
         where submit.job_id= #{resumeBriefVo.jobId}
         <if test="resumeBriefVo.hrStatus != null and resumeBriefVo.hrStatus !='' or resumeBriefVo.hrStatus != 0"> and submit.hr_status = #{resumeBriefVo.hrStatus,jdbcType=INTEGER}</if>
         ORDER BY submit.update_time desc limit #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
@@ -435,10 +436,11 @@
         <if test="hrStatus != null and hrStatus !='' or hrStatus != 0"> and submit.hr_status = #{hrStatus,jdbcType=INTEGER}</if>
     </select>
     <select id="querySubmitByResumeId"  resultType="com.cainiaoshixi.vo.ResumeDetailVo">
-        SELECT resume.id as resumeId,submit.id as submitId,submit.job_id,resume.evaluation,submit.user_id as submit_user_id
+        SELECT resume.id as resumeId,submit.id as submitId,submit.job_id,resume.evaluation,submit.user_id as submit_user_id,file.path
         FROM cn_job_submit submit
         JOIN cn_job job ON (job.user_id=#{jobUserId} and submit.job_id=job.id and job.id=#{jobId})
         JOIN cn_resume resume ON (resume.user_id=submit.user_id and resume.user_id=#{userId})
+        JOIN cn_file file ON (file.uploader_id=#{jobUserId} and file.type=1)
         ORDER BY submit.create_time DESC limit 1
     </select>
     <update id="updateViewCount"  parameterType="java.lang.Integer">

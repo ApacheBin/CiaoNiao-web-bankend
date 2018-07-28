@@ -122,8 +122,8 @@ public class ResumeServiceImpl implements IResumeService {
     }
 
     @Override
-    public boolean isResumeUploaded(int userId){
-        return null != resumeMapper.isResumeUploaded(userId);
+    public boolean resumeUploaded(int userId){
+        return !"".equals(resumeMapper.getResumePath(userId));
     }
 
 }

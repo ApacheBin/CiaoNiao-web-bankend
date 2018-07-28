@@ -36,6 +36,6 @@ public interface IResumeService {
 
     public int queryCount(JobBriefVo jobBriefVo);
 
-    public boolean isResumeUploaded(int userId);
+    public boolean resumeUploaded(int userId);
 
 }

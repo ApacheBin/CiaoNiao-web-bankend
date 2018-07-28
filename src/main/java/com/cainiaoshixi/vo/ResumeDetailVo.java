@@ -33,7 +33,7 @@ public class ResumeDetailVo {
 
     private List<Work> work;
 
-    private boolean isResumeUploaded;
+    private String resumePath;
 
     public int getJobId() {
         return jobId;
@@ -109,11 +109,11 @@ public class ResumeDetailVo {
         this.work = work;
     }
 
-    public boolean getIsResumeUploaded() {
-        return isResumeUploaded;
+    public String getResumePath() {
+        return resumePath;
     }
 
-    public void setIsResumeUploaded(boolean isResumeUploaded) {
-        this.isResumeUploaded = isResumeUploaded;
+    public void setResumePath(String resumePath) {
+        this.resumePath = resumePath;
     }
 }

@@ -101,8 +101,8 @@ public class JobServiceImpl implements IJobService {
             List<SchoolExperience>  schoolExperience = schoolExpMapper.queryBySchId(userId,-1);
             if(schoolExperience != null)
                 resumeDetailVo.setSchoolExperience(schoolExperience);
-            boolean isUploadResume = (null != resumeMapper.isResumeUploaded(userId));
-            resumeDetailVo.setIsResumeUploaded(isUploadResume);
+            String uploadResume = resumeMapper.getResumePath(userId);
+            resumeDetailVo.setResumePath(uploadResume);
         }
         return resumeDetailVo;
     }

@@ -30,6 +30,7 @@ public class CompanyController {
 
     private final static String PRIMARY_COMPANY_LOGO_IMAGE_DIR = "/data/images/primaryCompany/logo/";
     private final static String SECONDARY_COMPANY_LOGO_IMAGE_DIR = "/data/images/secondaryCompany/logo/";
+    private final static String WEB_URL = "cainiaoshixi.com";
 
     private final ICompanyService companyService;
     /**
@@ -71,6 +72,11 @@ public class CompanyController {
     public Result getJobCompanyListByCompanyId(){
         Integer userId = session.userId();
         List<JobCompany> jobCompanyList = companyService.getJobCompanyListByUserId(userId);  //条件查询
+        for(JobCompany jobCompany: jobCompanyList) {
+            if(!jobCompany.getLogo().isEmpty() && !jobCompany.getLogo().startsWith("http")) {
+                jobCompany.setLogo(WEB_URL + jobCompany.getLogo());
+            }
+        }
         return ResultUtil.success(jobCompanyList);
     }
 
