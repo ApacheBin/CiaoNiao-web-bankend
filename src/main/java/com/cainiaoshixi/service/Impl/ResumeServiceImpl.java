@@ -124,7 +124,7 @@ public class ResumeServiceImpl implements IResumeService {
     @Override
     public boolean resumeUploaded(int userId){
         String path = resumeMapper.getResumePath(userId);
-        return !(null == path || path.isEmpty()) ;
+        return null != path && !path.isEmpty() ;
     }
 
 }

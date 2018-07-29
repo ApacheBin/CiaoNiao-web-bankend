@@ -11,7 +11,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(description = "查看简历投递情况（用户）")
 public class JobBriefVo {
-    public int submitId;
+    private int submitId;
 
     private  int jobId;
 

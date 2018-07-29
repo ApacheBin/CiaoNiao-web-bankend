@@ -219,7 +219,8 @@ public class UserController {
     public Result getUserInfo(HttpServletRequest request){
         int userId = (int) request.getSession().getAttribute("userId");
         User user = userService.getUserByPrimaryKey(userId);
-        user.setAvatarUrl(AVATAR_ROOT_URL + user.getAvatarUrl());
+        if(user.getAvatarUrl() != null && !user.getAvatarUrl().startsWith("/") )
+            user.setAvatarUrl(AVATAR_ROOT_URL + user.getAvatarUrl());
         user.setOpenId(null);
         return ResultUtil.success(user);
     }

@@ -33,7 +33,9 @@
 
   <select id="querySubmitByUserId"  resultType="com.cainiaoshixi.vo.JobBriefVo">
     SELECT submit.id as submit_id,submit.job_id,submit.user_id,job.name as job_name,job.company,job.company_id,company.logo,submit.status,submit.hr_status,submit.view_count
-    FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id JOIN cn_company company on job.company_id=company.id
+    FROM cn_job_submit submit
+    JOIN cn_job job ON submit.job_id=job.id
+    Left JOIN cn_job_company company on job.company_id=company.id
     WHERE submit.user_id= #{jobBriefVo.userId}
     <if test="jobBriefVo.status != null and jobBriefVo.status !='' or jobBriefVo.status !=0"> and submit.status = #{jobBriefVo.status,jdbcType=INTEGER}</if>
     <if test="jobBriefVo.viewCount != null and jobBriefVo.viewCount !='' or jobBriefVo.viewCount > 0"> and submit.view_count>0 </if>
@@ -43,7 +45,9 @@
   <select id="queryCount" parameterType="com.cainiaoshixi.vo.JobBriefVo" resultType="int">
     <!-- 查询总记录数-->
     select count(1)
-    FROM cn_job_submit submit JOIN cn_job job ON submit.job_id=job.id JOIN cn_company company on job.company_id=company.id
+    FROM cn_job_submit submit
+    JOIN cn_job job ON submit.job_id=job.id
+    LEFT JOIN cn_job_company company on job.company_id=company.id
     WHERE submit.user_id= #{userId}
     <if test="status != null and status !='' or status !=0"> and submit.status = #{status,jdbcType=INTEGER}</if>
     <if test="viewCount != null and viewCount !='' or viewCount > 0"> and submit.view_count>0 </if>
