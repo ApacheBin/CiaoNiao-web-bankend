@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/comment")
@@ -28,20 +27,18 @@ public class CommentController {
 
     private final static String COMMENT_IMAGE_DIR = "/data/images/comments/";
 
-    private final static String image_dir = "cainiaoshixi.com/images/comments/";
+    private final static String IMAGE_URL = "cainiaoshixi.com/images/comments/";
 
     private final ICommentService commentService;
 
     private final SessionUtil session;
 
     @Autowired
-    public CommentController(ICommentService commentService,SessionUtil session) {
+    public CommentController(ICommentService commentService,
+                             SessionUtil session) {
         this.commentService=commentService;
         this.session = session;
     }
-
-    @Autowired
-    private RedisUtil redisUtil;
 
     /**
      * 查询该用户的评论
@@ -58,7 +55,7 @@ public class CommentController {
             location =comment.getImageLocation();
             String[] locationArray= location.split(";");
             for (int i = 0; i < locationArray.length; i++) {
-                locationArray[i] = image_dir +locationArray[i];
+                locationArray[i] = IMAGE_URL +locationArray[i];
                 if(imageLocation==null){
                     imageLocation = locationArray[i];
                 }else {
@@ -84,7 +81,7 @@ public class CommentController {
         location =comment.getImageLocation();
         String[] locationArray= location.split(";");
         for (int j = 0; j < locationArray.length; j++) {
-            locationArray[j] = image_dir +locationArray[j];
+            locationArray[j] = IMAGE_URL +locationArray[j];
             if(imageLocation==null){
                 imageLocation = locationArray[j];
             }else {

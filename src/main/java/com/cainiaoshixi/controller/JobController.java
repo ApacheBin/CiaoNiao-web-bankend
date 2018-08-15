@@ -88,7 +88,7 @@ public class JobController {
     @PostMapping("/detail")
     public Result getJobDetail(@RequestParam(value = "id") Integer id){
         JobWithOther jobDetail = jobService.selectByPrimaryKey(id);
-        if(!jobDetail.getLogo().isEmpty() && !jobDetail.getLogo().startsWith("http")) {
+        if(jobDetail.getLogo() != null && !jobDetail.getLogo().isEmpty() && !jobDetail.getLogo().startsWith("http")) {
             jobDetail.setLogo(WEB_URL + jobDetail.getLogo());
         }
 //        int jobReadCount=0;
