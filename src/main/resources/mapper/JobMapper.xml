@@ -460,4 +460,8 @@
        SET hr_status=2
        WHERE submit.job_id=#{jobId} and submit.user_id=#{userId};
     </update>
+    <select id="selectEmail" resultType="com.cainiaoshixi.vo.EmailVo">
+        SELECT receive_email as email from cn_job
+        WHERE id = #{jobId}
+    </select>
 </mapper>

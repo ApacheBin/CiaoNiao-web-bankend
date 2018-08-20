@@ -56,10 +56,13 @@
                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table tableName="cn_student_certify" domainObjectName="StudentCertify">
-            <generatedKey column="id" identity="true" sqlStatement="Mysql"/>
-        </table>
-        <table tableName="cn_employee_certify" domainObjectName="EmployeeCertify">
+        <!--<table tableName="cn_student_certify" domainObjectName="StudentCertify">-->
+            <!--<generatedKey column="id" identity="true" sqlStatement="Mysql"/>-->
+        <!--</table>-->
+        <!--<table tableName="cn_employee_certify" domainObjectName="EmployeeCertify">-->
+            <!--<generatedKey column="id" identity="true" sqlStatement="Mysql"/>-->
+        <!--</table>-->
+        <table tableName="cn_job_submit" domainObjectName="JobSubmit">
             <generatedKey column="id" identity="true" sqlStatement="Mysql"/>
         </table>
 

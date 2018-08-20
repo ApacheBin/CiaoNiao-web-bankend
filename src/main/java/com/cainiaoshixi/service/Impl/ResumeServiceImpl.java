@@ -1,9 +1,6 @@
 package com.cainiaoshixi.service.Impl;
 
-import com.cainiaoshixi.dao.EducationMapper;
-import com.cainiaoshixi.dao.ResumeMapper;
-import com.cainiaoshixi.dao.WorkExperienceMapper;
-import com.cainiaoshixi.dao.WxUserMapper;
+import com.cainiaoshixi.dao.*;
 import com.cainiaoshixi.entity.*;
 import com.cainiaoshixi.service.IResumeService;
 import com.cainiaoshixi.util.PageUtil;
@@ -30,6 +27,9 @@ public class ResumeServiceImpl implements IResumeService {
     private WorkExperienceMapper workExperienceMapper;
     @Autowired
     private ResumeMapper resumeMapper;
+
+    @Autowired
+    private JobSubmitMapper jobSubmitMapper;
 
     @Override
     public void savePersonInfo(WxUser wxUser) {
@@ -125,6 +125,21 @@ public class ResumeServiceImpl implements IResumeService {
     public boolean resumeUploaded(int userId){
         String path = resumeMapper.getResumePath(userId);
         return null != path && !path.isEmpty() ;
+    }
+
+    @Override
+    public Integer saveJobEmailViewed(Integer userId, Integer jobId) {
+        JobSubmit record = new JobSubmit();
+        record.setJobId(jobId);
+        record.setUserId(userId);
+        record.setEmailViewed((byte) 1);
+        record.setUpdateTime(new Date());
+        if(isJobSubmitted(userId, jobId)) {
+            return jobSubmitMapper.updateSelective(record);
+        }else{
+            record.setCreateTime(new Date());
+            return jobSubmitMapper.insertSelective(record);
+        }
     }
 
 }

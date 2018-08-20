@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cainiaoshixi.dao.JobSubmitMapper">
+  <resultMap id="BaseResultMap" type="com.cainiaoshixi.entity.JobSubmit">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="job_id" jdbcType="INTEGER" property="jobId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="hr_status" jdbcType="TINYINT" property="hrStatus" />
+    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="email_viewed" jdbcType="TINYINT" property="emailViewed" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cn_job_submit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cainiaoshixi.entity.JobSubmit">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cn_job_submit (job_id, user_id, status, 
+      hr_status, view_count, create_time, 
+      update_time, email_viewed)
+    values (#{jobId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{hrStatus,jdbcType=TINYINT}, #{viewCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{emailViewed,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cainiaoshixi.entity.JobSubmit">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cn_job_submit
+    <trim prefix="(" suffix=")">
+      <if test="jobId != null">
+        job_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="emailViewed != null">
+        email_viewed,
+      </if>
+      create_time,
+      update_time
+    </trim>
+    <trim prefix="values (" suffix=")">
+      <if test="jobId != null">
+        #{jobId},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="emailViewed != null">
+        #{emailViewed},
+      </if>
+      #{createTime},
+      #{updateTime}
+    </trim>
+  </insert>
+  <update id="updateSelective" parameterType="com.cainiaoshixi.entity.JobSubmit">
+    update cn_job_submit
+    <set>
+      <if test="emailViewed != null">
+        email_viewed = #{emailViewed},
+      </if>
+    </set>
+    where job_id = #{jobId} and user_id = #{userId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cainiaoshixi.entity.JobSubmit">
+    update cn_job_submit
+    set job_id = #{jobId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      hr_status = #{hrStatus,jdbcType=TINYINT},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      email_viewed = #{emailViewed,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, job_id, user_id, status, hr_status, view_count, create_time, update_time, 
+    email_viewed
+    from cn_job_submit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, job_id, user_id, status, hr_status, view_count, create_time, update_time, 
+    email_viewed
+    from cn_job_submit
+  </select>
+</mapper>

@@ -3,6 +3,7 @@ package com.cainiaoshixi.service;
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithOther;
 import com.cainiaoshixi.util.PageUtil;
+import com.cainiaoshixi.vo.EmailVo;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 import com.cainiaoshixi.vo.ResumeDetailVo;
@@ -35,4 +36,6 @@ public interface IJobService {
     int updateInterest(int jobId,int userId,int jobUserId);
 
     int updateUnfit(int jobId,int userId,int jobUserId);
+
+    EmailVo queryReceiveEmail(int jobId);
 }

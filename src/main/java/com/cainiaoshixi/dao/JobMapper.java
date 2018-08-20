@@ -2,6 +2,7 @@ package com.cainiaoshixi.dao;
 
 import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithOther;
+import com.cainiaoshixi.vo.EmailVo;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 import com.cainiaoshixi.vo.ResumeDetailVo;
@@ -37,4 +38,6 @@ public interface JobMapper {
     int updateInterest(@Param("jobId")Integer jobId,@Param("userId")Integer userId,@Param("jobUserId")Integer jobUserId);
 
     int updateUnfit(@Param("jobId")Integer jobId,@Param("userId")Integer userId,@Param("jobUserId")Integer jobUserId);
+
+    EmailVo selectEmail(int jobId);
 }

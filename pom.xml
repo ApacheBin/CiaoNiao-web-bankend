@@ -286,7 +286,7 @@
                         ${basedir}/src/main/resources/generatorConfig.xml
                     </configurationFile>
                     <verbose>true</verbose>
-                    <overwrite>true</overwrite>
+                    <!--<overwrite>true</overwrite>-->
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -299,7 +299,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>

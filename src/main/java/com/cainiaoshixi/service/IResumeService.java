@@ -38,4 +38,5 @@ public interface IResumeService {
 
     public boolean resumeUploaded(int userId);
 
+    Integer saveJobEmailViewed(Integer userId, Integer jobId);
 }

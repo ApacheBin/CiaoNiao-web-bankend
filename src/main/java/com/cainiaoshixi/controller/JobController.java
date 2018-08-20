@@ -6,9 +6,11 @@ import com.cainiaoshixi.entity.Job;
 import com.cainiaoshixi.entity.JobWithOther;
 import com.cainiaoshixi.service.IFileService;
 import com.cainiaoshixi.service.IJobService;
+import com.cainiaoshixi.service.IResumeService;
 import com.cainiaoshixi.util.PageUtil;
 import com.cainiaoshixi.util.ResultUtil;
 import com.cainiaoshixi.util.SessionUtil;
+import com.cainiaoshixi.vo.EmailVo;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 import com.cainiaoshixi.vo.ResumeDetailVo;
@@ -36,15 +38,19 @@ public class JobController {
     private final static String WEB_URL = "cainiaoshixi.com";
 
     private IJobService jobService;
+
+    private final IResumeService resumeService;
     /**
      * 当前会话
      */
     private final SessionUtil session;
 
     @Autowired
-    public JobController(IJobService jobService, SessionUtil session, IFileService fileService) {
+    public JobController(IJobService jobService, SessionUtil session,
+                         IFileService fileService, IResumeService resumeService) {
         this.jobService = jobService;
         this.session = session;
+        this.resumeService = resumeService;
     }
 
     /**
@@ -102,6 +108,9 @@ public class JobController {
         jobDetailCopy.setReadCount(jobDetail.getReadCount()+1);
         jobService.updateById(jobDetailCopy);
 
+        if(!resumeService.isJobSubmitted(session.userId(), id)) {
+            jobDetail.setReceiveEmail(null);
+        }
         return ResultUtil.success(jobDetail);
     }
 
@@ -205,6 +214,13 @@ public class JobController {
     public Result updateUnfit(@RequestParam("jobId") int jobId,@RequestParam("userId") int userId){
         int jobUserId = session.userId();
         return ResultUtil.success(jobService.updateUnfit(jobId,userId,jobUserId));
+    }
+
+    @GetMapping("/email/get")
+    public Result getEmail(@RequestParam("jobId") int jobId) {
+        resumeService.saveJobEmailViewed(session.userId(), jobId);
+        EmailVo email = jobService.queryReceiveEmail(jobId);
+        return ResultUtil.success(email);
     }
 }
 

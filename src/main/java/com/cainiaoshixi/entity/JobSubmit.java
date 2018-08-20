@@ -22,6 +22,16 @@ public class JobSubmit {
 
     private int viewCount;
 
+    private byte emailViewed;
+
+    public byte getEmailViewed() {
+        return emailViewed;
+    }
+
+    public void setEmailViewed(byte emailViewed) {
+        this.emailViewed = emailViewed;
+    }
+
     private Date createTime;
 
     private Date updateTime;

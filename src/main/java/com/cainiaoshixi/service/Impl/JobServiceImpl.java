@@ -4,6 +4,7 @@ import com.cainiaoshixi.dao.*;
 import com.cainiaoshixi.entity.*;
 import com.cainiaoshixi.service.IJobService;
 import com.cainiaoshixi.util.PageUtil;
+import com.cainiaoshixi.vo.EmailVo;
 import com.cainiaoshixi.vo.JobQueryVo;
 import com.cainiaoshixi.vo.ResumeBriefVo;
 import com.cainiaoshixi.vo.ResumeDetailVo;
@@ -119,6 +120,11 @@ public class JobServiceImpl implements IJobService {
     @Override
     public int updateUnfit(int jobId,int userId,int jobUserId){
         return cnjobMapper.updateUnfit(jobId,userId,jobUserId);
+    }
+
+    @Override
+    public EmailVo queryReceiveEmail(int jobId) {
+        return cnjobMapper.selectEmail(jobId);
     }
 
     private JobWithOther convertJobWithOther(JobWithOther jbWithOther){
